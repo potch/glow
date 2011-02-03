@@ -1,0 +1,253 @@
+Identification_Information:
+  Citation:
+    Citation_Information:
+      Originator: Environmental Systems Research Institute, Inc. (ESRI)
+      Publication_Date: 20020401
+      Title: World Continents
+      Edition: 2002
+      Geospatial_Data_Presentation_Form: vector digital data
+      Series_Information:
+        Series_Name: ESRI Data & Maps
+        Issue_Identification: 2002
+      Publication_Information:
+        Publication_Place: Redlands, California, USA
+        Publisher: Environmental Systems Research Institute, Inc. (ESRI)
+      Other_Citation_Details: Location: ESRI Data & Maps 2002 (CD 1) \world
+  Description:
+    Abstract: World Continents represents the boundaries for the continents of the world.
+    Purpose: World Continents provides a base map layer of the continents for the world.
+    Supplemental_Information: Largest scale when displaying the data: 1:15,000,000.
+  Time_Period_of_Content:
+    Time_Period_Information:
+      Multiple_Dates/Times:
+        Single_Date/Time:
+          Calendar_Date: 1996
+        Single_Date/Time:
+          Calendar_Date: 1998
+        Single_Date/Time:
+          Calendar_Date: 2000
+    Currentness_Reference: publication date
+  Status:
+    Progress: Complete
+    Maintenance_and_Update_Frequency: Matches software update releases
+  Spatial_Domain:
+    Bounding_Coordinates:
+      West_Bounding_Coordinate: -180.000000
+      East_Bounding_Coordinate: 180.000000
+      North_Bounding_Coordinate: 83.623596
+      South_Bounding_Coordinate: -90.000000
+  Keywords:
+    Theme:
+      Theme_Keyword_Thesaurus: None
+      Theme_Keyword: polygon
+      Theme_Keyword: continents
+      Theme_Keyword: coastlines
+      Theme_Keyword: boundaries
+    Place:
+      Place_Keyword_Thesaurus: None
+      Place_Keyword: World
+    Temporal:
+      Temporal_Keyword_Thesaurus: None
+      Temporal_Keyword: 1996
+      Temporal_Keyword: 1998
+      Temporal_Keyword: 2000
+  Access_Constraints: Access granted to Licensee only.
+  Use_Constraints:
+    The data are provided by multiple, third party data vendors under license to ESRI for inclusion on ESRI Data & Maps CD–ROMs for use with ESRI® software.  Each data vendor has its own data licensing policies and may grant varying redistribution rights to end users. Please consult the redistribution rights below for this data set provided on ESRI Data & Maps CD–ROMs. As used herein, “Geodata” shall mean any digital data set consisting of geographic data coordinates and associated attributes.
+
+    The redistribution rights for this data set: Redistribution rights are granted by the data vendor for hard-copy renditions or static, electronic map images (e.g. .gif, .jpeg, etc.) that are plotted, printed, or publicly displayed with proper metadata and source/copyright attribution to the respective data vendor(s).  Geodata is redistributable with a Value-Added Software Application developed by ESRI Business Partners on a royalty-free basis with proper metadata and source/copyright attribution to the respective data vendor(s). Geodata is redistributable without a Value-Added Software Application (i.e., adding the sample data to an existing, [non]commercial data set for redistribution) with proper metadata and source/copyright attribution to the respective data vendor(s).
+
+    The terms and conditions below apply to all the data sets provided on the ESRI Data & Maps CD–ROMs.
+
+    Proprietary Rights and Copyright: Licensee acknowledges that the Data and Related Materials contain proprietary and confidential property of ESRI and its licensor(s). The Data and Related Materials are owned by ESRI and its licensor(s) and are protected by United States copyright laws and applicable international copyright treaties and/or conventions.
+
+    Limited Warranty and Disclaimer: ESRI warrants that the media upon which the Data and Related Materials are provided will be free from defects in materials and workmanship under normal use and service for a period of ninety (90) days from the date of receipt.
+
+    THE DATA AND RELATED MATERIALS ARE EXCLUDED FROM THE LIMITED WARRANTY, AND THE LICENSEE EXPRESSLY ACKNOWLEDGES THAT THE DATA CONTAINS SOME NONCONFORMITIES, DEFECTS, OR ERRORS. ESRI DOES NOT WARRANT THAT THE DATA WILL MEET LICENSEE'S NEEDS OR EXPECTATIONS; THAT THE USE OF THE DATA WILL BE UNINTERRUPTED; OR THAT ALL NONCONFORMITIES, DEFECTS, OR ERRORS CAN OR WILL BE CORRECTED. ESRI IS NOT INVITING RELIANCE ON THIS DATA, AND THE LICENSEE SHOULD ALWAYS VERIFY ACTUAL DATA.
+
+    EXCEPT FOR THE LIMITED WARRANTY SET FORTH ABOVE, THE DATA AND RELATED MATERIALS CONTAINED THEREIN ARE PROVIDED "AS-IS," WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+    Exclusive Remedy and Limitation of Liability: The entire liability of ESRI or its licensor(s) and Licensee's exclusive remedy shall be to terminate the Agreement upon Licensee returning the Data and Related Materials to ESRI with a copy of Licensee's invoice/receipt and ESRI returning the license fees paid to Licensee.
+
+    IN NO EVENT SHALL ESRI AND/OR ITS LICENSOR(S) BE LIABLE FOR COSTS OF PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOST PROFITS, LOST SALES, OR BUSINESS EXPENDITURES, INVESTMENTS, OR COMMITMENTS IN CONNECTION WITH ANY BUSINESS; LOSS OF ANY GOODWILL; OR FOR ANY INDIRECT, SPECIAL, INCIDENTAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES ARISING OUT OF THIS AGREEMENT OR USE OF THE DATA AND RELATED MATERIALS, HOWEVER CAUSED, ON ANY THEORY OF LIABILITY, AND WHETHER OR NOT ESRI OR ITS LICENSOR(S) HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. THESE LIMITATIONS SHALL APPLY NOTWITHSTANDING ANY FAILURE OF ESSENTIAL PURPOSE OF ANY EXCLUSIVE REMEDY.
+
+    Third Party Beneficiary: ESRI's licensor(s) has (have) authorized ESRI to (sub)distribute and (sub)license its (their) data as incorporated into the Data and Related Materials. As an intended third party beneficiary to this Agreement, the ESRI licensor(s) is (are) entitled to directly enforce, in its own name, the rights and obligations undertaken by the Licensee and to seek all legal and equitable remedies as are afforded to ESRI.
+
+    In the event that the data vendor(s) has (have) granted the end user permission to redistribute the Geodata, please use proper proprietary or copyright attribution for the various data vendor(s), and provide the associated metadata file(s) with the Geodata. In compliance with FGDC metadata standards, ESRI has attempted to practice proper metadata methodologies by providing any data source information, descriptions, and file names to assist in this effort.
+  Point_of_Contact:
+    Contact_Information:
+      Contact_Organization_Primary:
+        Contact_Organization: Environmental Systems Research Institute, Inc. (ESRI)
+        Contact_Person: Data Team
+      Contact_Address:
+        Address_Type: mailing and physical address
+        Address: 380 New York Street
+        City: Redlands
+        State_or_Province: California
+        Postal_Code: 92373-8100
+        Country: USA
+      Contact_Voice_Telephone: 909-793-2853
+      Contact_Facsimile_Telephone: 909-793-5953
+      Contact_Electronic_Mail_Address: info@esri.com
+      Hours_of_Service: 8:00 a.m.–5:30 p.m. Pacific time, Monday–Friday
+      Contact_Instructions:
+        In the United States–
+        Please direct all inquiries regarding software/data pricing and consulting services to your local ESRI Regional Office.  For support, you may contact Technical Support by telephone (voice) between 6:00 a.m. and 6:00 p.m. Pacific time, Monday through Friday, by dialing 909-793-3774; facsimile (fax) available at 909-792-0960; electronic mail (e-mail) support@esri.com; or visit http://support.esri.com; ESRI holidays excluded. 
+
+        Outside the United States–
+        Please direct all inquiries regarding software/data pricing, sales, support, and consulting services to your local ESRI International Distributor.  This information can be found at http://gis.esri.com/intldist/contactint.cfm.  
+
+        For other questions or comments, you may contact ESRI headquarters by e-mail, telephone, or fax or write to us.
+  Native_Data_Set_Environment: Microsoft Windows 2000 Version 5.0 (Build 2195) Service Pack 2; ESRI ArcCatalog 8.1.3.679
+Data_Quality_Information:
+  Logical_Consistency_Report: No duplicate features are present.  The shapefile is created directly from a topologically correct ArcInfo™ coverage.
+  Completeness_Report: After processing, the data set is checked for drawing display and number of records and file sizes compared with source materials.
+  Positional_Accuracy:
+    Horizontal_Positional_Accuracy:
+      Horizontal_Positional_Accuracy_Report: The geospatial part of this data set was originally extracted from the ArcWorld Supplement database and then generalized (tolerance unknown).  The positional accuracy is unknown.
+  Lineage:
+    Source_Information:
+      Source_Citation:
+        Citation_Information:
+          Originator: Environmental Systems Research Institute, Inc. (ESRI)
+          Publication_Date: 1996
+          Title: ArcWorld Supplement
+          Edition: 1
+          Geospatial_Data_Presentation_Form: vector digital data
+          Series_Information:
+          Publication_Information:
+            Publication_Place: Redlands, California, USA
+            Publisher: Environmental Systems Research Institute, Inc. (ESRI)
+      Source_Scale_Denominator: 3000000
+      Type_of_Source_Media: CD–ROM
+      Source_Time_Period_of_Content:
+        Time_Period_Information:
+          Single_Date/Time:
+            Calendar_Date: 1996
+        Source_Currentness_Reference: publication date
+      Source_Citation_Abbreviation: ArcWorld Supplement
+      Source_Contribution: Attribute and geospatial data
+    Source_Information:
+      Source_Citation:
+        Citation_Information:
+          Originator: Global Mapping International
+          Title: Missions Database
+          Publication_Information:
+            Publication_Place: Colorado Springs, Colorado, USA
+            Publisher: Global Mapping International
+      Type_of_Source_Media: CD–ROM
+      Source_Time_Period_of_Content:
+        Time_Period_Information:
+          Single_Date/Time:
+            Calendar_Date: 2000
+        Source_Currentness_Reference: publication date
+      Source_Citation_Abbreviation: GMI
+      Source_Contribution: Attribute data
+    Process_Step:
+      Process_Description: The following steps were performed by ESRI: Extracted the features from ESRI Data & Maps 1999 data set-admin98.shp.  Updated political boundaries for countries and first-level administrative units.  Used Continent attribute to dissolve out the necessary features to create the continents. Removed unnecessary attributes. Created ArcGIS™ layer file (.lyr).  Created ArcView legend file (.avl).  Created projection file (.prj).  Created spatial indices.
+      Source_Used_Citation_Abbreviation: ArcWorld Supplement
+      Source_Used_Citation_Abbreviation: GMI
+      Process_Date: 20010111
+Spatial_Data_Organization_Information:
+  Direct_Spatial_Reference_Method: Vector
+  Point_and_Vector_Object_Information:
+    SDTS_Terms_Description:
+      SDTS_Point_and_Vector_Object_Type: G-polygon
+      Point_and_Vector_Object_Count: 8
+Spatial_Reference_Information:
+  Horizontal_Coordinate_System_Definition:
+    Geographic:
+      Latitude_Resolution: 0.000001
+      Longitude_Resolution: 0.000001
+      Geographic_Coordinate_Units: Decimal degrees
+    Geodetic_Model:
+      Horizontal_Datum_Name: D_WGS_1984
+      Ellipsoid_Name: WGS_1984
+      Semi-major_Axis: 6378137.000000
+      Denominator_of_Flattening_Ratio: 298.257224
+Entity_and_Attribute_Information:
+  Detailed_Description:
+    Entity_Type:
+      Entity_Type_Label: continent
+      Entity_Type_Definition: The polygons represent the boundaries for the continents of the world.
+      Entity_Type_Definition_Source: ESRI
+    Attribute:
+      Attribute_Label: FID
+      Attribute_Definition: Internal feature number.
+      Attribute_Definition_Source: ESRI
+      Attribute_Domain_Values:
+        Unrepresentable_Domain: Sequential unique whole numbers that are automatically generated.
+    Attribute:
+      Attribute_Label: Shape
+      Attribute_Definition: Feature geometry.
+      Attribute_Definition_Source: ESRI
+      Attribute_Domain_Values:
+        Unrepresentable_Domain: Coordinates defining the features.
+    Attribute:
+      Attribute_Label: CONTINENT
+      Attribute_Definition: The continent name.
+      Attribute_Definition_Source: ArcWorld Supplement
+      Attribute_Domain_Values:
+        Enumerated_Domain:
+          Enumerated_Domain_Value: Africa, Antarctica, Asia, Australia, Europe, North America, Oceania, South America
+          Enumerated_Domain_Value_Definition: The continents of the world.
+          Enumerated_Domain_Value_Definition_Source: ArcWorld Supplement
+Distribution_Information:
+  Distributor:
+    Contact_Information:
+      Contact_Organization_Primary:
+        Contact_Organization: Environmental Systems Research Institute, Inc. (ESRI); ESRI International Distributors
+      Contact_Address:
+        Address_Type: mailing and physical address
+        Address: 380 New York Street
+        City: Redlands
+        State_or_Province: California
+        Postal_Code: 92373-8100
+        Country: USA
+      Contact_Voice_Telephone: 800-447-9778
+      Contact_Instructions:
+        In the United States, contact the ESRI Telesales staff at 800-447-9778 for more information about our software and data.
+
+        Outside the United States, please direct all inquiries to your local ESRI International Distributor.  This information can be found at http://gis.esri.com/intldist/contactint.cfm.
+  Resource_Description: Offline Data
+  Distribution_Liability: See use constraints.
+  Standard_Order_Process:
+    Digital_Form:
+      Digital_Transfer_Information:
+        Format_Name: SHP
+        Format_Specification: The SHP file contains the geospatial data. The SHX file contains the index of the geospatial data. The DBF file contains the attribute data in dBASE format. The PRJ file contains the coordinate system information (optional). The AVL file contains the legend information (optional). The SBN and SBX files contain the spatial index of the geospatial data (optional). The XML file contains the metadata describing the data set <data set name>.shp.xml (optional).
+        File_Decompression_Technique: no compression applied
+        Transfer_Size: 2.897
+      Digital_Transfer_Option:
+        Offline_Option:
+          Offline_Media: ESRI Data & Maps 2002 CD–ROM Set is available only as part of ESRI® software.
+          Recording_Capacity:
+            Recording_Density: 650
+            Recording_Density_Units: MB (megabytes)
+          Recording_Format: ISO 9660
+    Fees: Software purchase price
+  Technical_Prerequisites: To use this data requires software that supports ArcView® GIS shapefiles.
+Metadata_Reference_Information:
+  Metadata_Date: 20020208
+  Metadata_Contact:
+    Contact_Information:
+      Contact_Organization_Primary:
+        Contact_Organization: Environmental Systems Research Institute, Inc. (ESRI)
+        Contact_Person: Data Team
+      Contact_Address:
+        Address_Type: mailing and physical address
+        Address: 380 New York Street
+        City: Redlands
+        State_or_Province: California
+        Postal_Code: 92373-8100
+        Country: USA
+      Contact_Voice_Telephone: 909-793-2853
+      Contact_Facsimile_Telephone: 909-793-5953
+      Contact_Electronic_Mail_Address: info@esri.com
+      Hours_of_Service: 8:00 a.m.–5:30 p.m. Pacific time, Monday–Friday
+  Metadata_Standard_Name: FGDC Content Standards for Digital Geospatial Metadata
+  Metadata_Standard_Version: FGDC-STD-001-1998
+  Metadata_Time_Convention: local time
+  Metadata_Extensions:
+    Online_Linkage: http://www.esri.com/metadata/esriprof80.html
+    Profile_Name: ESRI Metadata Profile

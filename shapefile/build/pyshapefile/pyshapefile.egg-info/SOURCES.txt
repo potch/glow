@@ -1,0 +1,6 @@
+README
+pyshapefile/__init__.py
+pyshapefile.egg-info/PKG-INFO
+pyshapefile.egg-info/SOURCES.txt
+pyshapefile.egg-info/dependency_links.txt
+pyshapefile.egg-info/top_level.txt

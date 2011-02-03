@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body, html {
+        background: black;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      #controls {
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        background: rgba(0,0,0,.5);
+        border-radius: 10px;
+        color: #fff;
+        z-index: 1;
+        font-family: sans-serif;
+        font-size: 13px;
+        padding: 10px 15px;
+      }
+      #controls a {
+        color: #fff;
+        margin-left: 8px;
+      }
+      #map_container {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        left: 0;
+        -moz-transition: .2s -moz-transform linear;
+      }
+      #map svg {
+        background: #004;
+        width: 3600px;
+      }
+      polygon {
+        fill: black;
+        stroke: none;
+      }
+/*      g:hover polygon {
+        stroke: #fff;
+        z-index: 1;
+      }*/
+    </style>
+  </head>
+  <body>
+    <div id="map_container">
+      <div id="map">
+      </div>
+    </div>
+    <div id="controls">
+      Quality: 
+      <a href="#min">min</a>
+      <a href="#low">low</a>
+      <a href="#med">med</a>
+      <a href="#high">high</a>
+      <a href="#max">max</a>
+      <a id="out"></a>
+    </div>
+    <script src="jquery.js"></script>
+    <script>
+      var qs = "?changed=" + (new Date()).getTime(),
+          view = 0,
+          zoom = 1,
+          $out = $("#out"),
+          $mc = $("#map_container"),
+          loading = false,
+          $map = $("#map");
+
+      function zoomAndCenter(e, el) {
+        var $el = $("#el");
+      }
+
+      function dbg() {
+        var pos = $map.find("svg").position(),
+            az = (1 << (zoom >>> 0));
+        $("#out").text([view,pos.left,pos.top,zoom].join(" - "));
+      }
+
+      $(function() {
+        var sx, sy,
+            cx, cy,
+            task = false,
+            panning = false;
+
+        function loadUp(s) {
+          if (loading) {
+            task.abort();
+          }
+          loading = true;
+          task = $("#map").load("world_"+s+".svg"+qs, function() {
+            loading = false;
+            dbg();
+          });
+        }
+            
+        $mc.mousedown(function(e) {
+          cx = e.clientX;
+          cy = e.clientY;
+          sx = parseInt($map.css("left"));
+          sy = parseInt($map.css("top"));
+          panning = true;
+          e.preventDefault();
+        }).bind("mouseup", function(e) {
+          panning = false;
+        }).mousemove(function(e) {
+          if (panning) {
+            var az = (1 << (zoom >>> 0)),
+                newx = (sx - (cx - e.clientX)/az),
+                newy = (sy - (cy - e.clientY)/az),
+                wid = $mc.width(),
+                hgt = $mc.height();
+            newx = Math.max(Math.min(0, newx),-3600+wid);
+            newy = Math.max(Math.min(0, newy),-1800+hgt);
+            console.log(newx, -3600*az+wid/2, newy, -1800*az+hgt/2);
+            $map.css({
+              left: newx + "px",
+              top: newy + "px",
+              '-moz-transform-origin': (-newx + wid/2) + "px " + (-newy + hgt/2) + "px"
+            });
+            dbg();
+          }
+        }).bind("DOMMouseScroll", function(e) {
+          var evt = e.originalEvent,
+              amount = evt.detail ? evt.detail * -1 : evt.wheelDelta / 40,
+              oldzoom = zoom;
+          if (amount > 1) {
+            zoom = Math.min(zoom+1, 4);
+          }
+          if (amount < -1) {
+            zoom = Math.max(zoom-1, 0);
+          }
+          dbg();
+          if (view != zoom >>> 0) {
+            view = zoom >>> 0;
+            loadUp(view);
+          }
+          $map.css('-moz-transform', 'scale('+(1 << (zoom >>> 0))+')');
+          zoomAndCenter(e, this);
+        });
+        $(window).bind("mouseup", function(e) {
+          panning = false;
+        });
+        loadUp(view);
+      })
+    </script>
+  </body>
+</html>

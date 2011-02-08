@@ -1,90 +1,55 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      body, html {
-        background: black;
-        height: 100%;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-      }
-      #controls {
-        position: fixed;
-        bottom: 10px;
-        left: 10px;
-        background: rgba(0,0,0,.5);
-        border-radius: 10px;
-        color: #fff;
-        z-index: 1;
-        font-family: sans-serif;
-        font-size: 13px;
-        padding: 10px 15px;
-      }
-      #controls a {
-        color: #fff;
-        margin-left: 8px;
-      }
-      #map_container {
-        overflow: hidden;
-        width: 100%;
-        height: 100%;
-        position: relative;
-      }
-      #map {
-        position: absolute;
-        top: 0;
-        left: 0;
-        -moz-transition: .2s -moz-transform linear;
-      }
-      #map svg {
-        background: #004;
-        width: 3600px;
-      }
-      polygon {
-        fill: black;
-        stroke: none;
-      }
-/*      g:hover polygon {
-        stroke: #fff;
-        z-index: 1;
-      }*/
-    </style>
+    <link rel="stylesheet" href="media/screen.css">
   </head>
   <body>
-    <div id="map_container">
-      <div id="map">
-      </div>
+    <div id="countdown" class="glow">
     </div>
-    <div id="controls">
-      Quality: 
-      <a href="#min">min</a>
-      <a href="#low">low</a>
-      <a href="#med">med</a>
-      <a href="#high">high</a>
-      <a href="#max">max</a>
-      <a id="out"></a>
+    <div id="app">
+      <section id="ui">
+        <div class="menu glow"></div>
+        <div class="bars glow"></div>
+        <div class="masthead glow">
+          <div id="wordmark">
+            <h2>mozilla</h2>
+            <h1>Firefox<small>&reg;</small><b>4</b></h1>
+          </div>
+        </div>
+      </section>
+      <section id="geo">
+        <div id="map_container">
+          <div id="map">
+          </div>
+          <div id="controls">
+            Quality: 
+            <a href="#min">min</a>
+            <a href="#low">low</a>
+            <a href="#med">med</a>
+            <a href="#high">high</a>
+            <a href="#max">max</a>
+            <a id="out"></a>
+          </div>
+        </div>
+      </section>
     </div>
-    <script src="jquery.js"></script>
+    <script src="media/jquery.js"></script>
     <script>
       var qs = "?changed=" + (new Date()).getTime(),
           view = 0,
-          zoom = 1,
+          zoom = 0,
           $out = $("#out"),
           $mc = $("#map_container"),
           loading = false,
           $map = $("#map");
 
-      function zoomAndCenter(e, el) {
-        var $el = $("#el");
-      }
-
-      function dbg() {
-        var pos = $map.find("svg").position(),
-            az = (1 << (zoom >>> 0));
-        $("#out").text([view,pos.left,pos.top,zoom].join(" - "));
-      }
+      var support = {
+        inlineSVG: (function() {
+          var e = document.createElement('div');
+          e.innerHTML = '<svg></svg>';
+          return !!(window.SVGSVGElement && e.firstChild instanceof window.SVGSVGElement);
+        })()
+      };
 
       $(function() {
         var sx, sy,
@@ -92,15 +57,62 @@
             task = false,
             panning = false;
 
-        function loadUp(s) {
-          if (loading) {
-            task.abort();
+        function posMap(x,y,z) {
+          $out.text(x + ", " + y + ", " + z);
+          var pos = $map.position();
+          x = x || pos.left;
+          y = y || pos.top;
+          z = Math.min(Math.max((z+1) || (zoom+1), 1), 5)-1;
+          var z2 = z+1,
+              ox = $mc.width()/2,
+              oy = $mc.height()/2,
+              scale = (1 << (z >>> 0)) / (1 << (zoom >>> 0)),
+              wid = $map.width()*z2 - ox*2,
+              hgt = $map.height()*z2 - oy*2;
+          if (x != pos.left || y != pos.top || z != zoom) {
+            x = Math.max(Math.min(0, (x-ox)*scale+ox),-wid);
+            y = Math.max(Math.min(0, (y-oy)*scale+oy),-hgt);
+            zoom = z;
           }
-          loading = true;
-          task = $("#map").load("world_"+s+".svg"+qs, function() {
-            loading = false;
-            dbg();
+          $map.css({
+            left: x + "px",
+            top: y + "px",
+            '-moz-transform': 'scale('+(1 << (zoom >>> 0)) + ')',
           });
+        }
+
+        $(window).keydown(function(e) {
+          // console.log(e.which);
+          if (e.which == 61) {
+            zoomMap(zoom+1);
+          }
+          if (e.which == 109) {
+            zoomMap(zoom-1);
+          }
+        });
+
+        function zoomMap(z) {
+          posMap(false,false,z);
+        }
+
+        function loadUp(s) {
+            if (loading) {
+              task.abort();
+            }
+            loading = true;
+            task = $.get("maps/world_"+s+".svg", function(resp) {
+              if (support.inlineSVG) {
+                var $md = $(resp).attr("id", "mapdata");
+                $map.empty().append($md);
+              } else {
+                $map.html('<embed id="mapdata" type="image/svg+xml" src="maps/world_' + s + '.svg">');
+                $("#mapdata").css({
+                  "-moz-transform": "scale(" + $mc.width()/3600 + ")",
+                });
+              }
+              posMap();
+              loading = false;
+            });
         }
             
         $mc.mousedown(function(e) {
@@ -109,48 +121,67 @@
           sx = parseInt($map.css("left"));
           sy = parseInt($map.css("top"));
           panning = true;
+          $map.css("-moz-transition","none");
           e.preventDefault();
         }).bind("mouseup", function(e) {
           panning = false;
+          $map.css("-moz-transition","");
         }).mousemove(function(e) {
           if (panning) {
-            var az = (1 << (zoom >>> 0)),
-                newx = (sx - (cx - e.clientX)/az),
-                newy = (sy - (cy - e.clientY)/az),
-                wid = $mc.width(),
-                hgt = $mc.height();
-            newx = Math.max(Math.min(0, newx),-3600+wid);
-            newy = Math.max(Math.min(0, newy),-1800+hgt);
-            console.log(newx, -3600*az+wid/2, newy, -1800*az+hgt/2);
-            $map.css({
-              left: newx + "px",
-              top: newy + "px",
-              '-moz-transform-origin': (-newx + wid/2) + "px " + (-newy + hgt/2) + "px"
-            });
-            dbg();
+            var newx = sx - (cx - e.clientX),
+                newy = sy - (cy - e.clientY);
+            posMap(newx, newy);
           }
         }).bind("DOMMouseScroll", function(e) {
           var evt = e.originalEvent,
               amount = evt.detail ? evt.detail * -1 : evt.wheelDelta / 40,
               oldzoom = zoom;
           if (amount > 1) {
-            zoom = Math.min(zoom+1, 4);
+            zoomMap(zoom+1);
           }
           if (amount < -1) {
-            zoom = Math.max(zoom-1, 0);
+            zoomMap(zoom-1);
           }
-          dbg();
-          if (view != zoom >>> 0) {
-            view = zoom >>> 0;
-            loadUp(view);
-          }
-          $map.css('-moz-transform', 'scale('+(1 << (zoom >>> 0))+')');
-          zoomAndCenter(e, this);
+          posMap();
         });
         $(window).bind("mouseup", function(e) {
           panning = false;
         });
         loadUp(view);
+      })
+    </script>
+    <script>    
+      $(function() {
+        //This is not the real launch date, or even close to it.
+        var launchDate = (new Date(2011,1,12,10,0)).getTime(),
+            diff, soon,
+            l,s,m,h,d,n,n2,
+            $el = $("#countdown");
+        // var start = window.mozAnimationStartTime;
+        function tick() {
+            diff = launchDate - (new Date()).getTime();
+            soon = diff < 86400000;
+            diff = diff < 0 ? 0 : diff;
+            l = soon ? "." + ("00" + diff % 1000).substr(-3) : "";
+            s = ("0" + (diff / 1000 >>> 0) % 60).substr(-2);
+            m = ("0" + (diff / 60000 >>> 0) % 60).substr(-2) + ".";
+            h = ("0" + (diff / 3600000 >>> 0) % 24).substr(-2) + ".";
+            d = ("0" + (diff / 86400000 >>> 0)).substr(-2) + ".";
+            $el.text(d+h+m+s+l);
+            if (soon) {
+              $el.toggleClass("flash", diff%1000 > 500);
+              window.mozRequestAnimationFrame();
+            } else {
+              setTimeout(tick, 500);
+            }
+        }
+        window.addEventListener("MozBeforePaint", tick, false);
+        // window.mozRequestAnimationFrame();
+        setTimeout(tick, 500);
+        setTimeout(function() {
+          $("#countdown").addClass("stowed");
+          $("#app").css("opacity", 1);
+        }, 1000);
       })
     </script>
   </body>

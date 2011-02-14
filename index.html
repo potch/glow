@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="media/screen.css">
   </head>
   <body>
-    <div id="countdown" class="glow">
+    <div id="countdown" class="glow stowed">
     </div>
     <div id="app">
       <section id="ui">
@@ -20,20 +20,23 @@
       <section id="geo">
         <div id="map_container">
           <div id="map">
+            <div id="mapdata"></div>
+            <div id="pings"></div>
           </div>
           <div id="controls">
-            Quality: 
-            <a href="#min">min</a>
-            <a href="#low">low</a>
-            <a href="#med">med</a>
-            <a href="#high">high</a>
-            <a href="#max">max</a>
+            <a href="#">+</a>
+            <a href="#">-</a>
             <a id="out"></a>
           </div>
         </div>
       </section>
     </div>
     <script src="media/jquery.js"></script>
+    <script src="media/vast.js"></script>
+    <script src="media/map.js"></script>
+    <script>
+      var vast = vast();
+    </script>
     <script>
       var qs = "?changed=" + (new Date()).getTime(),
           view = 0,
@@ -42,14 +45,6 @@
           $mc = $("#map_container"),
           loading = false,
           $map = $("#map");
-
-      var support = {
-        inlineSVG: (function() {
-          var e = document.createElement('div');
-          e.innerHTML = '<svg></svg>';
-          return !!(window.SVGSVGElement && e.firstChild instanceof window.SVGSVGElement);
-        })()
-      };
 
       $(function() {
         var sx, sy,
@@ -79,10 +74,10 @@
             top: y + "px",
             '-moz-transform': 'scale('+(1 << (zoom >>> 0)) + ')',
           });
+          if (zoom != view) loadUp(zoom);
         }
 
         $(window).keydown(function(e) {
-          // console.log(e.which);
           if (e.which == 61) {
             zoomMap(zoom+1);
           }
@@ -100,21 +95,24 @@
               task.abort();
             }
             loading = true;
-            task = $.get("maps/world_"+s+".svg", function(resp) {
-              if (support.inlineSVG) {
-                var $md = $(resp).attr("id", "mapdata");
-                $map.empty().append($md);
+            task = $.get("./maps/world_"+s+".svg", function(resp) {
+              if (vast.capabilities.inlineSVG) {
+                $("#mapdata").empty().append($(resp).find("svg"));
               } else {
-                $map.html('<embed id="mapdata" type="image/svg+xml" src="maps/world_' + s + '.svg">');
-                $("#mapdata").css({
-                  "-moz-transform": "scale(" + $mc.width()/3600 + ")",
-                });
+                $("#mapdata").empty().append('<embed type="image/svg+xml" src="maps/world_' + s + '.svg">');
               }
+              $("#mapdata").css({
+                "-moz-transform": "scale(" + $mc.width()/3600 + ")",
+              });
+              $("#pings").css({
+                "-moz-transform": "scale(" + $mc.width()/3600 + ")",
+              });
+              view = s;
               posMap();
               loading = false;
             });
         }
-            
+
         $mc.mousedown(function(e) {
           cx = e.clientX;
           cy = e.clientY;
@@ -152,12 +150,11 @@
     </script>
     <script>    
       $(function() {
-        //This is not the real launch date, or even close to it.
-        var launchDate = (new Date(2011,1,12,10,0)).getTime(),
-            diff, soon,
+        var launchDate = (new Date(2011,1,16,10,0)).getTime(),
+            diff, soon, os,
             l,s,m,h,d,n,n2,
             $el = $("#countdown");
-        // var start = window.mozAnimationStartTime;
+
         function tick() {
             diff = launchDate - (new Date()).getTime();
             soon = diff < 86400000;
@@ -167,21 +164,15 @@
             m = ("0" + (diff / 60000 >>> 0) % 60).substr(-2) + ".";
             h = ("0" + (diff / 3600000 >>> 0) % 24).substr(-2) + ".";
             d = ("0" + (diff / 86400000 >>> 0)).substr(-2) + ".";
-            $el.text(d+h+m+s+l);
-            if (soon) {
-              $el.toggleClass("flash", diff%1000 > 500);
-              window.mozRequestAnimationFrame();
-            } else {
-              setTimeout(tick, 500);
-            }
+            s = d+h+m+s+l;
+            if (s != os) $el.text(s);
+            os = s;
         }
-        window.addEventListener("MozBeforePaint", tick, false);
-        // window.mozRequestAnimationFrame();
-        setTimeout(tick, 500);
-        setTimeout(function() {
-          $("#countdown").addClass("stowed");
-          $("#app").css("opacity", 1);
-        }, 1000);
+        vast.GlobalClock.register(tick, this);
+        // setTimeout(function() {
+        //   $("#countdown").addClass("stowed");
+        //   // $("#app").css("opacity", 1);
+        // }, 0);
       })
     </script>
   </body>

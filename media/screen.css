@@ -126,8 +126,28 @@ body, html {
 #map svg {
   background: #004;
 }
+#pings {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3600px;
+    height: 1800px;
+    -moz-transform-origin: 0 0;
+}
+.ping {
+    position: absolute;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+    background: #fff;
+    border-radius: 200px;
+    -moz-border-radius: 200px;
+    -webkit-border-radius: 200px;
+}
 #mapdata {
     -moz-transform-origin: 0 0;
+    width:3600px;
+    height:1800px;
 }
 embed {
   width: 3600px;
@@ -189,7 +209,7 @@ polygon {
   height: 96px;
   width: 102%;
   position: relative;
-  font-family: 'MetaBold';
+  font-family: 'MetaBold', sans-serif;
   font-size: 80px;
   line-height: 88px;
   color: white;
@@ -271,7 +291,7 @@ polygon {
 }
 #app {
 /*  display: none;*/
-  opacity: 0;
+/*  opacity: 0;*/
   -moz-transition: opacity 1s linear;
   -webkit-transition: opacity 1s linear;
 }

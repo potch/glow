@@ -194,7 +194,7 @@ polygon {
   position: fixed;
   bottom: 0px;
   right: 0px;
-  height: 128px;
+  height: 120px;
   width: 100%;
   border-width: 1px 0 0 0;
   z-index: 100;
@@ -213,19 +213,25 @@ polygon {
     float: right;
     width: 40px;
     height: 130px;
-    margin-right: 20px;
+    margin: 0 10px;
+/*    padding: 0 10px;*/
 }
 .bars .bar {
     position: absolute;
     bottom: 0;
-    width: 100%;
+    width: 40px;
     height: 0;
-/*    -moz-transition: 1s height ease;*/
-    background: rgba(255,255,255,.1);
-    border: 1px solid white;
-    box-shadow: 0 0 3px #889, 0 0 2px #889 inset;
-    -moz-box-shadow: 0 0 3px #889, 0 0 2px #889 inset;
-    -webkit-box-shadow: 0 0 3px #889, 0 0 2px #889 inset;
+    background: rgba(227,159,28,.1);
+    border: 1px solid #FF7E0A;
+    box-shadow: 0 0 6px 2px rgba(227,159,28,.5),
+                0 0 4px 1px #000 inset,
+                0 0 2px 1px #FFC000 inset;
+}
+.bars .col:hover .bar {
+    background-color: rgb(227,159,28);
+    box-shadow: 0 0 16px 2px rgba(227,159,28,.8),
+                0 0 4px 1px rgba(0,0,0,.1) inset,
+                0 0 2px 1px #FFC000 inset;
 }
 .masthead {
   position: fixed;

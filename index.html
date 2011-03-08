@@ -61,13 +61,13 @@
           $out = $("#out"),
           $mc = $("#map_container"),
           loading = false,
+          panning = false,
           $map = $("#map");
 
       $(function() {
         var sx, sy,
             cx, cy,
-            task = false,
-            panning = false;
+            task = false;
 
         function posMap(x,y,z) {
           // $out.text(x + ", " + y + ", " + z);
@@ -137,10 +137,12 @@
           sx = parseInt($map.css("left"));
           sy = parseInt($map.css("top"));
           panning = true;
+          vast.GlobalClock.pause();
           $map.css("-moz-transition","none");
           e.preventDefault();
         }).bind("mouseup", function(e) {
           panning = false;
+          vast.GlobalClock.resume();
           $map.css("-moz-transition","");
         }).mousemove(function(e) {
           if (panning) {

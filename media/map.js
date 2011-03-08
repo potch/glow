@@ -6,7 +6,7 @@ $(function () {
         count = 0,
         nextData,
         nextTime,
-        scale = $mc.width()/3600,
+        scale = $mc.width()/(3600*1),
         pings = [],
         pool = [],
         ctx = $("#pings")[0].getContext("2d"),
@@ -55,7 +55,7 @@ $(function () {
                 addPing(row[1],row[0]);
             }
         }
-        vast.animate.over(30000,drawPings,this,{after: function() {
+        vast.animate.over(60000,drawPings,this,{after: function() {
             getData();
         }});
     }
@@ -75,7 +75,7 @@ $(function () {
             l = (t-p[0])/1000;
             ctx.beginPath();
             ctx.fillStyle = "rgba(255,255,255," + (1-l) + ")";
-            ctx.arc(p[2],p[1],10*l,0,Math.PI*2,true);
+            ctx.arc(p[2],p[1],5*l,0,Math.PI*2,true);
             ctx.fill();
             // ctx.fillRect(p[2],p[1],20,20);
             if (l > 1) {

@@ -276,6 +276,13 @@ function vast() {
         return _;
     }
 
+    $(window).blur(function() {
+        GLOBAL_CLOCK_INTERVAL = 1000;
+    });
+
+    $(window).focus(function() {
+        GLOBAL_CLOCK_INTERVAL = 30;
+    });
 
     var animate = exports.animate = {
         over: function(duration, tick, ctx, opts) {

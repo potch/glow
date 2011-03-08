@@ -121,10 +121,9 @@ body, html {
   -moz-transition-duration: .2s;
   -moz-transition-property: -moz-transform, top, left;
   -moz-transform-origin: 0 0;
-  background: #004;
+  background-image: -moz-radial-gradient(center -5% 45deg, #badfef, #4b94d0 20%, #2e70b4 30%, #002a77 60%);
 }
 #map svg {
-  background: #004;
 }
 #pings {
     position: absolute;
@@ -132,19 +131,19 @@ body, html {
     left: 0;
     width: 3600px;
     height: 1800px;
-    -moz-transform-origin: 0 0;
 }
 .ping {
     position: absolute;
     pointer-events: none;
-    width: 0;
-    height: 0;
+    width: 1px;
+    height: 1px;
     background: #fff;
-    border-radius: 200px;
-    -moz-border-radius: 200px;
-    -webkit-border-radius: 200px;
+    border: 0;
 }
-#mapdata {
+/*.ping.born {
+    opacity: 1;
+}
+*/#mapdata {
     -moz-transform-origin: 0 0;
     width:3600px;
     height:1800px;
@@ -155,7 +154,7 @@ embed {
   pointer-events: none;
 }
 polygon {
-  fill: black;
+  fill: #031841;
   stroke: none;
 }
 
@@ -194,12 +193,39 @@ polygon {
 .bars {
   position: fixed;
   bottom: 0px;
-  left: 0;
+  right: 0px;
   height: 128px;
   width: 100%;
   border-width: 1px 0 0 0;
   z-index: 100;
+  text-align: right;
   background: black;
+  white-space: nowrap;
+}
+.bars .col {
+    text-align: center;
+    line-height: 24px;
+    color: white;
+    font-family: Verdana, sans-serif;
+    font-size: 10px;
+    display: block;
+    position: relative;
+    float: right;
+    width: 40px;
+    height: 130px;
+    margin-right: 20px;
+}
+.bars .bar {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 0;
+/*    -moz-transition: 1s height ease;*/
+    background: rgba(255,255,255,.1);
+    border: 1px solid white;
+    box-shadow: 0 0 3px #889, 0 0 2px #889 inset;
+    -moz-box-shadow: 0 0 3px #889, 0 0 2px #889 inset;
+    -webkit-box-shadow: 0 0 3px #889, 0 0 2px #889 inset;
 }
 .masthead {
   position: fixed;
@@ -247,36 +273,36 @@ polygon {
 }
 #wordmark {
   position: absolute;
-  left: 20px;
-  top: 9px;
+  left: 30px;
+  top: 20px;
   text-shadow: -5px 0 14px rgba(240,240,255,.5),
                5px 0 14px rgba(240,240,255,.5);
   color: rgba(255,255,255,.95);
 }
 #wordmark h2 {
-  font-size: 22px;
-  line-height: 20px;
+  font-size: 16px;
+  line-height: 16px;
   padding-left: 2px;
   margin: 0;
 }
 #wordmark h1 {
-  font-size: 60px;
-  line-height: 60px;
+  font-size: 45px;
+  line-height: 45px;
   margin: 0;
 }
 #wordmark b {
-  font-size: 100px;
+  font-size: 80px;
   float: right;
-  margin: -16px 0 0 2px;
+  margin: -16px 0 0;
 }
 #wordmark small {
-  font-size: 14px;
+  font-size: 8px;
   margin: 16px 0 0 2px;
   height: 16px;
-  width: 16px;
+  width: 10px;
   position: relative;
   opacity: .2;
-  line-height: 16px;
+  line-height: 8px;
   vertical-align: top;
   display: inline-block;
 }
@@ -290,8 +316,7 @@ polygon {
     inset 0 0 20px rgba(128,0,0,.4);
 }
 #app {
-/*  display: none;*/
-/*  opacity: 0;*/
-  -moz-transition: opacity 1s linear;
+  opacity: 0;
+/*  -moz-transition: opacity 1s linear;
   -webkit-transition: opacity 1s linear;
-}
+*/}

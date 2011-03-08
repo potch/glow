@@ -1,30 +1,47 @@
 $(function () {
+    "use strict";
     var currentData = [],
         currentTime,
         total = 0,
         count = 0,
         nextData,
         nextTime,
-        pings = [];
+        scale = $mc.width()/3600,
+        pings = [],
+        pool = [],
+        ctx = $("#pings")[0].getContext("2d"),
+        row, n, $p;
+
+    ctx.fillStyle = "#fff";
+
     function addPing(x,y) {
-        var $p = $("<div class='ping born'></div>");
-        x = (-x+90)*10;
-        y = (y+180)*10;
-        pings.push([0,x,y,$p]);
-        $p.appendTo("#pings").css({
-            "top": x+"px",
-            "left": y+"px"
-        });
+        x = ~~((-x+90)*10*scale);
+        y = ~~((y+180)*10*scale);
+        if (pool.length) {
+            n = pool.shift();
+            // $p = pings[n][3];
+            pings[n] = [0, x, y];
+        } else {
+            // if (Math.random() < pings.length / 500-.1) return;
+            // $p = $("<div class='ping'></div>");
+            // $p.appendTo("#pings");
+            row = [0,x,y];
+            pings.push(row);
+        }
+        // $p.addClass("born").css({
+        //     "top": x+"px",
+        //     "left": y+"px",
+        //     "opacity": 1
+        // });
     }
     function playback(data) {
-        data = data.d;
+        data = data.d[0];
         currentTime = data[0].join("");
-        total = data[1][0];
-        currentData = data[1][1];
+        total = data[1];
+        currentData = data[2];
         count = 0;
         var goal=0, n, row;
         function drawPings(i) {
-            var row;
             goal = i*total;
             while (count < goal) {
                 if (currentData.length < 1) return;
@@ -38,31 +55,36 @@ $(function () {
                 addPing(row[1],row[0]);
             }
         }
-        vast.animate.over(30000,drawPings,this,{after: getData});
+        vast.animate.over(30000,drawPings,this,{after: function() {
+            getData();
+        }});
     }
     function getData() {
         $.getJSON("map.json?" + Math.random(), playback);
     }
-    var i,p,l,ell;
-    function drawPings(t) {
-        for (var i=0; i<pings.length; i++) {
+    var i,p,l,el;
+    function iteratePings(t) {
+        if (pool.length == pings.length) return;
+        ctx.clearRect(0,0,3600,1800);
+        for (i=0; i<pings.length; i++) {
             p = pings[i];
+            if (p[0] < 0) continue;
             if (p[0]==0) {
                 p[0] = t;
             }
             l = (t-p[0])/1000;
-            el = p[3][0];
-            el.style.width = p[3][0].style.height = l*32+"px";
-            el.style.left = p[2] - l*16+"px";
-            el.style.top = p[1] - l*16+"px";
-            el.style.opacity = Math.max(1-l,0);
+            ctx.beginPath();
+            ctx.fillStyle = "rgba(255,255,255," + (1-l) + ")";
+            ctx.arc(p[2],p[1],10*l,0,Math.PI*2,true);
+            ctx.fill();
+            // ctx.fillRect(p[2],p[1],20,20);
             if (l > 1) {
-                p[3].remove();
-                pings.remove(i);
-                i--;
+                p[0] = -1;
+                pool.push(i);
             }
         }
     }
-    vast.GlobalClock.register(drawPings, this);
+    vast.GlobalClock.register(iteratePings, this);
     getData();
+    window.gonow = getData;
 });

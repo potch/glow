@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c" width=512 height=512></canvas>
+    <div id="out"></div>
+    <script src="jquery.js"></script>
+    <script src="vast.js"></script>
+    <script src="arcchart.js"></script>
+    <script>
+        var vast = vast();
+        $(document).ready(function() {
+          var ac;
+          $.getJSON("/glow/daisy.json", function(d) {
+            console.log(d);
+            $("#c").arcChart({data: test_data});
+          });
+          
+          var anim = false;
+          function easeAnim() {
+            if (anim) anim.die();
+            anim = vast.animate.over(500, function(i) {
+              var j = vast.ease.out(i);
+              ac.redraw(2*j*PI, {innerRad: 10+40*j, sa: (1-j)*PI});
+            },this,{after: console.log});
+          }
+          
+          $("#c").click(easeAnim);
+        });
+        
+    </script>
+  </body>
+</html>

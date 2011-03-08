@@ -2,6 +2,11 @@
 <html>
   <head>
     <link rel="stylesheet" href="media/screen.css">
+    <style>
+      #map polygon {
+          fill: url(#glow);
+      }
+    </style>
   </head>
   <body>
     <div id="countdown" class="glow stowed">
@@ -16,13 +21,15 @@
             <h1>Firefox<small>&reg;</small><b>4</b></h1>
           </div>
         </div>
+        <div class="cta">
+        </div>
       </section>
       <section id="geo">
         <div id="map_container">
           <div id="map">
             <div id="mapdata"></div>
-            <div id="pings"></div>
           </div>
+          <canvas id="pings" width="3600" height="1800"></canvas>
           <div id="controls">
             <a href="#">+</a>
             <a href="#">-</a>
@@ -31,15 +38,25 @@
         </div>
       </section>
     </div>
+    <canvas id="c"></canvas>
+    <svg>
+      <defs>
+        <radialGradient gradientUnits="userSpaceOnUse" id="glow" fx="50%" fy="0">
+          <stop offset="0%" style="stop-color:#23497a; stop-opacity:1"/>
+          <stop offset="78%" style="stop-color:#011841; stop-opacity:1"/>
+        </linearGradient>
+      </defs>
+    </svg>
     <script src="media/jquery.js"></script>
     <script src="media/vast.js"></script>
     <script src="media/map.js"></script>
+    <script src="media/bars.js"></script>
     <script>
       var vast = vast();
     </script>
     <script>
       var qs = "?changed=" + (new Date()).getTime(),
-          view = 0,
+          view = 4, nv,
           zoom = 0,
           $out = $("#out"),
           $mc = $("#map_container"),
@@ -53,7 +70,7 @@
             panning = false;
 
         function posMap(x,y,z) {
-          $out.text(x + ", " + y + ", " + z);
+          // $out.text(x + ", " + y + ", " + z);
           var pos = $map.position();
           x = x || pos.left;
           y = y || pos.top;
@@ -68,13 +85,16 @@
             x = Math.max(Math.min(0, (x-ox)*scale+ox),-wid);
             y = Math.max(Math.min(0, (y-oy)*scale+oy),-hgt);
             zoom = z;
+            nv = Math.max(Math.min(z,4),2);
+          } else {
+            nv = view;
           }
           $map.css({
             left: x + "px",
             top: y + "px",
             '-moz-transform': 'scale('+(1 << (zoom >>> 0)) + ')',
           });
-          if (zoom != view) loadUp(zoom);
+          if (nv != view) loadUp(nv);
         }
 
         $(window).keydown(function(e) {
@@ -91,6 +111,7 @@
         }
 
         function loadUp(s) {
+            s=4;
             if (loading) {
               task.abort();
             }
@@ -102,9 +123,6 @@
                 $("#mapdata").empty().append('<embed type="image/svg+xml" src="maps/world_' + s + '.svg">');
               }
               $("#mapdata").css({
-                "-moz-transform": "scale(" + $mc.width()/3600 + ")",
-              });
-              $("#pings").css({
                 "-moz-transform": "scale(" + $mc.width()/3600 + ")",
               });
               view = s;
@@ -130,7 +148,7 @@
                 newy = sy - (cy - e.clientY);
             posMap(newx, newy);
           }
-        }).bind("DOMMouseScroll", function(e) {
+        })/*.bind("DOMMouseScroll", function(e) {
           var evt = e.originalEvent,
               amount = evt.detail ? evt.detail * -1 : evt.wheelDelta / 40,
               oldzoom = zoom;
@@ -141,7 +159,7 @@
             zoomMap(zoom-1);
           }
           posMap();
-        });
+        });*/
         $(window).bind("mouseup", function(e) {
           panning = false;
         });
@@ -150,28 +168,26 @@
     </script>
     <script>    
       $(function() {
-        var launchDate = (new Date(2011,1,16,10,0)).getTime(),
+        var launchDate = (new Date(2011,2,15,10,0)).getTime(),
             diff, soon, os,
             l,s,m,h,d,n,n2,
             $el = $("#countdown");
 
-        function tick() {
-            diff = launchDate - (new Date()).getTime();
-            soon = diff < 86400000;
-            diff = diff < 0 ? 0 : diff;
-            l = soon ? "." + ("00" + diff % 1000).substr(-3) : "";
-            s = ("0" + (diff / 1000 >>> 0) % 60).substr(-2);
-            m = ("0" + (diff / 60000 >>> 0) % 60).substr(-2) + ".";
-            h = ("0" + (diff / 3600000 >>> 0) % 24).substr(-2) + ".";
-            d = ("0" + (diff / 86400000 >>> 0)).substr(-2) + ".";
-            s = d+h+m+s+l;
-            if (s != os) $el.text(s);
-            os = s;
+        var num = 0;
+        function commas(n) {
+          var s = n.toString().split('');
+          for (i = s.length-3; i > 0; i-=3) {
+            s.splice(i, 0, ',');
+          }
+          return s.join('');
         }
-        vast.GlobalClock.register(tick, this);
+        vast.animate.over(60000, function(i) {
+          $el.text(commas(~~(i*3294)+252314442));
+        }, this);
+        // vast.GlobalClock.register(tick, this);
         // setTimeout(function() {
-        //   $("#countdown").addClass("stowed");
-        //   // $("#app").css("opacity", 1);
+          $("#countdown").addClass("stowed");
+          $("#app").css("opacity", 1);
         // }, 0);
       })
     </script>

@@ -7,7 +7,7 @@ function vast() {
         PI = exports.SAFETY = Math.PI,
         PI_2 = exports.PI_2 = PI/2,
         RAD = exports.RAD = PI / 180,
-        GLOBAL_CLOCK_INTERVAL = exports.GLOBAL_CLOCK_INTERVAL = 10;
+        GLOBAL_CLOCK_INTERVAL = exports.GLOBAL_CLOCK_INTERVAL = 30;
 
     var capabilities = exports.capabilities = {
         inlineSVG: (function() {
@@ -24,7 +24,7 @@ function vast() {
             delete shim;
             return test;
         })(),
-        requestAnimationFrame: ("mozRequestAnimationFrame" in window) ? "moz" : ("webkitRequestAnimationFrame" in window ? "webkit" : false)
+        requestAnimationFrame: false //("mozRequestAnimationFrame" in window) ? "moz" : ("webkitRequestAnimationFrame" in window ? "webkit" : false)
     };
 
     // Array Remove - By John Resig (MIT Licensed)
@@ -283,7 +283,12 @@ function vast() {
             var anim = GlobalClock.register(function(current, self) {
                 prog = Math.min((current-self.start)/duration,1);
                 tick.call(ctx, prog);
-                if (prog >= 1) self.die();
+                if (prog >= 1) {
+                    self.die();
+                    if (opts && opts.after) {
+                        opts.after.call(opts.afterCtx || ctx);
+                    }
+                }
             }, this);
             var api = {
                 die: function() {

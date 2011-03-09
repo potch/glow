@@ -17,4 +17,4 @@ header('Vary: Accept-Language');
 // We can cache until the minute rolls over.
 header('Cache-Control: max-age='.(60 - strftime('%S')));
 ?>
-var glow = {"time": "<?= $time ?>", "locale": "<?= $locale ?>", "dir", "<?= $rtl ?>"};
+var glow = {"time": "<?= $time ?>", "locale": "<?= $locale ?>", "dir": "<?= $rtl ?>"};

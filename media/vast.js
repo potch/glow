@@ -1,5 +1,4 @@
 function vast() {
-
     var exports = {};
 
     //This is the global precision of compounding calculations in vast.
@@ -21,7 +20,6 @@ function vast() {
             shim.innerHTML = '<div style="-webkit-transition:color 1s linear;-moz-transition:color 1s linear;"></div>';
             var test = document.body.style.webkitTransition !== undefined ||
                        document.body.style.MozTransition !== undefined;
-            delete shim;
             return test;
         })(),
         requestAnimationFrame: false //("mozRequestAnimationFrame" in window) ? "moz" : ("webkitRequestAnimationFrame" in window ? "webkit" : false)
@@ -231,6 +229,13 @@ function vast() {
         };
     })();
     GlobalClock.start();
+    $(window).blur(function() {
+        GLOBAL_CLOCK_INTERVAL = 500;
+    });
+
+    $(window).focus(function() {
+        GLOBAL_CLOCK_INTERVAL = 30;
+    });
 
 
     function CanvasGroup() {
@@ -276,14 +281,6 @@ function vast() {
         return _;
     }
 
-    $(window).blur(function() {
-        GLOBAL_CLOCK_INTERVAL = 1000;
-    });
-
-    $(window).focus(function() {
-        GLOBAL_CLOCK_INTERVAL = 30;
-    });
-
     var animate = exports.animate = {
         over: function(duration, tick, ctx, opts) {
             var prog;
@@ -319,10 +316,10 @@ function vast() {
         linear: function(n) {
             return safe(n);
         },
-        out: function(n) {
+        easeout: function(n) {
             return safe(Math.sin(n*PI_2));
         },
-        in: function(n) {
+        easein: function(n) {
             return safe(1-Math.cos(n*PI_2));
         },
         both: function(n) {
@@ -330,6 +327,18 @@ function vast() {
         }
     };
 
+
+    var debounce = exports.debounce = function(fn, ms, ctxt) {
+        var ctx = ctxt || window;
+        var to, del = ms, fun = fn;
+        return function () {
+            var args = arguments;
+            clearTimeout(to);
+            to = setTimeout(function() {
+                fun.apply(ctx, args);
+            }, del);
+        };
+    }
 
     /** 2d vector methods */
     function safe(n) {

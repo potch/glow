@@ -2,6 +2,7 @@
 <html>
   <head>
     <link rel="stylesheet" href="media/screen.css">
+    <meta charset="utf-8">
     <style>
       #map polygon {
           fill: url(#glow);
@@ -9,7 +10,7 @@
     </style>
   </head>
   <body>
-    <div id="countdown" class="glow stowed">
+    <div id="bigcounter" class="glow stowed">
     </div>
     <div id="app">
       <section id="ui">
@@ -38,160 +39,189 @@
         </div>
       </section>
     </div>
+    <div id="callout">
+    </div>
     <canvas id="c"></canvas>
     <svg>
       <defs>
-        <radialGradient gradientUnits="userSpaceOnUse" id="glow" fx="50%" fy="0">
-          <stop offset="0%" style="stop-color:#23497a; stop-opacity:1"/>
-          <stop offset="78%" style="stop-color:#011841; stop-opacity:1"/>
-        </linearGradient>
+        <radialGradient gradientUnits="userSpaceOnUse" id="glow" fx="50%" fy="0" cx="1800" cy="0" r="1800">
+          <stop offset="0%" style="stop-color:#23497a; stop-opacity:1"></stop>
+          <stop offset="78%" style="stop-color:#011841; stop-opacity:1"></stop>
+        </radialGradient>
       </defs>
     </svg>
     <script src="media/jquery.js"></script>
     <script src="media/vast.js"></script>
-    <script src="media/map.js"></script>
-    <script src="media/bars.js"></script>
     <script>
       var vast = vast();
     </script>
+    <script src="media/map.js"></script>
+    <script src="media/bars.js"></script>
+    <script src="data/init.js"></script>
+    <script src="http://jbalogh.khan.mozilla.org/l10n.js"></script>
     <script>
-      var qs = "?changed=" + (new Date()).getTime(),
-          view = 4, nv,
-          zoom = 0,
-          $out = $("#out"),
+      var $out = $("#out"),
           $mc = $("#map_container"),
-          loading = false,
-          panning = false,
           $map = $("#map");
 
+      glow.view = "map";
+      glow.map= {};
+      glow.data = {
+        bars: {},
+        map: {},
+        sector: {}
+      };
+
       $(function() {
-        var sx, sy,
-            cx, cy,
-            task = false;
+        initMap();
+        loadMap();
+      });
 
-        function posMap(x,y,z) {
-          // $out.text(x + ", " + y + ", " + z);
-          var pos = $map.position();
-          x = x || pos.left;
-          y = y || pos.top;
-          z = Math.min(Math.max((z+1) || (zoom+1), 1), 5)-1;
-          var z2 = z+1,
-              ox = $mc.width()/2,
-              oy = $mc.height()/2,
-              scale = (1 << (z >>> 0)) / (1 << (zoom >>> 0)),
-              wid = $map.width()*z2 - ox*2,
-              hgt = $map.height()*z2 - oy*2;
-          if (x != pos.left || y != pos.top || z != zoom) {
-            x = Math.max(Math.min(0, (x-ox)*scale+ox),-wid);
-            y = Math.max(Math.min(0, (y-oy)*scale+oy),-hgt);
-            zoom = z;
-            nv = Math.max(Math.min(z,4),2);
+      function loadMap() {
+        $.get("./maps/world_4.svg", function(resp) {
+          if (vast.capabilities.inlineSVG) {
+            $("#mapdata").empty().html(resp);
           } else {
-            nv = view;
+            $("#mapdata").empty().append('<iframe width="3600" height"1800" src="maps/world_2.svg"></iframe>');
           }
-          $map.css({
-            left: x + "px",
-            top: y + "px",
-            '-moz-transform': 'scale('+(1 << (zoom >>> 0)) + ')',
+          $("#mapdata").css({
+            "-moz-transform": "scale(" + $mc.width()/3600 + ")",
+            "-webkit-transform-origin": "0 0",
+            "-webkit-transform": "scale(" + $mc.width()/3600 + ")"
           });
-          if (nv != view) loadUp(nv);
-        }
+          initData();
+        }, "text");
+      }
 
-        $(window).keydown(function(e) {
-          if (e.which == 61) {
-            zoomMap(zoom+1);
-          }
-          if (e.which == 109) {
-            zoomMap(zoom-1);
-          }
+      function processData(type) {
+        return function(r) {
+          glow.data[type].next = r;
+        };
+      }
+
+      function initData() {
+        $.getJSON("data/" + glow.time + "/map.json", function(r) {
+          processData("map")(r);
+          glow.map.playNext();
         });
-
-        function zoomMap(z) {
-          posMap(false,false,z);
-        }
-
-        function loadUp(s) {
-            s=4;
-            if (loading) {
-              task.abort();
-            }
-            loading = true;
-            task = $.get("./maps/world_"+s+".svg", function(resp) {
-              if (vast.capabilities.inlineSVG) {
-                $("#mapdata").empty().append($(resp).find("svg"));
-              } else {
-                $("#mapdata").empty().append('<embed type="image/svg+xml" src="maps/world_' + s + '.svg">');
-              }
-              $("#mapdata").css({
-                "-moz-transform": "scale(" + $mc.width()/3600 + ")",
-              });
-              view = s;
-              posMap();
-              loading = false;
-            });
-        }
-
-        $mc.mousedown(function(e) {
-          cx = e.clientX;
-          cy = e.clientY;
-          sx = parseInt($map.css("left"));
-          sy = parseInt($map.css("top"));
-          panning = true;
-          vast.GlobalClock.pause();
-          $map.css("-moz-transition","none");
-          e.preventDefault();
-        }).bind("mouseup", function(e) {
-          panning = false;
-          vast.GlobalClock.resume();
-          $map.css("-moz-transition","");
-        }).mousemove(function(e) {
-          if (panning) {
-            var newx = sx - (cx - e.clientX),
-                newy = sy - (cy - e.clientY);
-            posMap(newx, newy);
-          }
-        })/*.bind("DOMMouseScroll", function(e) {
-          var evt = e.originalEvent,
-              amount = evt.detail ? evt.detail * -1 : evt.wheelDelta / 40,
-              oldzoom = zoom;
-          if (amount > 1) {
-            zoomMap(zoom+1);
-          }
-          if (amount < -1) {
-            zoomMap(zoom-1);
-          }
-          posMap();
-        });*/
-        $(window).bind("mouseup", function(e) {
-          panning = false;
-        });
-        loadUp(view);
-      })
+      }
+    </script>
+    <script>
+      // var qs = "?changed=" + (new Date()).getTime(),
+      //     view = 4, nv,
+      //     zoom = 0,
+      //     $out = $("#out"),
+      //     $mc = $("#map_container"),
+      //     loading = false,
+      //     panning = false,
+      //     $map = $("#map");
+      // 
+      // $(function() {
+      //   var sx, sy,
+      //       cx, cy,
+      //       task = false;
+      // 
+      //   function posMap(x,y,z) {
+      //     var pos = $map.position();
+      //     x = x || pos.left;
+      //     y = y || pos.top;
+      //     z = Math.min(Math.max((z+1) || (zoom+1), 1), 5)-1;
+      //     var z2 = z+1,
+      //         ox = $mc.width()/2,
+      //         oy = $mc.height()/2,
+      //         scale = (1 << (z >>> 0)) / (1 << (zoom >>> 0)),
+      //         wid = $map.width()*z2 - ox*2,
+      //         hgt = $map.height()*z2 - oy*2;
+      //     if (x != pos.left || y != pos.top || z != zoom) {
+      //       x = Math.max(Math.min(0, (x-ox)*scale+ox),-wid);
+      //       y = Math.max(Math.min(0, (y-oy)*scale+oy),-hgt);
+      //       zoom = z;
+      //       nv = Math.max(Math.min(z,4),2);
+      //     } else {
+      //       nv = view;
+      //     }
+      //     $map.css({
+      //       left: x + "px",
+      //       top: y + "px",
+      //       '-moz-transform': 'scale('+(1 << (zoom >>> 0)) + ')',
+      //     });
+      //     if (nv != view) loadUp(nv);
+      //   }
+      // 
+      //   $(window).keydown(function(e) {
+      //     if (e.which == 61) {
+      //       zoomMap(zoom+1);
+      //     }
+      //     if (e.which == 109) {
+      //       zoomMap(zoom-1);
+      //     }
+      //   });
+      // 
+      //   function zoomMap(z) {
+      //     posMap(false,false,z);
+      //   }
+      // 
+      //   function loadUp(s) {
+      //       s=2;
+      //       if (loading) {
+      //         task.abort();
+      //       }
+      //       loading = true;
+      //       task = $.get("./maps/world_"+s+".svg", function(resp) {
+      //         if (vast.capabilities.inlineSVG || true) {
+      //           $("#mapdata").empty().html(resp);
+      //         } else {
+      //           $("#mapdata").empty().append('<iframe width="3600" height"1800" src="maps/world_' + s + '.svg"></iframe>');
+      //         }
+      //         $("#mapdata").css({
+      //           "-moz-transform": "scale(" + $mc.width()/3600 + ")",
+      //           "-webkit-transform-origin": "0 0",
+      //           "-webkit-transform": "scale(" + $mc.width()/3600 + ")"
+      //         });
+      //         view = s;
+      //         posMap();
+      //         loading = false;
+      //       }, "text");
+      //   }
+      // 
+      //   $mc.mousedown(function(e) {
+      //     cx = e.clientX;
+      //     cy = e.clientY;
+      //     sx = parseInt($map.css("left"));
+      //     sy = parseInt($map.css("top"));
+      //     panning = true;
+      //     // vast.GlobalClock.pause();
+      //     $map.css("-moz-transition","none");
+      //     e.preventDefault();
+      //   }).bind("mouseup", function(e) {
+      //     panning = false;
+      //     // vast.GlobalClock.resume();
+      //     $map.css("-moz-transition","");
+      //   }).mousemove(function(e) {
+      //     if (panning) {
+      //       var newx = sx - (cx - e.clientX),
+      //           newy = sy - (cy - e.clientY);
+      //       posMap(newx, newy);
+      //     }
+      //   });
+      //   $(window).bind("mouseup", function(e) {
+      //     panning = false;
+      //   });
+      //   loadUp(view);
+      // })
     </script>
     <script>    
       $(function() {
         var launchDate = (new Date(2011,2,15,10,0)).getTime(),
             diff, soon, os,
             l,s,m,h,d,n,n2,
-            $el = $("#countdown");
-
+            $el = $("#bigcounter");
+      
         var num = 0;
-        function commas(n) {
-          var s = n.toString().split('');
-          for (i = s.length-3; i > 0; i-=3) {
-            s.splice(i, 0, ',');
-          }
-          return s.join('');
-        }
         vast.animate.over(60000, function(i) {
-          $el.text(commas(~~(i*3294)+252314442));
+          $el.text(numberfmt(~~(i*3294)+252314442));
         }, this);
-        // vast.GlobalClock.register(tick, this);
-        // setTimeout(function() {
-          $("#countdown").addClass("stowed");
-          $("#app").css("opacity", 1);
-        // }, 0);
-      })
+      });
     </script>
   </body>
 </html>

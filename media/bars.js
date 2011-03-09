@@ -10,7 +10,7 @@ $(function () {
             b = d[i];
             m = "00" + b[0][4];
             v = (b[1] - d[i-1][1]);
-            $c = $("<div class='col'><span>" + b[0][3] + ":" + m.substr(-2) + "</span><div data-val=" + v + " class='bar'></div></div>");
+            $c = $("<div class='col'><div data-time='" + (b[0][3] + ":" + m.substr(-2)) + "' data-val=" + v + " class='bar'></div></div>");
             $bars.append($c);
             max = Math.max(v, max);
         }

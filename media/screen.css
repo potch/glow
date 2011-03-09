@@ -121,9 +121,9 @@ body, html {
   -moz-transition-duration: .2s;
   -moz-transition-property: -moz-transform, top, left;
   -moz-transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
   background-image: -moz-radial-gradient(center -5% 45deg, #badfef, #4b94d0 20%, #2e70b4 30%, #002a77 60%);
-}
-#map svg {
+  background-image: -webkit-gradient(radial, 50% -5%, 1, 50% -5%, 1800, from(#badfef), color-stop(20%, #4b94d0), color-stop(30%, #2e70b4), color-stop(60%, #002a77));
 }
 #pings {
     position: absolute;
@@ -132,26 +132,21 @@ body, html {
     width: 3600px;
     height: 1800px;
 }
-.ping {
-    position: absolute;
-    pointer-events: none;
-    width: 1px;
-    height: 1px;
-    background: #fff;
-    border: 0;
-}
-/*.ping.born {
-    opacity: 1;
-}
-*/#mapdata {
+#mapdata {
     -moz-transform-origin: 0 0;
     width:3600px;
     height:1800px;
 }
-embed {
+#mapdata embed {
   width: 3600px;
   height: 1800px;
   pointer-events: none;
+}
+#mapdata iframe {
+    width: 3600px;
+    height: 1800px;
+    overflow: hidden;
+    pointer-events: none;
 }
 polygon {
   fill: #031841;
@@ -214,7 +209,7 @@ polygon {
     width: 40px;
     height: 130px;
     margin: 0 10px;
-/*    padding: 0 10px;*/
+/*    padding: 0 1g0px;*/
 }
 .bars .bar {
     position: absolute;
@@ -247,7 +242,7 @@ polygon {
   color: white;
   z-index: 100;
 }
-#countdown {
+#bigcounter {
   color: #fff;
   font-size: 100px;
   border-radius: 10px;
@@ -267,7 +262,7 @@ polygon {
 /*  display: none;*/
   z-index: 9000;
 }
-#countdown.stowed {
+#bigcounter.stowed {
   margin: 0;
   top: 13px;
   right: 10px;
@@ -312,7 +307,7 @@ polygon {
   vertical-align: top;
   display: inline-block;
 }
-#countdown.flash {
+#bigcounter.flash {
   border-color: #e22;
   -moz-box-shadow:
     4px 0 18px rgba(128,0,0,.1),
@@ -322,7 +317,7 @@ polygon {
     inset 0 0 20px rgba(128,0,0,.4);
 }
 #app {
-  opacity: 0;
+/*  opacity: 0;*/
 /*  -moz-transition: opacity 1s linear;
   -webkit-transition: opacity 1s linear;
 */}

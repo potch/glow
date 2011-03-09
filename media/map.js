@@ -50,7 +50,7 @@ function initMap() {
         vast.animate.over(response.interval*1000,drawPings,this,{after: glow.map.playNext});
         dbg("waiting " + response.interval * 500 + " to fetch " + response.next);
         setTimeout(function() {
-            $.getJSON("data/" + response.next, function(r) {
+            $.getJSON("data/json/" + response.next, function(r) {
                 dbg(response.next + " fetched successfully");
                 glow.data.map.next = r;
             });

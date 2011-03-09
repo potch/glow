@@ -102,7 +102,7 @@
       }
 
       function initData() {
-        $.getJSON("data/" + glow.time + "/map.json", function(r) {
+        $.getJSON("data/json/" + glow.time + "/map.json", function(r) {
           processData("map")(r);
           glow.map.playNext();
         });

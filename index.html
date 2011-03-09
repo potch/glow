@@ -57,7 +57,7 @@
     </script>
     <script src="media/map.js"></script>
     <script src="media/bars.js"></script>
-    <script src="data/init.js"></script>
+    <script src="dynamo/"></script>
     <script src="l10n.js"></script>
     <script>
       var $out = $("#out"),
@@ -117,12 +117,12 @@
       //     loading = false,
       //     panning = false,
       //     $map = $("#map");
-      // 
+      //
       // $(function() {
       //   var sx, sy,
       //       cx, cy,
       //       task = false;
-      // 
+      //
       //   function posMap(x,y,z) {
       //     var pos = $map.position();
       //     x = x || pos.left;
@@ -149,7 +149,7 @@
       //     });
       //     if (nv != view) loadUp(nv);
       //   }
-      // 
+      //
       //   $(window).keydown(function(e) {
       //     if (e.which == 61) {
       //       zoomMap(zoom+1);
@@ -158,11 +158,11 @@
       //       zoomMap(zoom-1);
       //     }
       //   });
-      // 
+      //
       //   function zoomMap(z) {
       //     posMap(false,false,z);
       //   }
-      // 
+      //
       //   function loadUp(s) {
       //       s=2;
       //       if (loading) {
@@ -185,7 +185,7 @@
       //         loading = false;
       //       }, "text");
       //   }
-      // 
+      //
       //   $mc.mousedown(function(e) {
       //     cx = e.clientX;
       //     cy = e.clientY;
@@ -212,13 +212,13 @@
       //   loadUp(view);
       // })
     </script>
-    <script>    
+    <script>
       $(function() {
         var launchDate = (new Date(2011,2,15,10,0)).getTime(),
             diff, soon, os,
             l,s,m,h,d,n,n2,
             $el = $("#bigcounter");
-      
+
         var num = 0;
         vast.animate.over(60000, function(i) {
           $el.text(numberfmt(~~(i*3294)+252314442));

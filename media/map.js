@@ -48,10 +48,10 @@ function initMap() {
             $("#out").text(pings.length);
         }
         vast.animate.over(response.interval*1000,drawPings,this,{after: glow.map.playNext});
-        console.log("waiting " + response.interval * 500 + " to fetch " + response.next);
+        dbg("waiting " + response.interval * 500 + " to fetch " + response.next);
         setTimeout(function() {
             $.getJSON("data/" + response.next, function(r) {
-                console.log(response.next + " fetched successfully");
+                dbg(response.next + " fetched successfully");
                 glow.data.map.next = r;
             });
         }, response.interval * 500);
@@ -81,13 +81,14 @@ function initMap() {
                 p[0] = t;
             }
             l = (t-p[0])/1000;
-            ctx.beginPath();
-            ctx.fillStyle = "rgba(255,255,255," + (1-l) + ")";
-            ctx.arc(p[2],p[1],5*l,0,Math.PI*2,true);
-            ctx.fill();
             if (l > 1) {
                 p[0] = -1;
                 pool.push(i);
+            } else {
+                ctx.beginPath();
+                ctx.fillStyle = "rgba(255,255,255," + (1-l) + ")";
+                ctx.arc(p[2],p[1],5*l,0,Math.PI*2,true);
+                ctx.fill();
             }
         }
     }

@@ -58,11 +58,13 @@
     <script src="media/map.js"></script>
     <script src="media/bars.js"></script>
     <script src="data/init.js"></script>
-    <script src="http://jbalogh.khan.mozilla.org/l10n.js"></script>
+    <script src="l10n.js"></script>
     <script>
       var $out = $("#out"),
           $mc = $("#map_container"),
           $map = $("#map");
+
+      var dbg = ("console" in window) ? window.console.log : function() {};
 
       glow.view = "map";
       glow.map= {};

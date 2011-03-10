@@ -55,7 +55,7 @@
     </script>
     <script src="media/map.js"></script>
     <script src="media/bars.js"></script>
-    <script src="data/init.js"></script>
+    <script src="dynamo/"></script>
     <script src="l10n.js"></script>
     <script>
       var $out = $("#out"),
@@ -105,112 +105,6 @@
           glow.map.playNext();
         });
       }
-    </script>
-    <script>
-      // var qs = "?changed=" + (new Date()).getTime(),
-      //     view = 4, nv,
-      //     zoom = 0,
-      //     $out = $("#out"),
-      //     $mc = $("#map_container"),
-      //     loading = false,
-      //     panning = false,
-      //     $map = $("#map");
-      //
-      // $(function() {
-      //   var sx, sy,
-      //       cx, cy,
-      //       task = false;
-      //
-      //   function posMap(x,y,z) {
-      //     var pos = $map.position();
-      //     x = x || pos.left;
-      //     y = y || pos.top;
-      //     z = Math.min(Math.max((z+1) || (zoom+1), 1), 5)-1;
-      //     var z2 = z+1,
-      //         ox = $mc.width()/2,
-      //         oy = $mc.height()/2,
-      //         scale = (1 << (z >>> 0)) / (1 << (zoom >>> 0)),
-      //         wid = $map.width()*z2 - ox*2,
-      //         hgt = $map.height()*z2 - oy*2;
-      //     if (x != pos.left || y != pos.top || z != zoom) {
-      //       x = Math.max(Math.min(0, (x-ox)*scale+ox),-wid);
-      //       y = Math.max(Math.min(0, (y-oy)*scale+oy),-hgt);
-      //       zoom = z;
-      //       nv = Math.max(Math.min(z,4),2);
-      //     } else {
-      //       nv = view;
-      //     }
-      //     $map.css({
-      //       left: x + "px",
-      //       top: y + "px",
-      //       '-moz-transform': 'scale('+(1 << (zoom >>> 0)) + ')',
-      //     });
-      //     if (nv != view) loadUp(nv);
-      //   }
-      //
-      //   $(window).keydown(function(e) {
-      //     if (e.which == 61) {
-      //       zoomMap(zoom+1);
-      //     }
-      //     if (e.which == 109) {
-      //       zoomMap(zoom-1);
-      //     }
-      //   });
-      //
-      //   function zoomMap(z) {
-      //     posMap(false,false,z);
-      //   }
-      //
-      //   function loadUp(s) {
-      //       s=2;
-      //       if (loading) {
-      //         task.abort();
-      //       }
-      //       loading = true;
-      //       task = $.get("./maps/world_"+s+".svg", function(resp) {
-      //         if (vast.capabilities.inlineSVG || true) {
-      //           $("#mapdata").empty().html(resp);
-      //         } else {
-      //           $("#mapdata").empty().append('<iframe width="3600" height"1800" src="maps/world_' + s + '.svg"></iframe>');
-      //         }
-      //         $("#mapdata").css({
-      //           "-moz-transform": "scale(" + $mc.width()/3600 + ")",
-      //           "-webkit-transform-origin": "0 0",
-      //           "-webkit-transform": "scale(" + $mc.width()/3600 + ")"
-      //         });
-      //         view = s;
-      //         posMap();
-      //         loading = false;
-      //       }, "text");
-      //   }
-      //
-      //   $mc.mousedown(function(e) {
-      //     cx = e.clientX;
-      //     cy = e.clientY;
-      //     sx = parseInt($map.css("left"));
-      //     sy = parseInt($map.css("top"));
-      //     panning = true;
-      //     // vast.GlobalClock.pause();
-      //     $map.css("-moz-transition","none");
-      //     e.preventDefault();
-      //   }).bind("mouseup", function(e) {
-      //     panning = false;
-      //     // vast.GlobalClock.resume();
-      //     $map.css("-moz-transition","");
-      //   }).mousemove(function(e) {
-      //     if (panning) {
-      //       var newx = sx - (cx - e.clientX),
-      //           newy = sy - (cy - e.clientY);
-      //       posMap(newx, newy);
-      //     }
-      //   });
-      //   $(window).bind("mouseup", function(e) {
-      //     panning = false;
-      //   });
-      //   loadUp(view);
-      // })
-    </script>
-    <script>
       $(function() {
         var launchDate = (new Date(2011,2,15,10,0)).getTime(),
             diff, soon, os,

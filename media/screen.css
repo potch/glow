@@ -152,21 +152,13 @@ polygon {
 
 .glow {
   box-shadow:
-    4px 0 18px rgba(240,240,255,.1),
-    -4px 0 18px rgba(240,240,255,.1),
-    0 4px 18px rgba(240,240,255,.1),
-    0 -4px 18px rgba(240,240,255,.1),
+    0 0 18px 4px rgba(240,240,255,.1),
     inset 0 0 20px rgba(240,240,255,.4);
   -webkit-box-shadow:
-    4px 0 18px rgba(240,240,255,.1),
-    -4px 0 18px rgba(240,240,255,.1),
-    0 4px 18px rgba(240,240,255,.1),
-    0 -4px 18px rgba(240,240,255,.1),
+    0 0 18px 4px rgba(240,240,255,.1),
+    inset 0 0 20px rgba(240,240,255,.4);
   -moz-box-shadow:
-    4px 0 18px rgba(240,240,255,.1),
-    -4px 0 18px rgba(240,240,255,.1),
-    0 4px 18px rgba(240,240,255,.1),
-    0 -4px 18px rgba(240,240,255,.1),
+    0 0 18px 4px rgba(240,240,255,.1),
     inset 0 0 20px rgba(240,240,255,.4);
   border: 2px solid #fff;
 }

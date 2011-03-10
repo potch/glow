@@ -55,6 +55,7 @@
     </script>
     <script src="media/map.js"></script>
     <script src="media/bars.js"></script>
+    <script src="media/counter.js"></script>
     <script src="dynamo/"></script>
     <script src="data/init.js"></script>
     <script src="l10n.js"></script>
@@ -70,10 +71,12 @@
       glow.data = {
         bars: {},
         map: {},
-        sector: {}
+        sector: {},
+        counter: {}
       };
 
       $(function() {
+        initCounter();
         initMap();
         loadMap();
       });
@@ -107,17 +110,16 @@
           processData("map")(r);
           glow.map.playNext();
         });
+        $.getJSON("data/json/" + glow.time + "/count.json", function(r) {
+          processData("counter")(r);
+          glow.counter.playNext();
+        });
       }
       $(function() {
         var launchDate = (new Date(2011,2,15,10,0)).getTime(),
             diff, soon, os,
             l,s,m,h,d,n,n2,
             $el = $("#bigcounter");
-
-        var num = 0;
-        vast.animate.over(60000, function(i) {
-          $el.text(numberfmt(~~(i*3294)+252314442));
-        }, this);
       });
     </script>
   </body>

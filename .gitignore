@@ -1,4 +1,5 @@
 *.pyc
-.DS_STORE
+.DS_Store
+*.psd
 *.swp
 data

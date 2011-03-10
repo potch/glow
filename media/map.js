@@ -14,11 +14,13 @@ function initMap() {
     ctx.fillStyle = "#fff";
 
     function addPing(x,y) {
-        x = ~~((-x+90)*10*scale);
-        y = ~~((y+180)*10*scale);
+        x = ~~((-parseFloat(x)+90)*10*scale);
+        y = ~~((parseFloat(y)+180)*10*scale);
         if (pool.length) {
             n = pool.shift();
-            pings[n] = [0, x, y];
+            pings[n][0] = 0;
+            pings[n][1] = x;
+            pings[n][2] = y;
         } else {
             row = [0, x, y];
             pings.push(row);
@@ -45,7 +47,6 @@ function initMap() {
                 }
                 addPing(row[1],row[0]);
             }
-            $("#out").text(pings.length);
         }
         vast.animate.over(response.interval*1000,drawPings,this,{after: glow.map.playNext});
         dbg("waiting " + response.interval * 500 + " to fetch " + response.next);

@@ -55,7 +55,7 @@
     </script>
     <script src="media/map.js"></script>
     <script src="media/bars.js"></script>
-    <script src="dynamo/"></script>
+    <script src="data/init.js"></script>
     <script src="l10n.js"></script>
     <script>
       var $out = $("#out"),
@@ -82,7 +82,7 @@
           if (vast.capabilities.inlineSVG) {
             $("#mapdata").empty().html(resp);
           } else {
-            $("#mapdata").empty().append('<iframe width="3600" height"1800" src="maps/world_2.svg"></iframe>');
+            $("#mapdata").empty().append('<img width="3600" height"1800" src="maps/world_4.png">');
           }
           $("#mapdata").css({
             "-moz-transform": "scale(" + $mc.width()/3600 + ")",

@@ -6,7 +6,6 @@ var GAP = 2 * RAD;
 $.fn.arcChart = function(opts) {
     opts = $.extend({
         data: [],
-        colors: ["#38d", "#e66", "#4f6", "pink", "olive", "purple", "blue"],
         maxDrawDepth: 4,
         draw: true
     }, opts);
@@ -15,7 +14,6 @@ $.fn.arcChart = function(opts) {
         contextStack = [],
         currentContext = false,
         oldParent = false,
-        numColors= opts.colors.length,
         clickMap = [],
         cx, cy;
     
@@ -46,7 +44,7 @@ $.fn.arcChart = function(opts) {
             x, y, a, r,
             p, label, tgt;
         $canvas.mousemove(function(e) {
-            pos = $canvas.position();
+            pos = $canvas.offset();
             x = -(e.clientX - pos.left - cx);
             y = e.clientY - pos.top - cy;
             a = Math.atan2(x,y)+Math.PI;
@@ -76,14 +74,14 @@ $.fn.arcChart = function(opts) {
             $tip.hide();
         });
         $canvas.click(function(e) {
-            pos = $canvas.position();
+            pos = $canvas.offset();
             x = -(e.clientX - pos.left - cx);
             y = e.clientY - pos.top - cy;
             a = Math.atan2(x,y)+Math.PI;
             r = Math.sqrt(x*x + y*y);
             tgt = false;
             if (a < 0) a += Math.PI * 2;
-            if (r < 50) {
+            if (r < 80) {
                 currentContext = contextStack.pop();
                 $canvas.redraw();
             } else {
@@ -156,7 +154,7 @@ $.fn.arcChart = function(opts) {
     $("body").append($tip);
     $tip.css({
         "position": "absolute",
-        // "display": "none",
+        "display": "none",
         "width": "200px",
         "height": "20px",
         "left": "0",

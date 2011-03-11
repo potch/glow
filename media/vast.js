@@ -1,4 +1,4 @@
-function vast() {
+function Vast() {
     window.dbg = function () {
         if ("console" in window) {
             console.log(arguments);
@@ -74,7 +74,7 @@ function vast() {
 
                 // The method only need to be bound temporarily, so we
                 // remove it when we're done executing
-                var ret = fn.apply(this, arguments);       
+                var ret = fn.apply(this, arguments);
                 this._super = tmp;
 
                 return ret;
@@ -214,7 +214,7 @@ function vast() {
                 ns = ns || '_'
                 o = {fn: fn,
                      ctx: ctx,
-                     ns: ns || '_', 
+                     ns: ns || '_',
                      i: clock.now()};
             queue[i] = o;
             if (!(ns in groups)) {
@@ -421,3 +421,5 @@ function vast() {
 
     return exports;
 }
+
+var vast = Vast();

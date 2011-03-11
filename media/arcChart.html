@@ -32,7 +32,7 @@
         var vast = vast();
         var ac;
         $(document).ready(function() {
-          $.getJSON("/data/json/2011/03/09/17/33/daisy.json", function(r) {
+          $.getJSON("../data/json/2011/03/09/17/33/daisy.json", function(r) {
             ac = $("#c").arcChart({data: r.data});
           });
           

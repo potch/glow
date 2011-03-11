@@ -15,13 +15,17 @@ $.fn.arcChart = function(opts) {
         currentContext = false,
         oldParent = false,
         clickMap = [],
-        cx, cy;
+        cx, cy,
+        animation = false;
     
-    this.redraw = function(sz, o) {
+    this.redraw = function(o) {
         o = $.extend({
+            sz: 2 * PI,
             sa: 0,
             innerRad: 50,
-            radStep: 30
+            radStep: 30,
+            hue: currentContext[3],
+            hueSpan: currentContext[4]
         }, o);
         ctx.clearRect(0,0,$canvas.width(),$canvas.height());
         cx = $canvas.width()/2;
@@ -31,7 +35,8 @@ $.fn.arcChart = function(opts) {
         ctx.rotate(-PI_2);
         ctx.fillRect(0,0,1,1);
         ctx.rotate(o.sa);
-        drawChildren(currentContext || opts.data[2], 1, sz||2*PI, o);
+        var data = currentContext.length ? currentContext[2][2] : opts.data[2];
+        drawChildren(data, 1, o.sz, o);
         ctx.restore();
     }
     
@@ -44,6 +49,7 @@ $.fn.arcChart = function(opts) {
             x, y, a, r,
             p, label, tgt;
         $canvas.mousemove(function(e) {
+            if (this.animation) return;
             pos = $canvas.offset();
             x = -(e.clientX - pos.left - cx);
             y = e.clientY - pos.top - cy;
@@ -71,9 +77,11 @@ $.fn.arcChart = function(opts) {
             });
         });
         $canvas.mouseout(function(e) {
+            if (this.animation) return;
             $tip.hide();
         });
         $canvas.click(function(e) {
+            if (this.animation) return;
             pos = $canvas.offset();
             x = -(e.clientX - pos.left - cx);
             y = e.clientY - pos.top - cy;
@@ -81,32 +89,61 @@ $.fn.arcChart = function(opts) {
             r = Math.sqrt(x*x + y*y);
             tgt = false;
             if (a < 0) a += Math.PI * 2;
-            if (r < 80) {
-                currentContext = contextStack.pop();
-                $canvas.redraw();
-            } else {
+            if (r < 80 && contextStack.length) {
+                span = (currentContext[1]-currentContext[0]);
+                animation = vast.animate.over(
+                    500,
+                    function(i) {
+                        var a = currentContext[0] * vast.ease.easeout(i);
+                        var s = (2 * Math.PI - span) * (1-vast.ease.easeout(i)) + span;
+                        ac.redraw({sa: a, sz: s});
+                    },
+                    this,
+                    {after: function() {
+                        animation = false;
+                        currentContext = contextStack.pop() || false;
+                        $canvas.redraw();
+                    }}
+                );
+            } else if (r < 200 && r > 80) {
                 for (var i=0; i<clickMap.length; i++) {
                     p = clickMap[i];
                     if (a > p[0] && a < p[1]) {
-                        tgt = p[2][2];
+                        tgt = p;
                     }
                 }
-                if (tgt) {
+                if (tgt && tgt[2][2]) {
                     contextStack.push(currentContext);
                     currentContext = tgt;
-                    $canvas.redraw();
+                    span = (tgt[1]-tgt[0]);
+                    animation = vast.animate.over(
+                        500,
+                        function(i) {
+                            var a = tgt[0] * (1-vast.ease.easeout(i));
+                            var s = (2 * Math.PI - span) * vast.ease.easeout(i) + span;
+                            ac.redraw({sa: a, sz: s});
+                        },
+                        this,
+                        {after: function() {
+                            animation = false;
+                            $canvas.redraw();
+                        }}
+                    );
                 }
             }
         });
     })();
-    
+
     function drawChildren(pts, depth, arcSize, o) {
         if (depth > opts.maxDrawDepth) return;
         var len = pts.length,
             segmentArc,
             total = o.total,
             other = 0,
-            arcOffset = o.sa;
+            baseHue = o.hue || 0,
+            hueSpan = o.hueSpan,
+            arcOffset = o.sa,
+            cutoff = animation ? .1 : .01;
         if (!o.total) {
             total=0;
             for (var i=0; i<len; i++) {
@@ -116,31 +153,28 @@ $.fn.arcChart = function(opts) {
         if (depth == 1) {
             clickMap = [];
         }
+        hueSpan = 1/len * ((o.hueSpan/2) || 360);
         var innerRad = depth * o.radStep + o.innerRad,
             outerRad = innerRad + o.radStep,
             p, hue;
         ctx.save();
         for (var i=0; i<len; i++) {
             p = pts[i];            
-            if (depth == 1) {
-                hue = ~~(i/len * 360);
-            } else {
-                hue = o.hue;
-            }
-            ctx.fillStyle = "hsl(" + hue + ", 100%, " + (40 + depth*10) + "%)";
             if (!p._pct) p._pct = p[1] / total;
             segmentArc = p._pct * arcSize;
-            if (p._pct >= .01 || depth == 1) {
+            if (p._pct >= cutoff || depth == 1) {
+                hue = baseHue + i*hueSpan;
+                ctx.fillStyle = "hsl(" + ~~hue + ", 100%, " + (40 + depth*10) + "%)";
                 ctx.beginPath();
                 ctx.arc(0,0,outerRad, 0, segmentArc, false);
                 ctx.arc(0,0,innerRad, segmentArc, 0, true);
                 ctx.lineTo(outerRad, 0);
                 ctx.fill();
                 if (depth == 1) {
-                    clickMap.push([arcOffset, arcOffset + segmentArc, p]);
+                    clickMap.push([arcOffset, arcOffset + segmentArc, p, hue, hueSpan]);
                 }
                 if (p._pct > .05) {
-                    if (p[2]) drawChildren(p[2], depth+1, segmentArc, $.extend(o, {total: p[1], hue: hue}));
+                    if (p[2]) drawChildren(p[2], depth+1, segmentArc, $.extend(o, {total: p[1], hue: hue, hueSpan: hueSpan}));
                 }
             }
             // ctx.stroke();

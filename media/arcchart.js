@@ -179,7 +179,7 @@ $.fn.arcChart = function(opts) {
             segmentArc = p._pct * arcSize;
             if (p._pct >= cutoff || depth == 1) {
                 hue = baseHue + i*hueSpan;
-                ctx.fillStyle = "hsl(" + ~~hue + ", 100%, " + (40 + depth*10) + "%)";
+                ctx.fillStyle = "hsl(" + ~~hue + ", 95%, " + (50 + depth*10) + "%)";
                 ctx.beginPath();
                 ctx.arc(0,0,outerRad, 0, segmentArc, false);
                 ctx.arc(0,0,innerRad, segmentArc, 0, true);

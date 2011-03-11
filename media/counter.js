@@ -23,5 +23,7 @@ function initCounter() {
                 glow.data.counter.next = r;
             });
         }, response.interval * 500);
+
+        glow.bar.playNext();
     };
 }

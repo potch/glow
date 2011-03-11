@@ -248,6 +248,10 @@ polygon {
   color: white;
   z-index: 100;
 }
+.rtl .masthead {
+  left: 0;
+  right: -1%;
+}
 #bigcounter {
   color: #fff;
   font-size: 100px;
@@ -278,6 +282,10 @@ polygon {
   font-size: 64px;
   line-height: 55px;
 }
+.rtl #bigcounter.stowed {
+  right: 0;
+  left: 10px;
+}
 #wordmark {
   position: absolute;
   left: 30px;
@@ -286,11 +294,18 @@ polygon {
                5px 0 14px rgba(240,240,255,.5);
   color: rgba(255,255,255,.95);
 }
+.rtl #wordmark {
+  right: 30px;
+  left: 0;
+}
 #wordmark h2 {
   font-size: 16px;
   line-height: 16px;
   padding-left: 2px;
   margin: 0;
+}
+.rtl #wordmark h2 {
+  padding-right: 126px;
 }
 #wordmark h1 {
   font-size: 45px;
@@ -301,6 +316,8 @@ polygon {
   font-size: 80px;
   float: right;
   margin: -16px 0 0;
+}
+.rtl #wordmark b {
 }
 #wordmark small {
   font-size: 8px;

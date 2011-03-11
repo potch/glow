@@ -12,6 +12,7 @@ $.fn.arcChart = function(opts) {
     var $canvas = this,
         ctx = $canvas[0].getContext('2d'),
         contextStack = [],
+        scaleFactor = 1,
         currentContext = false,
         oldParent = false,
         clickMap = [],
@@ -28,10 +29,15 @@ $.fn.arcChart = function(opts) {
             hueSpan: currentContext[4]
         }, o);
         ctx.clearRect(0,0,$canvas.width(),$canvas.height());
+        $canvas[0].width = $canvas.width();
+        $canvas[0].height = $canvas.height();
         cx = $canvas.width()/2;
         cy = $canvas.height()/2;
+        scaleFactor = Math.min(cx,cy) / 280;
+        if (!animation) dbg(scaleFactor);
         ctx.save();
         ctx.translate(cx, cy);
+        ctx.scale(scaleFactor, scaleFactor);
         ctx.rotate(-PI_2);
         ctx.fillRect(0,0,1,1);
         ctx.rotate(o.sa);
@@ -66,7 +72,7 @@ $.fn.arcChart = function(opts) {
             if (currentlabel != label) {
                 $tiptext.text(label);
             }
-            if (r < 80 || r > 200) {
+            if (r < 80 * scaleFactor || r > 200 * scaleFactor) {
                 $tip.hide();
             } else {
                 $tip.show();
@@ -89,7 +95,7 @@ $.fn.arcChart = function(opts) {
             r = Math.sqrt(x*x + y*y);
             tgt = false;
             if (a < 0) a += Math.PI * 2;
-            if (r < 80 && contextStack.length) {
+            if (r < 80 * scaleFactor && contextStack.length) {
                 span = (currentContext[1]-currentContext[0]);
                 animation = vast.animate.over(
                     500,
@@ -108,7 +114,7 @@ $.fn.arcChart = function(opts) {
                         $canvas.redraw();
                     }}
                 );
-            } else if (r < 200 && r > 80) {
+            } else if (r < 200 * scaleFactor && r > 80 * scaleFactor) {
                 for (var i=0; i<clickMap.length; i++) {
                     p = clickMap[i];
                     if (a > p[0] && a < p[1]) {

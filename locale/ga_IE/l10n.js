@@ -22,9 +22,7 @@ var timefmt = function(d) {
   var rv = [], hour = d.getHours(), minute = d.getMinutes(), num, fmt;
   for (var i = 0, ii = _timefmt.length; i < ii; i++) {
     fmt = _timefmt[i];
-    if (fmt == "a") {
-        rv.push(gettext(hour < 12 ? "AM" : "PM"));
-    } else if (fmt == "h" || fmt == "H" || fmt == "m") {
+    if (fmt == "h" || fmt == "H" || fmt == "m") {
       if (fmt == "m") {
         num = minute;
       } else {
@@ -36,7 +34,7 @@ var timefmt = function(d) {
       } else {
         rv.push(num);
       }
-    } else {
+    } else if (fmt != "a") {
       rv.push(fmt);
     }
   }

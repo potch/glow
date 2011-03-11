@@ -202,6 +202,10 @@ polygon {
 .bars.slide {
     -moz-transition-property: padding;
     -moz-transition-duration: 2s;
+    -webkit-transition-property: padding;
+    -webkit-transition-duration: 2s;
+    transition-property: padding;
+    transition-duration: 2s;
     padding-right: 60px;
 }
 .bars .bar {
@@ -225,6 +229,10 @@ polygon {
     height: 0;
     -moz-transition-property: height;
     -moz-transition-duration: 3s;
+    -webkit-transition-property: height;
+    -webkit-transition-duration: 3s;
+    transition-property: height;
+    transition-duration: 3s;
 }
 .masthead {
   position: fixed;

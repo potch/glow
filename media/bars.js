@@ -60,9 +60,9 @@ function initBars() {
         // Make room for a new bar.
         $bars.addClass('slide');
 
-        $bars.bind('transitionend', function(){
+        $bars.bind('transitionend webkitTransitionEnd', function(){
             dbg('slide finished');
-            $bars.unbind('transitionend');
+            $bars.unbind('transitionend webkitTransitionEnd');
             $bars.removeClass('slide');
 
             resize();

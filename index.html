@@ -58,8 +58,14 @@
     <script src="media/bars.js"></script>
     <script src="media/counter.js"></script>
     <script src="dynamo/"></script>
-    <script src="l10n.js"></script>
     <script>
+      $.getScript("locale/" + glow.locale + "/l10n.js", function() {
+        document.title = gettext("Firefox 4 Download Stats");
+        console.log(glow);
+        $('html').addClass(glow.dir)
+          .attr({lang: glow.locale.replace('_', '-'), dir: glow.dir});
+      });
+
       var $out = $("#out"),
           $mc = $("#map_container"),
           $map = $("#map");

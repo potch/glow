@@ -94,9 +94,12 @@ $.fn.arcChart = function(opts) {
                 animation = vast.animate.over(
                     500,
                     function(i) {
-                        var a = currentContext[0] * vast.ease.easeout(i);
-                        var s = (2 * Math.PI - span) * (1-vast.ease.easeout(i)) + span;
-                        ac.redraw({sa: a, sz: s});
+                        var j = vast.ease.easeout(i);
+                        ac.redraw({
+                            sa: currentContext[0] * j,
+                            sz: (2 * Math.PI - span) * (1-j) + span,
+                            innerRad: 50 + 30 * j
+                        });
                     },
                     this,
                     {after: function() {
@@ -119,9 +122,12 @@ $.fn.arcChart = function(opts) {
                     animation = vast.animate.over(
                         500,
                         function(i) {
-                            var a = tgt[0] * (1-vast.ease.easeout(i));
-                            var s = (2 * Math.PI - span) * vast.ease.easeout(i) + span;
-                            ac.redraw({sa: a, sz: s});
+                            var j = vast.ease.easeout(i);
+                            ac.redraw({
+                                sa: tgt[0] * (1-j),
+                                sz: (2 * Math.PI - span) * j + span,
+                                innerRad: 80 - 30 * j
+                            });
                         },
                         this,
                         {after: function() {

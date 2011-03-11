@@ -1,4 +1,6 @@
 function vast() {
+    window.dbg = ("console" in window) ? window.console.log : function() {};
+
     var exports = {};
 
     //This is the global precision of compounding calculations in vast.
@@ -99,11 +101,11 @@ function vast() {
 
 
     function ParticleEffect(o) {
-    
+
     }
 
     function Particle() {
-    
+
     }
 
 
@@ -147,19 +149,22 @@ function vast() {
         })();
 
         function tick() {
-            var prog = clock.since(stime);
-            for (var i=0,e=queue[0]; i<queue.length; i++,e=queue[i]) {
+            var prog = clock.since(stime),
+                len = queue.length;
+            for (var i=0,e=queue[0]; i<len; i++,e=queue[i]) {
                 if (!paused[e.ns]) {
                     e.fn.call(e.ctx,prog-groups[e.ns],e.ret);
                 }
             }
-            for (var i=0,e=queue[0]; i<queue.length; i++,e=queue[i]) {
+            for (var i=0,e=queue[0]; i<len; i++,e=queue[i]) {
                 if (e.died) {
                     queue.remove(i);
                 }
             }
-            if (!paused) {
+            if (!paused && queue.length) {
                 requestNewFrame();
+            } else {
+                dbg("nothing to do, going to sleep");
             }
         }
 
@@ -187,7 +192,7 @@ function vast() {
                 interval = setInterval(tick, GLOBAL_CLOCK_INTERVAL);
             }
         }
-        
+
         var ClockReceipt = Class.extend({
             init: function(o) {
                 this.o = o;
@@ -201,7 +206,7 @@ function vast() {
                 this.o.died = true;
             }
         });
-        
+
         function register(fn, ctx, ns) {
             var i = queue.length,
                 ns = ns || '_'
@@ -214,6 +219,10 @@ function vast() {
                 groups[ns] = clock.since(stime);
             }
             o.ret = new ClockReceipt(o);
+            if (i == 0) {
+                requestNewFrame();
+                dbg("back to work!");
+            }
             return o.ret;
         }
 
@@ -303,7 +312,7 @@ function vast() {
                     return api;
                 },
                 pause: function() {
-                    
+
                 }
             };
             return api;
@@ -408,6 +417,6 @@ function vast() {
         var range = bounds[1] - bounds[0] + (1 / SAFETY);
         return Math.floor(Math.random() * range * SAFETY) / SAFETY + bounds[0];
     }
-    
+
     return exports;
 }

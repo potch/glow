@@ -2,8 +2,12 @@
 <html>
   <head>
     <style>
+      body {
+        color: white;
+        background: black;
+      }
       canvas {
-        border: 1px solid black;
+        border: 1px solid white;
       }
     </style>
   </head>
@@ -15,23 +19,22 @@
     <script src="arcchart.js"></script>
     <script>
         var vast = vast();
+        var ac;
         $(document).ready(function() {
-          var ac;
-          $.getJSON("/glow/daisy.json", function(d) {
-            console.log(d);
-            $("#c").arcChart({data: test_data});
+          $.getJSON("/glow/data/json/2011/03/09/17/33/daisy.json", function(r) {
+            ac = $("#c").arcChart({data: r.data});
           });
           
           var anim = false;
           function easeAnim() {
             if (anim) anim.die();
             anim = vast.animate.over(500, function(i) {
-              var j = vast.ease.out(i);
+              var j = vast.ease.easeout(i);
               ac.redraw(2*j*PI, {innerRad: 10+40*j, sa: (1-j)*PI});
-            },this,{after: console.log});
+            },this);
           }
           
-          $("#c").click(easeAnim);
+          // $("#c").click(easeAnim);
         });
         
     </script>

@@ -1,5 +1,9 @@
 function vast() {
-    window.dbg = ("console" in window) ? window.console.log : function() {};
+    window.dbg = function () {
+        if ("console" in window) {
+            console.log(arguments);
+        }
+    }
 
     var exports = {};
 
@@ -163,8 +167,6 @@ function vast() {
             }
             if (!paused && queue.length) {
                 requestNewFrame();
-            } else {
-                dbg("nothing to do, going to sleep");
             }
         }
 
@@ -221,7 +223,6 @@ function vast() {
             o.ret = new ClockReceipt(o);
             if (i == 0) {
                 requestNewFrame();
-                dbg("back to work!");
             }
             return o.ret;
         }

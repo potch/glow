@@ -34,7 +34,6 @@ $.fn.arcChart = function(opts) {
         cx = $canvas.width()/2;
         cy = $canvas.height()/2;
         scaleFactor = Math.min(cx,cy) / 280;
-        if (!animation) dbg(scaleFactor);
         ctx.save();
         ctx.translate(cx, cy);
         ctx.scale(scaleFactor, scaleFactor);
@@ -55,26 +54,30 @@ $.fn.arcChart = function(opts) {
             x, y, a, r,
             p, label, tgt;
         $canvas.mousemove(function(e) {
-            if (this.animation) return;
+            if (animation) return;
             pos = $canvas.offset();
             x = -(e.clientX - pos.left - cx);
             y = e.clientY - pos.top - cy;
             a = Math.atan2(x,y)+Math.PI;
             r = Math.sqrt(x*x + y*y);
-            label = "";
+            tgt = false, label = false;
             if (a < 0) a += Math.PI * 2;
             for (var i=0; i<clickMap.length; i++) {
                 p = clickMap[i];
                 if (a > p[0] && a < p[1]) {
-                    label = p[2][0];
+                    tgt = p[2];
                 }
-            }
-            if (currentlabel != label) {
-                $tiptext.text(label);
             }
             if (r < 80 * scaleFactor || r > 200 * scaleFactor) {
                 $tip.hide();
             } else {
+                if (tgt) {
+                    label = tgt[0];
+                }
+                if (label && currentlabel != label) {
+                    $tiptext.text(label + ": " + tgt[1]);
+                    currentLabel = label;
+                }
                 $tip.show();
             }
             $tip.css({
@@ -83,11 +86,11 @@ $.fn.arcChart = function(opts) {
             });
         });
         $canvas.mouseout(function(e) {
-            if (this.animation) return;
+            if (animation) return;
             $tip.hide();
         });
         $canvas.click(function(e) {
-            if (this.animation) return;
+            if (animation) return;
             pos = $canvas.offset();
             x = -(e.clientX - pos.left - cx);
             y = e.clientY - pos.top - cy;

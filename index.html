@@ -50,12 +50,13 @@
         </radialGradient>
       </defs>
     </svg>
+    <script src="dynamo/"></script>
     <script src="media/jquery.js"></script>
     <script src="media/vast.js"></script>
     <script src="media/map.js"></script>
     <script src="media/bars.js"></script>
     <script src="media/counter.js"></script>
-    <script src="dynamo/"></script>
+    <script src="media/glow.js"></script>
     <script>
       $.getScript("locale/" + glow.locale + "/l10n.js", function() {
         document.title = gettext("Firefox 4 Download Stats");
@@ -68,22 +69,9 @@
           $map = $("#map");
 
       glow.view = "map";
-      glow.map= {};
-      glow.data = {
-        bars: {},
-        map: {},
-        sector: {},
-        counter: {}
-      };
+      glow.init();
 
-      $(function() {
-        initCounter();
-        initBars();
-        initMap();
-        loadMap();
-      });
-
-      function loadMap() {
+      function loadMap(cb) {
         $.get("./maps/world_4.svg", function(resp) {
           if (vast.capabilities.inlineSVG) {
             $("#mapdata").empty().html(resp);
@@ -97,25 +85,8 @@
             "-o-transform-origin": "0 0",
             "-o-transform": "scale(" + $mc.width()/3600 + ")"
           });
-          initData();
         }, "text");
-      }
-
-      function processData(type) {
-        return function(r) {
-          glow.data[type].next = r;
-        };
-      }
-
-      function initData() {
-        $.getJSON("data/json/" + glow.time + "/map.json", function(r) {
-          processData("map")(r);
-          glow.map.playNext();
-        });
-        $.getJSON("data/json/" + glow.time + "/count.json", function(r) {
-          processData("counter")(r);
-          glow.counter.playNext();
-        });
+        cb();
       }
     </script>
   </body>

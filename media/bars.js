@@ -12,7 +12,7 @@ function initBars() {
 
     glow.bar.playNext = function() {
         dbg('writing bars');
-        var response = glow.data.counter.next,
+        var response = glow.data.count.next,
             data = response.data,
             container = document.getElementsByClassName('bars')[0],
             bars = document.getElementsByClassName('bar');
@@ -33,6 +33,8 @@ function initBars() {
                   "' data-val='" + delta +
                   "'></div></div>");
         }
+
+        setTimeout(glow.bar.playNext, response.interval * 1000);
 
         // Write out all the initial bars.
         if (!started) {

@@ -48,14 +48,9 @@ function initMap() {
                 addPing(row[1],row[0]);
             }
         }
-        vast.animate.over(response.interval*1000,drawPings,this,{after: glow.map.playNext});
-        dbg("waiting " + response.interval * 500 + " to fetch " + response.next);
-        setTimeout(function() {
-            $.getJSON("data/json/" + response.next, function(r) {
-                dbg(response.next + " fetched successfully");
-                glow.data.map.next = r;
-            });
-        }, response.interval * 500);
+        var duration = response.interval * 1000;
+        vast.animate.over(duration, drawPings, this);
+        setTimeout(glow.map.playNext, duration);
     };
 
     $(window).resize(vast.debounce(function() {

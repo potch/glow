@@ -247,6 +247,9 @@ function Vast() {
     $(window).focus(function() {
         GLOBAL_CLOCK_INTERVAL = 30;
     });
+    exports.frameInterval = function () {
+        return GLOBAL_CLOCK_INTERVAL;
+    };
 
 
     function CanvasGroup() {

@@ -7,7 +7,9 @@ function initMap() {
         pings = [],
         pool = [],
         ctx = $("#pings")[0].getContext("2d"),
-        row, n;
+        row, n,
+        newThisIteration,
+        maxThisIteration;
 
     glow.map = {};
 
@@ -29,8 +31,7 @@ function initMap() {
 
     glow.map.playNext = function() {
         var response = glow.data.map.next,
-            data = response.data,
-            newThisIteration;
+            data = response.data;
         total = data[1];
         currentData = data[2].slice();
         count = 0;
@@ -38,7 +39,8 @@ function initMap() {
         function drawPings(i) {
             goal = i*total;
             newThisIteration = 0;
-            while (count < goal && newThisIteration < 200) {
+            maxThisIteration = 400/(1000/vast.frameInterval());
+            while (count < goal && newThisIteration < maxThisIteration) {
                 if (currentData.length < 1) return;
                 count++;
                 newThisIteration++;

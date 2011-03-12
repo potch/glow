@@ -90,11 +90,16 @@
         cb();
       }
 
-      var _tag=new WebTrends();
-      // This does a document.write so we have to put the rest of webtrends in another script tag.
-      _tag.dcsGetId();
+      $(function(){
+        // Wait 10 seconds to do webtrends so we can set up everything else.
+        setTimeout(function() {
+          var _tag=new WebTrends();
+          $.getScript(_tag.dcsGetId(), function() {
+            _tag.dcsCollect();
+          });
+        }, 10000);
+      });
     </script>
-    <script>_tag.dcsCollect();</script>
     <noscript><img alt="DCSIMG" id="DCSIMG" width="1" height="1" src="http://statse.webtrendslive.com/dcs2spfmdvz5bd7g077trfrve_3f2b/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=9.3.0&amp;WT.dcssip=www.glow.mozilla.org"/></noscript>
   </body>
 </html>

@@ -1,5 +1,5 @@
 // WebTrends SmartSource Data Collector Tag
-// Version: 9.3.0     
+// Version: 9.3.0
 // Tag Builder Version: 3.1
 // Created: 3/12/2011 8:54:18 PM
 
@@ -31,7 +31,7 @@ function WebTrends(){
 }
 WebTrends.prototype.dcsGetId=function(){
 	if (this.enabled&&(document.cookie.indexOf(this.fpc+"=")==-1)&&(document.cookie.indexOf("WTLOPTOUT=")==-1)){
-		document.write("<scr"+"ipt type='text/javascript' src='"+"http"+(window.location.protocol.indexOf('https:')==0?'s':'')+"://"+this.domain+"/"+this.dcsid+"/wtid.js"+"'><\/scr"+"ipt>");
+        return "//"+this.domain+"/"+this.dcsid+"/wtid.js";
 	}
 }
 WebTrends.prototype.dcsGetCookie=function(name){
@@ -198,7 +198,7 @@ WebTrends.prototype.dcsNavigation=function(evt){
 	var id="";
 	var cname="";
 	var elems=this.dcsSplit(this.navigationtag);
-	var elen=elems.length;	
+	var elen=elems.length;
 	var i,e,elem;
 	for (i=0;i<elen;i++){
 		elem=elems[i];
@@ -451,7 +451,7 @@ WebTrends.prototype.dcsVar=function(){
 	})();
 	WT.slv=(function(){
 		var slv="Not enabled";
-		try{     
+		try{
 			if (navigator.userAgent.indexOf('MSIE')!=-1){
 				var sli = new ActiveXObject('AgControl.AgControl');
 				if (sli){
@@ -493,7 +493,7 @@ WebTrends.prototype.dcsVar=function(){
 	if (this.i18n){
 		if (typeof(document.defaultCharset)=="string"){
 			WT.le=document.defaultCharset;
-		} 
+		}
 		else if (typeof(document.characterSet)=="string"){
 			WT.le=document.characterSet;
 		}
@@ -616,7 +616,7 @@ WebTrends.prototype.dcsTag=function(){
 	var DCS=this.DCS;
 	var DCSext=this.DCSext;
 	var i18n=this.i18n;
-	var P="http"+(window.location.protocol.indexOf('https:')==0?'s':'')+"://"+this.domain+(this.dcsid==""?'':'/'+this.dcsid)+"/dcs.gif?";
+	var P="//"+this.domain+(this.dcsid==""?'':'/'+this.dcsid)+"/dcs.gif?";
 	if (i18n){
 		WT.dep="";
 	}

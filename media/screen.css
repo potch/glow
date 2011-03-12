@@ -283,7 +283,7 @@ polygon {
   line-height: 55px;
 }
 .rtl #bigcounter.stowed {
-  right: 0;
+  right: inherit;
   left: 10px;
 }
 #wordmark {

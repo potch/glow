@@ -11,19 +11,19 @@ var ROOT = "data/json/";
 
 // Load the next file of json data before timeout seconds have elapsed.
 glow.fetchCount = function(timeout) {
-    getData(glow.data.map.next.next, timeout, function(r) {
+    getData(glow.data.count.next.next, timeout, function(r) {
         glow.data.count.next = r;
         // We don't request data.sector until the page flips, but
         // but we want to be ready with the right url.
         glow.data.sector.next = r.next.replace('count', 'daisy');
-    };
+    });
 };
 
 // Load the next file of json data before timeout seconds have elapsed.
 glow.fetchMap = function(timeout) {
     getData(glow.data.map.next.next, timeout, function(r) {
         glow.data.map.next = r;
-    };
+    });
 };
 
 // $.getJSON with an error parameter.

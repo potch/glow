@@ -1,0 +1,8 @@
+<FilesMatch "\.(css|gif|ico|jpe?g|js|png|svg)$">
+    ExpiresActive On
+    ExpiresDefault "access plus 1 year"
+</FilesMatch>
+<FilesMatch "\.json$">
+    ExpiresActive On
+    ExpiresDefault "access plus 10 minutes"
+</FilesMatch>

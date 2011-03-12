@@ -59,7 +59,6 @@
     <script>
       $.getScript("locale/" + glow.locale + "/l10n.js", function() {
         document.title = gettext("Firefox 4 Download Stats");
-        console.log(glow);
         $('html').addClass(glow.dir)
           .attr({lang: glow.locale.replace('_', '-'), dir: glow.dir});
       });

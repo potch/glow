@@ -154,14 +154,16 @@ function Vast() {
 
         function tick() {
             var prog = clock.since(stime),
-                len = queue.length;
-            for (var i=0,e=queue[0]; i<len; i++,e=queue[i]) {
+                len = queue.length,
+                i, e;
+            for (i = 0; i < len; i++) {
+                e = queue[i];
                 if (!paused[e.ns]) {
-                    e.fn.call(e.ctx,prog-groups[e.ns],e.ret);
+                    e.fn.call(e.ctx, prog - groups[e.ns], e.ret);
                 }
             }
-            for (var i=0,e=queue[0]; i<len; i++,e=queue[i]) {
-                if (e.died) {
+            for (i = len - 1; i >= 0; i--) {
+                if (queue[i].died) {
                     queue.remove(i);
                 }
             }

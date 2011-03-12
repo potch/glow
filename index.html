@@ -33,9 +33,6 @@
             <div id="mapdata"></div>
           </div>
           <canvas id="pings" width="3600" height="1800"></canvas>
-          <div id="controls">
-            <a id="out"></a>
-          </div>
         </div>
       </section>
     </div>
@@ -65,8 +62,7 @@
         document.title = gettext("Firefox 4 Download Stats");
       });
 
-      var $out = $("#out"),
-          $mc = $("#map_container"),
+      var $mc = $("#map_container"),
           $map = $("#map");
 
       glow.view = "map";

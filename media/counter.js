@@ -19,6 +19,6 @@ function initCounter() {
 
         vast.animate.over(response.interval * 1000, drawCounter, this,
                           {after: glow.count.playNext});
-        setTimeout(glow.fetchCount, response.interval * 500);
+        glow.fetchCount(response.interval);
     };
 }

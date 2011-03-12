@@ -55,7 +55,7 @@ function initMap() {
         }
         vast.animate.over(response.interval * 1000, drawPings, this,
                           {after: glow.map.playNext});
-        setTimeout(glow.fetchMap, response.interval * 500);
+        glow.fetchMap(response.interval);
     };
 
     $(window).resize(vast.debounce(function() {

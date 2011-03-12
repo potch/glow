@@ -58,10 +58,10 @@
     <script src="media/counter.js"></script>
     <script src="media/glow.js"></script>
     <script>
+      $('html').addClass(glow.dir)
+        .attr({lang: glow.locale.replace('_', '-'), dir: glow.dir});
       $.getScript("locale/" + glow.locale + "/l10n.js", function() {
         document.title = gettext("Firefox 4 Download Stats");
-        $('html').addClass(glow.dir)
-          .attr({lang: glow.locale.replace('_', '-'), dir: glow.dir});
       });
 
       var $out = $("#out"),

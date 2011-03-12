@@ -29,16 +29,19 @@ function initMap() {
 
     glow.map.playNext = function() {
         var response = glow.data.map.next,
-            data = response.data;
+            data = response.data,
+            newThisIteration;
         total = data[1];
         currentData = data[2].slice();
         count = 0;
         var goal=0, n, row;
         function drawPings(i) {
             goal = i*total;
-            while (count < goal && pings.length < 500) {
+            newThisIteration = 0;
+            while (count < goal && newThisIteration < 200) {
                 if (currentData.length < 1) return;
                 count++;
+                newThisIteration++;
                 n = ~~(Math.random()*currentData.length);
                 row = currentData[n];
                 row[2]--;

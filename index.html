@@ -57,6 +57,7 @@
     <script src="media/bars.js"></script>
     <script src="media/counter.js"></script>
     <script src="media/glow.js"></script>
+    <script src="media/webtrends.js"></script>
     <script>
       $('html').addClass(glow.dir)
         .attr({lang: glow.locale.replace('_', '-'), dir: glow.dir});
@@ -88,6 +89,12 @@
         }, "text");
         cb();
       }
+
+      var _tag=new WebTrends();
+      // This does a document.write so we have to put the rest of webtrends in another script tag.
+      _tag.dcsGetId();
     </script>
+    <script>_tag.dcsCollect();</script>
+    <noscript><img alt="DCSIMG" id="DCSIMG" width="1" height="1" src="http://statse.webtrendslive.com/dcs2spfmdvz5bd7g077trfrve_3f2b/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=9.3.0&amp;WT.dcssip=www.glow.mozilla.org"/></noscript>
   </body>
 </html>

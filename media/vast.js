@@ -3,7 +3,7 @@ function Vast() {
         if ("console" in window) {
             console.log(arguments);
         }
-    }
+    };
 
     var exports = {};
 
@@ -125,11 +125,10 @@ function Vast() {
 
 
     GlobalClock = exports.GlobalClock = (function() {
-        var paused = false,
+        var paused = {'_': false},
             groups = {},
             queue = [],
             stime,
-            paused = {'_': false},
             api;
 
         var requestNewFrame = (function() {
@@ -148,7 +147,7 @@ function Vast() {
                 default:
                     return function() {
                         setTimeout(tick, GLOBAL_CLOCK_INTERVAL);
-                    }
+                    };
             }
         })();
 
@@ -190,7 +189,7 @@ function Vast() {
         function resume(group) {
             if (group) {
                 groups[group] += clock.since(paused[group]);
-                paused[group] = false
+                paused[group] = false;
             } else {
                 stime += clock.since(paused);
                 interval = setInterval(tick, GLOBAL_CLOCK_INTERVAL);
@@ -213,7 +212,7 @@ function Vast() {
 
         function register(fn, ctx, ns) {
             var i = queue.length,
-                ns = ns || '_'
+                ns = ns || '_',
                 o = {fn: fn,
                      ctx: ctx,
                      ns: ns || '_',
@@ -260,7 +259,7 @@ function Vast() {
 
         _.add = function(m,n) {
             if (!m) return;
-            var l
+            var l;
             if (m.getContext)
                 l = m;
             else {
@@ -277,7 +276,7 @@ function Vast() {
         _.remove = function(l) {
             if (l.vast_name) delete named[l.vast_name];
             layers.remove(l.vast_ref);
-        }
+        };
         _.using = function(i,fn,ctx) {
             var layer = (typeof i == 'string') ? named[i] : layers[i];
             fn.call(ctx,layer.getContext('2d'));
@@ -289,7 +288,7 @@ function Vast() {
         };
         _.dbg = function() {
             console.log(layers, named);
-        }
+        };
         return _;
     }
 
@@ -350,7 +349,7 @@ function Vast() {
                 fun.apply(ctx, args);
             }, del);
         };
-    }
+    };
 
     /** 2d vector methods */
     function safe(n) {

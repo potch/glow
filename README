@@ -1,0 +1,11 @@
+glow is an application to track Firefox 4 downloads in realtime.
+
+
+Deployment
+==========
+
+git clone git://github.com/potch/glow.git
+git checkout -f origin/prod
+./build.sh
+
+# Push live.

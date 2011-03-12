@@ -48,9 +48,9 @@ function initMap() {
                 addPing(row[1],row[0]);
             }
         }
-        var duration = response.interval * 1000;
-        vast.animate.over(duration, drawPings, this);
-        setTimeout(glow.map.playNext, duration);
+        vast.animate.over(response.interval * 1000, drawPings, this,
+                          {after: glow.map.playNext});
+        setTimeout(glow.fetchMap, response.interval * 500);
     };
 
     $(window).resize(vast.debounce(function() {

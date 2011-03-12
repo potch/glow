@@ -17,8 +17,8 @@ function initCounter() {
             el.textContent = numberfmt(parseInt(current + i * delta));
         }
 
-        var duration = response.interval * 1000;
-        vast.animate.over(duration, drawCounter, this);
-        setTimeout(glow.count.playNext, duration);
+        vast.animate.over(response.interval * 1000, drawCounter, this,
+                          {after: glow.count.playNext});
+        setTimeout(glow.fetchCount, response.interval * 500);
     };
 }

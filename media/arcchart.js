@@ -104,7 +104,7 @@ $.fn.arcChart = function(opts) {
                     500,
                     function(i) {
                         var j = vast.ease.easeout(i);
-                        ac.redraw({
+                        $canvas.redraw({
                             sa: currentContext[0] * j,
                             sz: (2 * Math.PI - span) * (1-j) + span,
                             innerRad: 50 + 30 * j
@@ -132,7 +132,7 @@ $.fn.arcChart = function(opts) {
                         500,
                         function(i) {
                             var j = vast.ease.easeout(i);
-                            ac.redraw({
+                            $canvas.redraw({
                                 sa: tgt[0] * (1-j),
                                 sz: (2 * Math.PI - span) * j + span,
                                 innerRad: 80 - 30 * j
@@ -179,7 +179,7 @@ $.fn.arcChart = function(opts) {
             segmentArc = p._pct * arcSize;
             if (p._pct >= cutoff || depth == 1) {
                 hue = baseHue + i*hueSpan;
-                ctx.fillStyle = "hsl(" + ~~hue + ", 95%, " + (50 + depth*10) + "%)";
+                ctx.fillStyle = "hsl(" + ~~(360-hue) + ", 95%, " + (50 + depth*10) + "%)";
                 ctx.beginPath();
                 ctx.arc(0,0,outerRad, 0, segmentArc, false);
                 ctx.arc(0,0,innerRad, segmentArc, 0, true);

@@ -96,13 +96,6 @@
         }, "text");
       }
 
-      var ac;
-      function initSunburst() {
-        $.getJSON("data/json/" + glow.time + "/daisy.json", function(r) {
-          ac = $("#chart").arcChart({data: r.data});
-        });
-      }
-
       $(function(){
         // Wait 10 seconds to do webtrends so we can set up everything else.
         setTimeout(function() {
@@ -112,15 +105,6 @@
           });
         }, 10000);
       });
-      
-      function sizePageElements() {
-        $("#chart")[0].width = $("#sunburst").width() - 300;
-        $("#chart")[0].height = $("#sunburst").height();
-        if (ac) ac.redraw();
-      }
-      $(window).resize(vast.debounce(sizePageElements, 500, this));
-      sizePageElements();
-      $(initSunburst);
     </script>
     <noscript><img alt="DCSIMG" id="DCSIMG" width="1" height="1" src="http://statse.webtrendslive.com/dcs2spfmdvz5bd7g077trfrve_3f2b/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=9.3.0&amp;WT.dcssip=www.glow.mozilla.org"/></noscript>
   </body>

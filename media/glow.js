@@ -65,6 +65,30 @@ var getData = function(url, timeout, success) {
     fetch(remaining);
 };
 
+glow.toggleView = function() {
+    if (glow.view == "map") {
+        glow.view = "chart";
+        $("#sunburst").show();
+        if (!glow.sector) initSunburst();
+    } else {
+        glow.view = "map";
+        $("#sunburst").hide();
+    }
+    $("body").toggleClass("view-sector", glow.view == "chart");
+}
+
+function sizePageElements() {
+  $("#chart")[0].width = $("#sunburst").width() - 300;
+  $("#chart")[0].height = $("#sunburst").height();
+  if (glow.sector) glow.sector.redraw();
+}
+$(window).resize(vast.debounce(sizePageElements, 500, this));
+
+function initSunburst() {
+  $.getJSON(glow.data.sector.next, function(r) {
+    glow.sector = $("#chart").arcChart({data: r.data});
+  });
+}
 
 glow.init = function() {
     $.getJSON(ROOT + glow.time + "/count.json", function(r) {
@@ -84,6 +108,9 @@ glow.init = function() {
     initCounter();
     initBars();
     initMap();
+    sizePageElements();
+
+    $(".menu").click(glow.toggleView);
 };
 
 })();

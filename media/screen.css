@@ -137,27 +137,31 @@ polygon {
 
 .glow {
   box-shadow:
-    0 0 18px 4px rgba(240,240,255,.1),
+    0 0 18px 4px rgba(240,240,255,.4),
     inset 0 0 20px rgba(240,240,255,.4);
   -webkit-box-shadow:
-    0 0 18px 4px rgba(240,240,255,.1),
+    0 0 18px 4px rgba(240,240,255,.4),
     inset 0 0 20px rgba(240,240,255,.4);
   -moz-box-shadow:
-    0 0 18px 4px rgba(240,240,255,.1),
+    0 0 18px 4px rgba(240,240,255,.4),
     inset 0 0 20px rgba(240,240,255,.4);
   border: 2px solid #fff;
 }
 .menu {
   position: fixed;
   bottom: -96px;
-  left: -96px;
-  height: 256px;
-  width: 256px;
+  left: -64px;
+  height: 250px;
+  width: 250px;
   z-index: 110;
   background: #000;
   border-radius: 128px;
   -moz-border-radius: 128px;
   -webkit-border-radius: 128px;
+  background: url(../media/sector.png) center no-repeat #000;
+}
+.view-sector .menu {
+    background: url(../media/globe.png) center no-repeat #000;
 }
 .bars {
   position: fixed;

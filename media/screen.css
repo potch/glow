@@ -339,8 +339,7 @@ polygon {
     0 -4px 18px rgba(128,0,0,.1),
     inset 0 0 20px rgba(128,0,0,.4);
 }
-#app {
-/*  opacity: 0;*/
-/*  -moz-transition: opacity 1s linear;
-  -webkit-transition: opacity 1s linear;
-*/}
+noscript {
+  color: #fff;
+  font-size: 64px;
+}

@@ -1,58 +1,68 @@
 function initMap() {
     "use strict";
-    var currentData = [],
-        total = 0,
-        count = 0,
-        scale = $mc.width()/(3600*1),
+    var scale = $mc.width() / 3600,
         pings = [],
         pool = [],
-        ctx = $("#pings")[0].getContext("2d"),
-        row, n,
-        newThisIteration,
-        maxThisIteration;
+        ctx = $("#pings")[0].getContext("2d");
 
     glow.map = {};
 
     ctx.fillStyle = "#fff";
 
-    function addPing(x,y) {
-        x = ~~((-parseFloat(x)+90)*10*scale);
-        y = ~~((parseFloat(y)+180)*10*scale);
+    /* Shuffle the array in place. (Fisher-Yates) */
+    var shuffle = function(xs) {
+        var i = xs.length, j, tmp;
+        if (i == 0) { return; }
+        while (--i) {
+            j = Math.floor(Math.random() * (i + 1));
+            tmp = xs[j];
+            xs[j] = xs[i];
+            xs[i] = tmp;
+        }
+    };
+
+    function addPing(latitude, longitude) {
+        longitude = ~~((-parseFloat(longitude)+90)*10*scale);
+        latitude = ~~((parseFloat(latitude)+180)*10*scale);
         if (pool.length) {
-            n = pool.shift();
+            var n = pool.shift();
             pings[n][0] = 0;
-            pings[n][1] = x;
-            pings[n][2] = y;
+            pings[n][1] = longitude;
+            pings[n][2] = latitude;
         } else {
-            row = [0, x, y];
-            pings.push(row);
+            pings.push([0, longitude, latitude]);
         }
     }
 
+    /* Each ping looks like [latitude, longitude, count]. It represents the
+     * numbers of downloads in the timeframe from this location. */
     glow.map.playNext = function() {
         var response = glow.data.map.next,
-            data = response.data;
-        total = data[1];
-        currentData = data[2].slice();
-        count = 0;
-        var goal=0, n, row;
-        function drawPings(i) {
-            goal = i*total;
-            newThisIteration = 0;
-            maxThisIteration = 400/(1000/vast.frameInterval());
-            while (count < goal && newThisIteration < maxThisIteration) {
-                if (currentData.length < 1) return;
-                count++;
-                newThisIteration++;
-                n = ~~(Math.random()*currentData.length);
-                row = currentData[n];
-                row[2]--;
-                if (row[2] < 1) {
-                    currentData.remove(n);
-                }
-                addPing(row[1],row[0]);
+            /* [date, total, [pings]] */
+            data = response.data,
+            pings = data[2],
+            currentData = [];
+
+        /* Add `count` [lat, long] pairs to currentData, then shuffle the whole
+         * thing. */
+        for (var j = 0, jj = pings.length; j < jj; j++) {
+            // My kingdom for destructuring bind.
+            var ping = pings[j], loc = [ping[0], ping[1]], count = ping[2];
+            for (var k = 0; k < count; k++) {
+                currentData.push(loc);
             }
         }
+        shuffle(currentData);
+
+        /* How many pings we've been through so far. */
+        var index = 0, total = currentData.length;
+        function drawPings(i) {
+            //maxThisIteration = 400 / (1000 / vast.frameInterval()),
+            for (var goal = i * total; index < goal; index++) {
+                addPing.apply(null, currentData[index]);
+            }
+        }
+
         vast.animate.over(response.interval * 1000, drawPings, this,
                           {after: glow.map.playNext});
         glow.fetchMap(response.interval);

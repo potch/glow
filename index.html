@@ -41,7 +41,9 @@
       </section>
       <section id="sunburst">
         <canvas id="chart"></canvas>
-        <div id="rankedlist">
+        <div id="chart-sidebar">
+          <ul id="rankedlist">
+          </ul>
         </div>
       </section>
     </div>
@@ -70,13 +72,13 @@
         .attr({lang: glow.locale.replace('_', '-'), dir: glow.dir});
       $.getScript("locale/" + glow.locale + "/l10n.js", function() {
         document.title = gettext("Firefox 4 Download Stats");
+        glow.init();
       });
 
       var $mc = $("#map_container"),
           $map = $("#map");
 
       glow.view = "map";
-      glow.init();
 
       function loadMap(cb) {
         $.get("./maps/world_4.svg", function(resp) {

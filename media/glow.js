@@ -90,6 +90,15 @@ function initSunburst() {
   });
 }
 
+$("#chart").bind("update", function(e, list) {
+    var $el = $("#rankedlist").empty();
+
+    for (var i=0; i<list.length; i++) {
+        $el.append("<li>" + list[i][2][0] + " <span>" + list[i][2][1] + "</span></li>");
+    }
+
+});
+
 glow.init = function() {
     $.getJSON(ROOT + glow.time + "/count.json", function(r) {
         glow.data.count.next = r;

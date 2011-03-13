@@ -338,11 +338,18 @@ noscript {
 #sunburst canvas {
     background: url(../media/sqlstreamlogo.png) 98% 98% no-repeat #000;
 }
-#rankedlist {
+#chart-sidebar {
     width: 300px;
     border-left: 1px solid white;
     position: absolute;
     height: 100%;
     right: 0;
     top: 0;
+    overflow: auto;
+}
+#rankedlist {
+    margin: 2em;
+}
+#rankedlist li span {
+    float: right;
 }

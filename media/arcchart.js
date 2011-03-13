@@ -33,7 +33,7 @@ $.fn.arcChart = function(opts) {
         $canvas[0].height = $canvas.height();
         cx = $canvas.width()/2;
         cy = $canvas.height()/2;
-        scaleFactor = Math.min(cx,cy) / 280;
+        scaleFactor = Math.min(cx,cy) / 240;
         ctx.save();
         ctx.translate(cx, cy);
         ctx.scale(scaleFactor, scaleFactor);
@@ -43,6 +43,7 @@ $.fn.arcChart = function(opts) {
         var data = currentContext.length ? currentContext[2][2] : opts.data[2];
         drawChildren(data, 1, o.sz, o);
         ctx.restore();
+        if (!animation) $canvas.trigger("update", [clickMap]);
     }
     
     this.dbg = function() {

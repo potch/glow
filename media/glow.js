@@ -5,7 +5,7 @@ glow.data = {
     count: {},
     map: {},
     sector: {}
-}
+};
 
 var ROOT = "data/json/";
 

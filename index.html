@@ -39,6 +39,11 @@
           <canvas id="pings" width="3600" height="1800"></canvas>
         </div>
       </section>
+      <section id="sunburst">
+        <canvas id="chart"></canvas>
+        <div id="rankedlist">
+        </div>
+      </section>
     </div>
     <div id="callout">
     </div>
@@ -57,6 +62,7 @@
     <script src="media/map.js"></script>
     <script src="media/bars.js"></script>
     <script src="media/counter.js"></script>
+    <script src="media/arcchart.js"></script>
     <script src="media/glow.js"></script>
     <script src="media/webtrends.js"></script>
     <script>
@@ -90,6 +96,13 @@
         }, "text");
       }
 
+      var ac;
+      function initSunburst() {
+        $.getJSON("data/json/" + glow.time + "/daisy.json", function(r) {
+          ac = $("#chart").arcChart({data: r.data});
+        });
+      }
+
       $(function(){
         // Wait 10 seconds to do webtrends so we can set up everything else.
         setTimeout(function() {
@@ -99,6 +112,15 @@
           });
         }, 10000);
       });
+      
+      function sizePageElements() {
+        $("#chart")[0].width = $("#sunburst").width() - 300;
+        $("#chart")[0].height = $("#sunburst").height();
+        if (ac) ac.redraw();
+      }
+      $(window).resize(vast.debounce(sizePageElements, 500, this));
+      sizePageElements();
+      $(initSunburst);
     </script>
     <noscript><img alt="DCSIMG" id="DCSIMG" width="1" height="1" src="http://statse.webtrendslive.com/dcs2spfmdvz5bd7g077trfrve_3f2b/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=9.3.0&amp;WT.dcssip=www.glow.mozilla.org"/></noscript>
   </body>

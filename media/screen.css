@@ -64,6 +64,7 @@ body, html {
   background: black;
   height: 100%;
   width: 100%;
+  color: white;
   overflow: hidden;
 }
 #controls {
@@ -92,11 +93,12 @@ body, html {
 #ui {
     z-index: 100;
 }
-#geo {
+#geo, #sunburst {
     position: absolute;
-    top: 90px;
+    top: 92px;
     width: 100%;
-    height: -moz-calc(100% - 200px);
+    background: #000;
+    height: -moz-calc(100% - 213px);
 }
 #map {
   position: relative;
@@ -325,4 +327,18 @@ polygon {
 noscript {
   color: #fff;
   font-size: 64px;
+}
+#sunburst {
+    display: none;
+}
+#sunburst canvas {
+    background: url(../media/sqlstreamlogo.png) 98% 98% no-repeat #000;
+}
+#rankedlist {
+    width: 300px;
+    border-left: 1px solid white;
+    position: absolute;
+    height: 100%;
+    right: 0;
+    top: 0;
 }

@@ -32,6 +32,8 @@ function initMap() {
         } else {
             pings.push([0, longitude, latitude]);
         }
+        row = [0, x, y];
+        pings.push(row);
     }
 
     /* Each ping looks like [latitude, longitude, count]. It represents the

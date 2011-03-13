@@ -2,7 +2,6 @@ function initMap() {
     "use strict";
     var scale = $mc.width() / 3600,
         pings = [],
-        pool = [],
         ctx = $("#pings")[0].getContext("2d");
 
     glow.map = {};
@@ -24,18 +23,16 @@ function initMap() {
     function addPing(latitude, longitude) {
         longitude = ~~((-parseFloat(longitude)+90)*10*scale);
         latitude = ~~((parseFloat(latitude)+180)*10*scale);
-        if (pool.length) {
-            var n = pool.shift();
-            pings[n][0] = 0;
-            pings[n][1] = longitude;
-            pings[n][2] = latitude;
-        } else {
-            pings.push([0, longitude, latitude]);
+        for (var n = 0; n<pings.length; n++) {
+            if (pings[n][0] < 0) {
+                pings[n][0] = 0;
+                pings[n][1] = longitude;
+                pings[n][2] = latitude;
+                return;
+            }
         }
-        row = [0, x, y];
-        pings.push(row);
+        pings.push([0, longitude, latitude]);
     }
-
     /* Each ping looks like [latitude, longitude, count]. It represents the
      * numbers of downloads in the timeframe from this location. */
     glow.map.playNext = function() {
@@ -59,7 +56,6 @@ function initMap() {
         /* How many pings we've been through so far. */
         var index = 0, total = currentData.length;
         function drawPings(i) {
-            //maxThisIteration = 400 / (1000 / vast.frameInterval()),
             for (var goal = i * total; index < goal; index++) {
                 addPing.apply(null, currentData[index]);
             }
@@ -72,7 +68,6 @@ function initMap() {
 
     var i,p,l,el;
     function iteratePings(t) {
-        if (pool.length == pings.length) return;
         for (i=0; i<pings.length; i++) {
             p = pings[i];
             if (p[0] < 0) continue;
@@ -87,7 +82,6 @@ function initMap() {
             l = (t-p[0])/1000;
             if (l > 1) {
                 p[0] = -1;
-                pool.push(i);
             } else {
                 ctx.beginPath();
                 ctx.fillStyle = "rgba(255,255,255," + (1-l) + ")";

@@ -4,6 +4,7 @@ require 'locales.php';
 $locales = array('ar', 'ca', 'cs', 'de', 'el', 'en-us', 'es', 'eu', 'fr', 'fy', 'fy-nl', 'ga', 'ga-ie', 'he', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'nl', 'pl', 'pt', 'pt-br', 'rm', 'ru', 'sk', 'sl', 'sq', 'th', 'tr', 'zh-tw');
 $rtl_locales = array('ar', 'fa', 'fa-ir', 'he');
 
+date_default_timezone_set('UTC');
 $time = strftime('%Y/%m/%d/%H/%M', strtotime('-2 minutes'));
 $chooser = new ChooseLocale($locales);
 $locale = $chooser->getCompatibleLocale();

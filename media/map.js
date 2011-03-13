@@ -66,26 +66,27 @@ function initMap() {
         glow.fetchMap(response.interval);
     };
 
-    var i,p,l,el;
     function iteratePings(t) {
         for (i=0; i<pings.length; i++) {
             p = pings[i];
             if (p[0] < 0) continue;
             ctx.clearRect(p[2]-5,p[1]-5,10,10);
         }
-        for (i=0; i<pings.length; i++) {
+        for (var i = 0, ii = pings.length; i < ii; i++) {
             p = pings[i];
-            if (p[0] < 0) continue;
-            if (p[0]==0) {
+            if (p[0] < 0) {
+                continue;
+            }
+            if (p[0] == 0) {
                 p[0] = t;
             }
-            l = (t-p[0])/1000;
-            if (l > 1) {
+            var age = (t - p[0]) / 1000;
+            if (age > 1) {
                 p[0] = -1;
             } else {
                 ctx.beginPath();
-                ctx.fillStyle = "rgba(255,255,255," + (1-l) + ")";
-                ctx.arc(p[2],p[1],5*l,0,Math.PI*2,true);
+                ctx.fillStyle = "rgba(255, 255, 255, " + (1 - age) + ")";
+                ctx.arc(p[2], p[1], 5 * age, 0, Math.PI * 2, true);
                 ctx.fill();
             }
         }
@@ -100,5 +101,4 @@ function initMap() {
         $("#pings")[0].width=$mc.width();
         $("#pings")[0].height=$mc.height();
     }, 500, this));
-
 }

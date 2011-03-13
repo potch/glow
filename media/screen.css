@@ -60,23 +60,6 @@ table {
     font-weight: bold;
     font-style: normal;
 }
-@font-face {
-  font-family: 'OrbitronBold';
-  src: url('orbitron-bold-webfont.eot');
-  src: local('â˜º'), url('orbitron-bold-webfont.woff') format('woff'), url('orbitron-bold-webfont.ttf') format('truetype'), url('orbitron-bold-webfont.svg#webfontMOSYtX6m') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-
-/** Clearfix */
-/*section:after {
-    content: ".";
-    display: block;
-    clear: both;
-    height: 0;
-    visibility: hidden;
-}
-*/
 body, html {
   background: black;
   height: 100%;

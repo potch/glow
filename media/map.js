@@ -1,7 +1,6 @@
 function initMap() {
     "use strict";
     var scale = $mc.width() / 3600,
-        pings = [],
         ctx = $("#pings")[0].getContext("2d");
 
     glow.map = {};
@@ -20,19 +19,6 @@ function initMap() {
         }
     };
 
-    function addPing(latitude, longitude) {
-        longitude = ~~((-parseFloat(longitude)+90)*10*scale);
-        latitude = ~~((parseFloat(latitude)+180)*10*scale);
-        for (var n = 0; n<pings.length; n++) {
-            if (pings[n][0] < 0) {
-                pings[n][0] = 0;
-                pings[n][1] = longitude;
-                pings[n][2] = latitude;
-                return;
-            }
-        }
-        pings.push([0, longitude, latitude]);
-    }
     /* Each ping looks like [latitude, longitude, count]. It represents the
      * numbers of downloads in the timeframe from this location. */
     glow.map.playNext = function() {
@@ -46,52 +32,64 @@ function initMap() {
          * thing. */
         for (var j = 0, jj = pings.length; j < jj; j++) {
             // My kingdom for destructuring bind.
-            var ping = pings[j], loc = [ping[0], ping[1]], count = ping[2];
+            var ping = pings[j],
+                latitude = ~~((parseFloat(ping[0]) + 180) * 10 * scale),
+                longitude = ~~((-parseFloat(ping[1]) + 90) * 10 * scale),
+                count = ping[2];
             for (var k = 0; k < count; k++) {
-                currentData.push(loc);
+                currentData.push([0, latitude, longitude]);
             }
         }
         shuffle(currentData);
 
-        /* How many pings we've been through so far. */
-        var index = 0, total = currentData.length;
-        function drawPings(i) {
-            for (var goal = i * total; index < goal; index++) {
-                addPing.apply(null, currentData[index]);
-            }
-        }
-
-        vast.animate.over(response.interval * 1000, drawPings, this,
-                          {after: glow.map.playNext});
         glow.fetchMap(response.interval);
-    };
+        setTimeout(glow.map.playNext, response.interval * 1000);
 
-    function iteratePings(t) {
-        for (i=0; i<pings.length; i++) {
-            p = pings[i];
-            if (p[0] < 0) continue;
-            ctx.clearRect(p[2]-5,p[1]-5,10,10);
+        var start = 0,
+            total = currentData.length,
+            duration = response.interval * 1000,
+            reg = vast.GlobalClock.register(iteratePings, this);
+
+        function iteratePings(t) {
+            if (start == total) {
+                reg.die();
+            }
+            // How far along the current interval we are [0...1].
+            var tt = Math.min(1, (t - reg.start) / duration),
+                i, ping, age, end;
+
+            // Clear out the canvas.
+            for (i = start, end = tt * total; i < end; i++) {
+                ping = currentData[i];
+                ctx.clearRect(ping[1] - 5, ping[2] - 5, 10, 10);
+            }
+
+            var currentAge = -1;
+            for (i = start, end = tt * total; i < end; i++) {
+                ping = currentData[i];
+                if (ping[0] == 0) {
+                    ping[0] = t;
+                } else {
+                    age = (t - ping[0]) / 1000;
+                    if (age > 1) {
+                        // This ping has played out, don't come back to it.
+                        start++;
+                    } else {
+                        /* Setting fillStyle is expensive according to Chrome's
+                         * profiler, so only set it if the fillStyle has
+                         * changed. */
+                        if (age != currentAge) {
+                            ctx.fillStyle = "rgba(255, 255, 255, " + (1 - age) + ")";
+                            currentAge = age;
+                        }
+                        ctx.beginPath();
+                        ctx.arc(ping[1], ping[2], 5 * age, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
         }
-        for (var i = 0, ii = pings.length; i < ii; i++) {
-            p = pings[i];
-            if (p[0] < 0) {
-                continue;
-            }
-            if (p[0] == 0) {
-                p[0] = t;
-            }
-            var age = (t - p[0]) / 1000;
-            if (age > 1) {
-                p[0] = -1;
-            } else {
-                ctx.beginPath();
-                ctx.fillStyle = "rgba(255, 255, 255, " + (1 - age) + ")";
-                ctx.arc(p[2], p[1], 5 * age, 0, Math.PI * 2, true);
-                ctx.fill();
-            }
-        }
-    }
-    vast.GlobalClock.register(iteratePings, this);
+    };
 
     $(window).resize(vast.debounce(function() {
         $("#pings").css({

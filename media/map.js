@@ -58,15 +58,6 @@ function initMap() {
         glow.fetchMap(response.interval);
     };
 
-    $(window).resize(vast.debounce(function() {
-        $("#pings").css({
-            width: $mc.width() + "px",
-            height: $mc.height() + "px"
-        });
-        $("#pings")[0].width=$mc.width();
-        $("#pings")[0].height=$mc.height();
-    }, 500, this));
-
     var i,p,l,el;
     function iteratePings(t) {
         if (pool.length == pings.length) return;
@@ -94,4 +85,14 @@ function initMap() {
         }
     }
     vast.GlobalClock.register(iteratePings, this);
+
+    $(window).resize(vast.debounce(function() {
+        $("#pings").css({
+            width: $mc.width() + "px",
+            height: $mc.height() + "px"
+        });
+        $("#pings")[0].width=$mc.width();
+        $("#pings")[0].height=$mc.height();
+    }, 500, this));
+
 }

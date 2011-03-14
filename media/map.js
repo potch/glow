@@ -107,7 +107,9 @@ function initMap() {
                         currentAge = age;
                     }
                     ctx.beginPath();
-                    ctx.arc(ping[1] * glow.map.scale, ping[2] * glow.map.scale, 5 * age, 0, Math.PI * 2);
+                    // Firefox 3.6 requires the anticlockwise argument.
+                    ctx.arc(ping[1] * glow.map.scale, ping[2] * glow.map.scale,
+                            5 * age, 0, Math.PI * 2, false);
                     ctx.fill();
                 }
             }

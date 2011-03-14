@@ -102,10 +102,9 @@
       $(function(){
         // Wait 10 seconds to do webtrends so we can set up everything else.
         setTimeout(function() {
-          var _tag=new WebTrends();
-          $.getScript(_tag.dcsGetId(), function() {
-            _tag.dcsCollect();
-          });
+          var _tag=new WebTrends(),
+              collect = function() { _tag.dcsCollect(); };
+          _tag.dcsGetId() ?  $.getScript(_tag.dcsGetId(), collect) : collect();
         }, 10000);
       });
     </script>

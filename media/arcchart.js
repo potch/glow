@@ -73,12 +73,14 @@ $.fn.arcChart = function(opts) {
             } else {
                 if (tgt) {
                     label = tgt[0];
+                    if (label && currentlabel != label) {
+                        $tiptext.text(label + ": " + tgt[1]);
+                        currentLabel = label;
+                    }
+                    $tip.show();
+                } else {
+                    $tip.hide();
                 }
-                if (label && currentlabel != label) {
-                    $tiptext.text(label + ": " + tgt[1]);
-                    currentLabel = label;
-                }
-                $tip.show();
             }
             $tip.css({
                 left: e.clientX + "px",

@@ -15,7 +15,7 @@ glow.fetchCount = function(timeout) {
         glow.data.count.next = r;
         // We don't request data.sector until the page flips, but
         // but we want to be ready with the right url.
-        glow.data.sector.next = r.next.replace('count', 'daisy');
+        glow.data.sector.next = r.next.replace('count', 'arc');
     });
 };
 
@@ -174,7 +174,7 @@ $("#chart").bind("update", function(e, list, current) {
 glow.init = function() {
     $.getJSON(ROOT + glow.time + "/count.json", function(r) {
         glow.data.count.next = r;
-        glow.data.sector.next = ROOT + glow.time + "/daisy.json";
+        glow.data.sector.next = ROOT + glow.time + "/arc.json";
         glow.count.playNext();
         glow.bar.playNext();
 

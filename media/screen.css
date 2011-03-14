@@ -131,8 +131,8 @@ body, html {
     pointer-events: none;
 }
 polygon {
-  fill: #031841;
-  stroke: none;
+    fill: #031841;
+    stroke: none;
 }
 
 .glow {
@@ -148,32 +148,33 @@ polygon {
   border: 2px solid #fff;
 }
 .menu {
-  position: fixed;
-  bottom: -96px;
-  left: -64px;
-  height: 250px;
-  width: 250px;
-  z-index: 110;
-  background: #000;
-  border-radius: 128px;
-  -moz-border-radius: 128px;
-  -webkit-border-radius: 128px;
-  background: url(../media/sector.png) center no-repeat #000;
+    position: fixed;
+    bottom: -96px;
+    left: -64px;
+    height: 250px;
+    width: 250px;
+    z-index: 110;
+    background: #000;
+    border-radius: 128px;
+    -moz-border-radius: 128px;
+    -webkit-border-radius: 128px;
+    background: url(../media/sector.png) center no-repeat #000;
+    cursor: pointer;
 }
 .view-sector .menu {
     background: url(../media/globe.png) center no-repeat #000;
 }
 .bars {
-  position: fixed;
-  bottom: 0px;
-  right: 0px;
-  height: 120px;
-  width: 100%;
-  border-width: 1px 0 0 0;
-  z-index: 100;
-  text-align: right;
-  background: black;
-  white-space: nowrap;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    height: 120px;
+    width: 100%;
+    border-width: 1px 0 0 0;
+    z-index: 100;
+    text-align: right;
+    background: black;
+    white-space: nowrap;
 }
 .bars .col {
     text-align: center;
@@ -339,6 +340,7 @@ noscript {
     background: url(../media/sqlstreamlogo.png) 98% 98% no-repeat #000;
 }
 #chart-sidebar {
+    font-family: sans-serif;
     width: 300px;
     border-left: 1px solid white;
     position: absolute;
@@ -348,8 +350,23 @@ noscript {
     overflow: auto;
 }
 #rankedlist {
-    margin: 2em;
+    margin: 1em;
+    font-size: 13px;
 }
-#rankedlist li span {
+#rankedlist a {
+    display: block;
+    padding: .5em;
+    color: white;
+    text-decoration: none;
+}
+#rankedlist a:hover {
+    background: #888;
+}
+.ltr #rankedlist li span {
     float: right;
+    margin-left: 12px;
+}
+.rtl #rankedlist li span {
+    float: left;
+    margin-right: 12px;
 }

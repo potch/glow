@@ -74,6 +74,7 @@ glow.toggleView = function() {
         glow.view = "map";
         $("#sunburst").hide();
     }
+    sizePageElements();
     $("body").toggleClass("view-sector", glow.view == "chart");
 }
 
@@ -86,15 +87,59 @@ $(window).resize(vast.debounce(sizePageElements, 500, this));
 
 function initSunburst() {
   $.getJSON(glow.data.sector.next, function(r) {
-    glow.sector = $("#chart").arcChart({data: r.data});
+      processGeo(r.data, function(decodedData) {
+          glow.sector = $("#chart").arcChart({data: decodedData});
+          $("#crumb").click(glow.sector.zoomOut);
+      });
   });
 }
 
-$("#chart").bind("update", function(e, list) {
-    var $el = $("#rankedlist").empty();
+function processGeo(_data, cb) {
+    $.getScript("locale/" + glow.locale + "/countries.js", function() {
+        $.getScript("media/regions.js", function() {
+            cb.call(null, [null, _data[1], decodeGeo(_data[2], 1)]);
+        });
+    });
+}
 
-    for (var i=0; i<list.length; i++) {
-        $el.append("<li>" + list[i][2][0] + " <span>" + list[i][2][1] + "</span></li>");
+function decodeGeo(data, depth, parent) {
+    if (!data) return;
+    var i, name, row,
+        ret = [], o;
+    for (i=0; i < data.length; i++) {
+        row = data[i];
+        switch (depth) {
+            case 2:
+                name = _countries[row[0]] || row[0];
+                break;
+            case 3:
+                name = _regions[parent][row[0]] || row[0];
+                break;
+            default:
+                name = row[0];
+        }
+        ret.push([name, row[1], decodeGeo(row[2], depth+1, row[0])]);
+    }
+    return ret;
+}
+
+
+$("#chart").bind("update", function(e, list, current) {
+    var $ul = $("#rankedlist").empty(),
+        $crumb = $("#crumb").empty(),
+        i;
+
+    if (current) {
+        $crumb.append(current[2][0]);
+    }
+
+    $ul.undelegate().delegate("li a", "click", function(e) {
+        e.preventDefault();
+        var $li = $(this).closest("li");
+        glow.sector.zoomIn($li.index());
+    })
+    for (i=0; i<list.length; i++) {
+        $ul.append("<li><a href='#'>" + list[i][2][0] + " <span>" + numberfmt(list[i][2][1]) + "</span></a></li>");
     }
 
 });

@@ -43,7 +43,7 @@ $.fn.arcChart = function(opts) {
         var data = currentContext.length ? currentContext[2][2] : opts.data[2];
         drawChildren(data, 1, o.sz, o);
         ctx.restore();
-        if (!animation) $canvas.trigger("update", [clickMap]);
+        if (!animation) $canvas.trigger("update", [clickMap, currentContext, contextStack]);
     }
     
     this.dbg = function() {
@@ -99,56 +99,65 @@ $.fn.arcChart = function(opts) {
             r = Math.sqrt(x*x + y*y);
             tgt = false;
             if (a < 0) a += Math.PI * 2;
-            if (r < 80 * scaleFactor && contextStack.length) {
-                span = (currentContext[1]-currentContext[0]);
-                animation = vast.animate.over(
-                    500,
-                    function(i) {
-                        var j = vast.ease.easeout(i);
-                        $canvas.redraw({
-                            sa: currentContext[0] * j,
-                            sz: (2 * Math.PI - span) * (1-j) + span,
-                            innerRad: 50 + 30 * j
-                        });
-                    },
-                    this,
-                    {after: function() {
-                        animation = false;
-                        currentContext = contextStack.pop() || false;
-                        $canvas.redraw();
-                    }}
-                );
+            if (r < 80 * scaleFactor) {
+                $canvas.zoomOut();
             } else if (r < 200 * scaleFactor && r > 80 * scaleFactor) {
                 for (var i=0; i<clickMap.length; i++) {
                     p = clickMap[i];
                     if (a > p[0] && a < p[1]) {
-                        tgt = p;
+                        $canvas.zoomIn(i);
+                        break;
                     }
-                }
-                if (tgt && tgt[2][2]) {
-                    contextStack.push(currentContext);
-                    currentContext = tgt;
-                    span = (tgt[1]-tgt[0]);
-                    animation = vast.animate.over(
-                        500,
-                        function(i) {
-                            var j = vast.ease.easeout(i);
-                            $canvas.redraw({
-                                sa: tgt[0] * (1-j),
-                                sz: (2 * Math.PI - span) * j + span,
-                                innerRad: 80 - 30 * j
-                            });
-                        },
-                        this,
-                        {after: function() {
-                            animation = false;
-                            $canvas.redraw();
-                        }}
-                    );
                 }
             }
         });
     })();
+    
+    this.zoomOut = function() {
+        if (contextStack.length < 1) return;
+        span = (currentContext[1]-currentContext[0]);
+        animation = vast.animate.over(
+            500,
+            function(i) {
+                var j = vast.ease.easeout(i);
+                $canvas.redraw({
+                    sa: currentContext[0] * j,
+                    sz: (2 * Math.PI - span) * (1-j) + span,
+                    innerRad: 50 + 30 * j
+                });
+            },
+            this,
+            {after: function() {
+                animation = false;
+                currentContext = contextStack.pop() || false;
+                $canvas.redraw();
+            }}
+        );
+    };
+    
+    this.zoomIn = function(which) {
+        contextStack.push(currentContext);
+        var tgt = clickMap[which];
+        if (!tgt || !tgt[2][2]) return;
+        currentContext = tgt;
+        span = (tgt[1]-tgt[0]);
+        animation = vast.animate.over(
+            500,
+            function(i) {
+                var j = vast.ease.easeout(i);
+                $canvas.redraw({
+                    sa: tgt[0] * (1-j),
+                    sz: (2 * Math.PI - span) * j + span,
+                    innerRad: 80 - 30 * j
+                });
+            },
+            this,
+            {after: function() {
+                animation = false;
+                $canvas.redraw();
+            }}
+        );
+    };
 
     function drawChildren(pts, depth, arcSize, o) {
         if (depth > opts.maxDrawDepth) return;

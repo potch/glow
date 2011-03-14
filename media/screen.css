@@ -146,15 +146,15 @@ polygon {
 .view-sector .menu {
     background: url(../media/globe.png) center no-repeat #000;
 }
-#shill {
+#sqlstream {
     position: absolute;
     z-index: 100;
     /* 120px puts us right above the bars. */
-    bottom: 120px;
-    right: 5px;
+    bottom: 5px;
+    right: 10px;
     outline: none;
 }
-.view-sector #shill {
+.view-sector #sqlstream {
     display: none;
 }
 .bars {

@@ -19,7 +19,7 @@ $.fn.arcChart = function(opts) {
         clickMap = [],
         cx, cy,
         animation = false;
-    
+
     this.redraw = function(o) {
         o = $.extend({
             sz: 2 * PI,
@@ -44,11 +44,11 @@ $.fn.arcChart = function(opts) {
         ctx.restore();
         if (!animation) $canvas.trigger("update", [clickMap, currentContext, contextStack]);
     }
-    
+
     this.dbg = function() {
         console.log(clickMap);
     };
-    
+
     (function() {
         var currentlabel, pos,
             x, y, a, r,
@@ -74,7 +74,7 @@ $.fn.arcChart = function(opts) {
                 if (tgt) {
                     label = tgt[0];
                     if (label && currentlabel != label) {
-                        $tiptext.text(label + ": " + tgt[1]);
+                        $tiptext.text(label + ": " + numberfmt(tgt[1]));
                         currentLabel = label;
                     }
                     $tip.show();
@@ -113,7 +113,7 @@ $.fn.arcChart = function(opts) {
             }
         });
     })();
-    
+
     this.zoomOut = function() {
         if (contextStack.length < 1) return;
         span = (currentContext[1]-currentContext[0]);
@@ -135,7 +135,7 @@ $.fn.arcChart = function(opts) {
             }}
         );
     };
-    
+
     this.zoomIn = function(which) {
         var tgt = clickMap[which];
         if (!tgt || !tgt[2][2]) return;
@@ -183,7 +183,7 @@ $.fn.arcChart = function(opts) {
             p, hue;
         ctx.save();
         for (var i=0; i<len; i++) {
-            p = pts[i];            
+            p = pts[i];
             if (!p._pct) p._pct = p[1] / total;
             segmentArc = p._pct * arcSize;
             if ((p._pct >= cutoff || depth == 1) && segmentArc > .005) {

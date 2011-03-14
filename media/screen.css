@@ -283,7 +283,10 @@ polygon {
     font-size: 36px;
     line-height: 36px;
     background: -moz-linear-gradient(center top , #84C63C 0%, #489615 100%) repeat scroll 0 0 transparent;
-    border-radius: 6px 6px 6px 6px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#84C63C), to(#489615)) repeat scroll 0 0 transparent;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
     height: 36px;
     position: relative;
     display: block;

@@ -38,7 +38,6 @@ $.fn.arcChart = function(opts) {
         ctx.translate(cx, cy);
         ctx.scale(scaleFactor, scaleFactor);
         ctx.rotate(-PI_2);
-        ctx.fillRect(0,0,1,1);
         ctx.rotate(o.sa);
         var data = currentContext.length ? currentContext[2][2] : opts.data[2];
         drawChildren(data, 1, o.sz, o);
@@ -136,9 +135,9 @@ $.fn.arcChart = function(opts) {
     };
     
     this.zoomIn = function(which) {
-        contextStack.push(currentContext);
         var tgt = clickMap[which];
         if (!tgt || !tgt[2][2]) return;
+        contextStack.push(currentContext);
         currentContext = tgt;
         span = (tgt[1]-tgt[0]);
         animation = vast.animate.over(
@@ -187,12 +186,12 @@ $.fn.arcChart = function(opts) {
             p = pts[i];            
             if (!p._pct) p._pct = p[1] / total;
             segmentArc = p._pct * arcSize;
-            if (p._pct >= cutoff || depth == 1) {
+            if ((p._pct >= cutoff || depth == 1) && segmentArc > .005) {
                 hue = baseHue + i*hueSpan;
                 ctx.fillStyle = "hsl(" + ~~(360-hue) + ", 95%, " + (50 + depth*10) + "%)";
                 ctx.beginPath();
-                ctx.arc(0,0,outerRad, 0, segmentArc, false);
-                ctx.arc(0,0,innerRad, segmentArc, 0, true);
+                ctx.arc(0,0,outerRad-1, 0, segmentArc - .005, false);
+                ctx.arc(0,0,innerRad, segmentArc - .005, 0, true);
                 ctx.lineTo(outerRad, 0);
                 ctx.fill();
                 if (depth == 1) {

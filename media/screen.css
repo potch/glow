@@ -335,14 +335,19 @@ noscript {
 }
 #sunburst {
     display: none;
+/*    background-image: -moz-radial-gradient(center -5% 45deg, #badfef, #4b94d0 20%, #2e70b4 30%, #002a77 60%);
+    background-image: -webkit-gradient(radial, 50% -5%, 1, 50% -5%, 1800, from(#badfef), color-stop(20%, #4b94d0), color-stop(30%, #2e70b4), color-stop(60%, #002a77));
+*/
+    background-color: #222;
 }
 #sunburst canvas {
-    background: url(../media/sqlstreamlogo.png) 98% 98% no-repeat #000;
+    background: url(../media/sqlstreamlogo.png) 98% 98% no-repeat transparent;
 }
 #chart-sidebar {
     font-family: sans-serif;
     width: 300px;
-    border-left: 1px solid white;
+    background-color: #181818;
+    border-left: 1px solid #050505;
     position: absolute;
     height: 100%;
     right: 0;
@@ -360,7 +365,7 @@ noscript {
     text-decoration: none;
 }
 #rankedlist a:hover {
-    background: #888;
+    background: #444;
 }
 .ltr #rankedlist li span {
     float: right;

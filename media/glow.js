@@ -82,6 +82,18 @@ function sizePageElements() {
   $("#chart")[0].width = $("#sunburst").width() - 300;
   $("#chart")[0].height = $("#sunburst").height();
   if (glow.sector) glow.sector.redraw();
+  glow.map.scale = $mc.width() / 3600;
+  $("#mapdata").css({
+    "-moz-transform": "scale(" + glow.map.scale + ")",
+    "-webkit-transform": "scale(" + glow.map.scale + ")",
+    "-o-transform": "scale(" + glow.map.scale + ")"
+  });
+  $("#pings").css({
+      width: $mc.width() + "px",
+      height: $mc.height() + "px"
+  });
+  $("#pings")[0].width=$mc.width();
+  $("#pings")[0].height=$mc.height();
 }
 $(window).resize(vast.debounce(sizePageElements, 500, this));
 

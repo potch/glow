@@ -1,11 +1,11 @@
 function initMap() {
     "use strict";
-    var scale = $mc.width() / 3600,
-        ctx = $("#pings")[0].getContext("2d"),
+    var ctx = $("#pings")[0].getContext("2d"),
         currentData = [],
         start = 0, total = 0, duration = 0, extra = 0;
 
     glow.map = {};
+    glow.map.scale = $mc.width() / 3600;
 
     ctx.fillStyle = "#fff";
 
@@ -34,8 +34,8 @@ function initMap() {
          * thing. */
         for (var j = 0, jj = pings.length; j < jj; j++) {
             var ping = pings[j],
-                latitude = ~~((parseFloat(ping[0]) + 180) * 10 * scale),
-                longitude = ~~((-parseFloat(ping[1]) + 90) * 10 * scale),
+                latitude = ~~((parseFloat(ping[0]) + 180) * 10),
+                longitude = ~~((-parseFloat(ping[1]) + 90) * 10),
                 count = ping[2];
             for (var k = 0; k < count; k++) {
                 newData.push([0, latitude, longitude]);
@@ -83,7 +83,7 @@ function initMap() {
         // Clear out the canvas.
         for (i = start; i < end; i++) {
             ping = currentData[i];
-            ctx.clearRect(ping[1] - 5, ping[2] - 5, 10, 10);
+            ctx.clearRect(ping[1] * glow.map.scale - 5, ping[2] * glow.map.scale- 5, 10, 10);
         }
 
         for (i = start; i < end; i++) {
@@ -107,19 +107,10 @@ function initMap() {
                         currentAge = age;
                     }
                     ctx.beginPath();
-                    ctx.arc(ping[1], ping[2], 5 * age, 0, Math.PI * 2);
+                    ctx.arc(ping[1] * glow.map.scale, ping[2] * glow.map.scale, 5 * age, 0, Math.PI * 2);
                     ctx.fill();
                 }
             }
         }
     }
-
-    $(window).resize(vast.debounce(function() {
-        $("#pings").css({
-            width: $mc.width() + "px",
-            height: $mc.height() + "px"
-        });
-        $("#pings")[0].width=$mc.width();
-        $("#pings")[0].height=$mc.height();
-    }, 500, this));
 }

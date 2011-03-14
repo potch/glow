@@ -100,6 +100,7 @@ body, html {
     left: 0;
     width: 3600px;
     height: 1800px;
+    background: url(../media/sqlstreamlogo.png) 99% 98% no-repeat transparent;
 }
 #mapdata {
     -moz-transform-origin: 0 0;
@@ -306,9 +307,6 @@ noscript {
 #sunburst {
     display: none;
     background-color: #222;
-}
-#sunburst canvas {
-    background: url(../media/sqlstreamlogo.png) 98% 98% no-repeat transparent;
 }
 #chart-sidebar {
     font-family: sans-serif;

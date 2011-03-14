@@ -114,6 +114,14 @@ function processGeo(_data, cb) {
     });
 }
 
+var _continents = {
+    "EU": "Europe",
+    "NA": "North America",
+    "AS": "Asia",
+    "SA": "South America",
+    "AF": "Africa",
+    "OC": "Oceania"
+};
 function decodeGeo(data, depth, parent) {
     if (!data) return;
     var i, name, row,
@@ -121,6 +129,9 @@ function decodeGeo(data, depth, parent) {
     for (i=0; i < data.length; i++) {
         row = data[i];
         switch (depth) {
+            case 1:
+                name = gettext(_continents[row[0]]) || row[0];
+                break;
             case 2:
                 name = _countries[row[0]] || row[0];
                 break;

@@ -256,53 +256,51 @@ polygon {
     text-align: right;
     right: 20px;
 }
-#wordmark a {
+#dlbutton {
+    color: white;
+    text-shadow: -5px 0 14px rgba(240,240,255,.5),
+                 5px 0 14px rgba(240,240,255,.5);
+    font-family: MetaBold;
     text-decoration: none;
-    color: inherit;
+    font-size: 36px;
+    line-height: 36px;
+    background: -moz-linear-gradient(center top , #84C63C 0%, #489615 100%) repeat scroll 0 0 transparent;
+    border-radius: 6px 6px 6px 6px;
+    height: 36px;
+    position: relative;
+    display: block;
 }
-#wordmark {
-  position: absolute;
-  right: 30px;
-  top: 20px;
-  text-shadow: -5px 0 14px rgba(240,240,255,.5),
-               5px 0 14px rgba(240,240,255,.5);
-  color: rgba(255,255,255,.95);
+.ltr #dlbutton {
+    float: right;
+    padding: 7px 20px 12px 50px;
 }
-.rtl #wordmark {
-  left: 30px;
-  right: 0;
+.rtl #dlbutton {
+    float: left;
+    padding: 7px 50px 12px 20px;
 }
-#wordmark h2 {
-  font-size: 16px;
-  line-height: 16px;
-  padding-left: 2px;
-  margin: 0;
+#dlbutton:before {
+    content: "";
+    width: 73px;
+    height: 77px;
+    position: absolute;
+    display: block;
+    top: -7px;
+    left: -35px;
+    background: url(../media/logo-med.png);
 }
-.rtl #wordmark h2 {
-  padding-right: 126px;
+.rtl #dlbutton:before {
+    left: auto;
+    right: -35px;
 }
-#wordmark h1 {
-  font-size: 45px;
-  line-height: 45px;
-  margin: 0;
+#cta {
+    position: absolute;
+    top: 22px;
 }
-#wordmark b {
-  font-size: 80px;
-  float: right;
-  margin: -16px 0 0;
+.ltr #cta {
+    right: 40px;
 }
-.rtl #wordmark b {
-}
-#wordmark small {
-  font-size: 8px;
-  margin: 16px 0 0 2px;
-  height: 16px;
-  width: 10px;
-  position: relative;
-  opacity: .2;
-  line-height: 8px;
-  vertical-align: top;
-  display: inline-block;
+.rtl #cta {
+    left: 40px;
 }
 #bigcounter.flash {
   border-color: #e22;

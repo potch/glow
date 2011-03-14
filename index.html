@@ -23,18 +23,13 @@
         <div class="menu glow"></div>
         <div class="bars glow"></div>
         <div class="masthead glow">
-          <div id="wordmark">
-            <a href="http://www.mozilla.com/firefox/?from=glow">
-              <h2>mozilla</h2>
-              <h1>Firefox<small>&reg;</small><b>4</b></h1>
-            </a>
+          <div id="cta">
+            <a id="dlbutton" href="#" gettext="Get Firefox"></a>
           </div>
+          <a href="http://www.sqlstream.com" id="shill" target="_blank">
+            <img src="media/sqlstreamlogo.png" width="85" height="19">
+          </a>
         </div>
-        <div class="cta">
-        </div>
-        <a href="http://www.sqlstream.com" id="shill" target="_blank">
-          <img src="media/sqlstreamlogo.png" width="85" height="19">
-        </a>
       </section>
       <section id="geo" dir="ltr">
         <div id="map_container">
@@ -79,6 +74,9 @@
       $.getScript("locale/" + glow.locale + "/l10n.js", function() {
         document.title = gettext("Firefox 4 Download Stats");
         glow.init();
+        $("[gettext]").each(function(){
+          $(this).text(gettext($(this).attr("gettext")));
+        });
       });
 
       var $mc = $("#map_container"),

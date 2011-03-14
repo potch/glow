@@ -11,11 +11,12 @@ var ROOT = "data/json/";
 
 // Load the next file of json data before timeout seconds have elapsed.
 glow.fetchCount = function(timeout) {
+    // We don't request data.sector until the page flips, but
+    // but we want to be ready with the right url.
+    var sector = glow.data.count.next.next.replace('count', 'arc');
     getData(glow.data.count.next.next, timeout, function(r) {
         glow.data.count.next = r;
-        // We don't request data.sector until the page flips, but
-        // but we want to be ready with the right url.
-        glow.data.sector.next = r.next.replace('count', 'arc');
+        glow.data.sector.next = sector;
     });
 };
 

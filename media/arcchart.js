@@ -1,3 +1,4 @@
+var hueTable = [193, 192, 192, 193, 193, 192, 192, 197, 201, 211, 216, 219, 222, 54, 58, 58, 57, 55, 54, 51, 47, 42, 39, 36, 47, 45, 43, 41, 39, 47, 45, 47, 32, 40, 38, 36, 34, 35, 30, 33, 35, 33, 31, 30, 30, 29, 29, 29, 29, 29, 29, 28, 29, 28, 28, 28, 28, 27, 27, 27, 26, 26, 25, 24, 24, 23, 22, 22, 21, 21, 21, 21, 20, 23, 24, 25, 26, 29, 31, 223, 222, 219, 209, 202, 198, 191, 193, 193, 192, 192];
 
 var PI = Math.PI;
 var PI_2 = PI/2;
@@ -25,8 +26,7 @@ $.fn.arcChart = function(opts) {
             sa: 0,
             innerRad: 50,
             radStep: 30,
-            hue: currentContext[3],
-            hueSpan: currentContext[4]
+            hue: currentContext[3]
         }, o);
         ctx.clearRect(0,0,$canvas.width(),$canvas.height());
         $canvas[0].width = $canvas.width();
@@ -167,7 +167,6 @@ $.fn.arcChart = function(opts) {
             total = o.total,
             other = 0,
             baseHue = o.hue || 0,
-            hueSpan = o.hueSpan,
             arcOffset = o.sa,
             cutoff = animation ? .1 : .01;
         if (!o.total) {
@@ -179,7 +178,6 @@ $.fn.arcChart = function(opts) {
         if (depth == 1) {
             clickMap = [];
         }
-        hueSpan = 1/len * ((o.hueSpan/2) || 360);
         var innerRad = depth * o.radStep + o.innerRad,
             outerRad = innerRad + o.radStep,
             p, hue;
@@ -189,23 +187,27 @@ $.fn.arcChart = function(opts) {
             if (!p._pct) p._pct = p[1] / total;
             segmentArc = p._pct * arcSize;
             if ((p._pct >= cutoff || depth == 1) && segmentArc > .005) {
-                hue = baseHue + i*hueSpan;
-                ctx.fillStyle = "hsl(" + ~~(360-hue) + ", " + (90 - depth*20) + "%, 50%)";
+                if (depth == 1 && !baseHue) {
+                    hue = hueTable[~~((arcOffset+segmentArc/2)/arcSize * 90)];
+                } else {
+                    hue = o.hue;
+                }
+                ctx.fillStyle = "hsl(" + hue + ", " + (90 - depth*20) + "%, 50%)";
                 ctx.beginPath();
                 ctx.arc(0,0,outerRad-1, 0, segmentArc - .005, false);
                 ctx.arc(0,0,innerRad, segmentArc - .005, 0, true);
                 ctx.lineTo(outerRad, 0);
                 ctx.fill();
                 if (depth == 1) {
-                    clickMap.push([arcOffset, arcOffset + segmentArc, p, hue, hueSpan]);
+                    clickMap.push([arcOffset, arcOffset + segmentArc, p, hue]);
                 }
                 if (p._pct > .05) {
-                    if (p[2]) drawChildren(p[2], depth+1, segmentArc, $.extend(o, {total: p[1], hue: hue, hueSpan: hueSpan}));
+                    if (p[2]) drawChildren(p[2], depth+1, segmentArc, $.extend(o, {total: p[1], hue: hue}));
                 }
             }
             // ctx.stroke();
             ctx.rotate(segmentArc);
-            if (depth == 1) arcOffset += segmentArc;
+            arcOffset += segmentArc;
         }
         ctx.restore();
     }

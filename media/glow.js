@@ -99,7 +99,9 @@ $(window).resize(vast.debounce(sizePageElements, 500, this));
 
 function initSunburst() {
   $.getJSON(glow.data.sector.next, function(r) {
+      dbg('sector data loaded');
       processGeo(r.data, function(decodedData) {
+          dbg('processing done');
           glow.sector = $("#chart").arcChart({data: decodedData});
           $("#crumb").click(glow.sector.zoomOut);
       });
@@ -108,7 +110,9 @@ function initSunburst() {
 
 function processGeo(_data, cb) {
     $.getScript("locale/" + glow.locale + "/countries.js", function() {
+        dbg('loaded countries');
         $.getScript("media/regions.js", function() {
+            dbg('loaded regions');
             cb.call(null, [null, _data[1], decodeGeo(_data[2], 1)]);
         });
     });

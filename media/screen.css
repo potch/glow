@@ -327,6 +327,10 @@ noscript {
     right: 0;
     border-left: 1px solid #050505;
 }
+#crumb {
+    height: 15px;
+    margin: 20px 19px;
+}
 #rankedlist {
     margin: 1em;
     font-size: 13px;

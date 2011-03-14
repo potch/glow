@@ -152,6 +152,7 @@ polygon {
     /* 120px puts us right above the bars. */
     bottom: 120px;
     right: 5px;
+    outline: none;
 }
 .view-sector #shill {
     display: none;

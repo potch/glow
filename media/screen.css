@@ -100,14 +100,12 @@ body, html {
     left: 0;
     width: 3600px;
     height: 1800px;
-    background: url(../media/sqlstreamlogo.png) 99% 98% no-repeat transparent;
 }
 #mapdata {
     -moz-transform-origin: 0 0;
     width:3600px;
     height:1800px;
 }
-
 #mapdata img {
     width: 3600px;
     height: 1800px;
@@ -147,6 +145,16 @@ polygon {
 }
 .view-sector .menu {
     background: url(../media/globe.png) center no-repeat #000;
+}
+#shill {
+    position: absolute;
+    z-index: 100;
+    /* 120px puts us right above the bars. */
+    bottom: 120px;
+    right: 5px;
+}
+.view-sector #shill {
+    display: none;
 }
 .bars {
     position: fixed;
@@ -246,6 +254,10 @@ polygon {
 .rtl #bigcounter {
     text-align: right;
     right: 20px;
+}
+#wordmark a {
+    text-decoration: none;
+    color: inherit;
 }
 #wordmark {
   position: absolute;

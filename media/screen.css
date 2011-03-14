@@ -150,8 +150,8 @@ polygon {
     position: absolute;
     z-index: 100;
     /* 120px puts us right above the bars. */
-    bottom: 5px;
-    right: 10px;
+    bottom: 120px;
+    right: 5px;
     outline: none;
 }
 .view-sector #sqlstream {

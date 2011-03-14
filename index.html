@@ -33,9 +33,7 @@
       </section>
       <section id="geo" dir="ltr">
         <div id="map_container">
-          <div id="map">
-            <div id="mapdata"></div>
-          </div>
+          <div id="mapdata"></div>
           <canvas id="pings" width="3600" height="1800"></canvas>
         </div>
       </section>
@@ -92,11 +90,9 @@
             $("#mapdata").empty().append('<img width="3600" height"1800" src="maps/world_4.png">');
           }
           $("#mapdata").css({
-            "-moz-transform": "scale(" + $mc.width()/3600 + ")",
+            "-moz-transform-origin": "0 0",
             "-webkit-transform-origin": "0 0",
-            "-webkit-transform": "scale(" + $mc.width()/3600 + ")",
-            "-o-transform-origin": "0 0",
-            "-o-transform": "scale(" + $mc.width()/3600 + ")"
+            "-o-transform-origin": "0 0"
           });
           cb();
         }, "text");

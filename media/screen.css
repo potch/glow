@@ -81,18 +81,10 @@ body, html {
     top: 92px;
     width: 100%;
     background: #000;
-    height: -moz-calc(100% - 213px);
 }
-#map {
-  position: relative;
-  top: 0;
-  left: 0;
-  -moz-transition-duration: .2s;
-  -moz-transition-property: -moz-transform, top, left;
-  -moz-transform-origin: 0 0;
-  -webkit-transform-origin: 0 0;
-  background-image: -moz-radial-gradient(center -5% 45deg, #badfef, #4b94d0 20%, #2e70b4 30%, #002a77 60%);
-  background-image: -webkit-gradient(radial, 50% -5%, 1, 50% -5%, 1800, from(#badfef), color-stop(20%, #4b94d0), color-stop(30%, #2e70b4), color-stop(60%, #002a77));
+#geo {
+    background-image: -moz-radial-gradient(center -5% 45deg, #badfef, #4b94d0 20%, #2e70b4 30%, #002a77 60%);
+    background-image: -webkit-gradient(radial, 50% -5%, 1, 50% -5%, 1800, from(#badfef), color-stop(20%, #4b94d0), color-stop(30%, #2e70b4), color-stop(60%, #002a77));
 }
 #pings {
     position: absolute;
@@ -102,9 +94,14 @@ body, html {
     height: 1800px;
 }
 #mapdata {
-    -moz-transform-origin: 0 0;
+    -moz-transform-origin: 0 100%;
+    -webkit-transform-origin: 0 100%;
+    -o-transform-origin: 0 100%;
     width:3600px;
     height:1800px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 #mapdata img {
     width: 3600px;

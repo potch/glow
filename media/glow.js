@@ -80,16 +80,26 @@ glow.toggleView = function() {
 }
 
 function sizePageElements() {
-    $("#sunburst").css("height", $("body").height() - 200);
+    var $geo = $("#geo");
+    $("#sunburst, #geo").css("height", $("body").height() - 213);
     $("#chart")[0].width = $("#sunburst").width() - 300;
     $("#chart")[0].height = $("#sunburst").height();
     if (glow.sector) glow.sector.redraw();
-    glow.map.scale = $mc.width() / 3600;
+    if ($geo.width() / $geo.height() > 2) {
+        glow.map.scale = $geo.height() / 1800;
+    } else {
+        glow.map.scale = $geo.width() / 3600;
+    }
+    $("#mapdata, #pings").css({
+        "top": $geo.height() - 1800 * glow.map.scale,
+        "left": ($geo.width() - 3600 * glow.map.scale) / 2
+    });
     $("#mapdata").css({
         "-moz-transform": "scale(" + glow.map.scale + ")",
         "-webkit-transform": "scale(" + glow.map.scale + ")",
         "-o-transform": "scale(" + glow.map.scale + ")"
     });
+    if ($("#geo").height)
     $("#pings").css({
         width: $mc.width() + "px",
         height: $mc.height() + "px"

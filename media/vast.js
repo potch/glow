@@ -241,7 +241,7 @@ function Vast() {
     })();
     GlobalClock.start();
     $(window).blur(function() {
-        GLOBAL_CLOCK_INTERVAL = 500;
+        GLOBAL_CLOCK_INTERVAL = 250;
     });
 
     $(window).focus(function() {

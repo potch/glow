@@ -110,14 +110,52 @@ function sizePageElements() {
 $(window).resize(vast.debounce(sizePageElements, 500, this));
 
 function initSunburst() {
+  var loader = loading();
   $.getJSON(glow.data.sector.next, function(r) {
       dbg('sector data loaded');
       processGeo(r.data, function(decodedData) {
           dbg('processing done');
+          clearInterval(loader);
           glow.sector = $("#chart").arcChart({data: decodedData});
           $("#crumb").click(glow.sector.zoomOut);
       });
   });
+}
+
+function loading() {
+    var c = $('#chart'),
+        ctx = c[0].getContext('2d'),
+        wedges = 8,
+        cnt = 0;
+    return setInterval(function(){
+        ctx.save();
+        ctx.fillStyle = 'rgba(227, 159, 28, .1)';
+        ctx.translate(c[0].width / 2, c[0].height / 2);
+        ctx.clearRect(-70, -70, 140, 140);
+        for (var i = 0; i < 8; i++) {
+            ctx.rotate(Math.PI / 4);
+            if (i == cnt) {
+                ctx.save();
+                ctx.shadowColor = 'rgba(227, 159, 28, .8)';
+                ctx.shadowBlur = 5;
+                ctx.fillStyle = 'rgb(227, 159, 28)';
+                wedge();
+                ctx.restore();
+            } else {
+                wedge();
+            }
+        }
+        function wedge() {
+            ctx.beginPath();
+            ctx.arc(0, 0, 60, 0, Math.PI / 8, 0);
+            ctx.arc(0, 0, 20, Math.PI / 8, 0, 1);
+            ctx.lineTo(60, 0);
+            ctx.stroke();
+            ctx.fill();
+        }
+        cnt = ++cnt % 8;
+        ctx.restore();
+    }, 90);
 }
 
 function processGeo(_data, cb) {

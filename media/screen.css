@@ -261,7 +261,7 @@ polygon {
   background-image: url(../media/starburst.png), url(../media/bg-header.png);
   background-repeat: no-repeat, repeat;
   background-position: center -50px, top left;
-  
+
 }
 .rtl .masthead {
   left: 0;
@@ -280,6 +280,10 @@ polygon {
 }
 .rtl .masthead h1 {
     right: 40px;
+}
+h1, #bigcounter {
+  text-shadow: -5px 0 14px rgba(240,240,255,.5),
+                5px 0 14px rgba(240,240,255,.5);
 }
 #bigcounter {
   color: #fff;

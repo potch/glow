@@ -57,8 +57,11 @@ function initBars() {
             }
         }
 
-        // Drop the oldest bar so it can get gc'd.
-        container.removeChild(container.lastChild);
+        // Each bar is 60px wide, keep 60 at all times in case we resize.
+        var numChildren = container.childNodes.length;
+        if (numChildren > 60 && $(window).width() / 60 < numChildren) {
+            container.removeChild(container.lastChild);
+        }
         // Make room for a new bar.
         $bars.addClass('slide');
 

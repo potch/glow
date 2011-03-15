@@ -81,17 +81,17 @@ glow.toggleView = function() {
 
 function sizePageElements() {
     var $geo = $("#geo");
-    $("#sunburst, #geo").css("height", $("body").height() - 213);
+    $("#sunburst, #geo").css("height", $("body").height() - 248);
     $("#chart")[0].width = $("#sunburst").width() - 300;
     $("#chart")[0].height = $("#sunburst").height();
     if (glow.sector) glow.sector.redraw();
     if ($geo.width() / $geo.height() > 2) {
-        glow.map.scale = $geo.height() / 1800;
+        glow.map.scale = $geo.height() / 1650;
     } else {
         glow.map.scale = $geo.width() / 3600;
     }
     $("#mapdata, #pings").css({
-        "top": $geo.height() - 1800 * glow.map.scale,
+        "top": $geo.height() - 1650 * glow.map.scale,
         "left": ($geo.width() - 3600 * glow.map.scale) / 2
     });
     $("#mapdata").css({

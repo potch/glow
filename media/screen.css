@@ -55,11 +55,18 @@ table {
 /************************************/
 
 @font-face {
+    font-family: 'MetaBlack';
+    src: url('http://www.mozilla.com/img/fonts/MetaWebPro-Black.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
     font-family: 'MetaBold';
     src: url('http://www.mozilla.com/img/fonts/MetaWebPro-Bold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
 }
+
 body, html {
   background: black;
   height: 100%;
@@ -78,7 +85,7 @@ body, html {
 }
 #geo, #sunburst {
     position: absolute;
-    top: 92px;
+    top: 126px;
     width: 100%;
     background: #000;
 }
@@ -108,6 +115,15 @@ body, html {
     height: 1800px;
     overflow: hidden;
     pointer-events: none;
+}
+#logo {
+    position: absolute;
+    top: 20px;
+    width: 146px;
+    height: 150px;
+    left: 50%;
+    margin-left: -73px;
+    z-index: 9000;
 }
 polygon {
     fill: #031841;
@@ -146,9 +162,9 @@ polygon {
 #sqlstream {
     position: absolute;
     z-index: 100;
-    /* 120px puts us right above the bars. */
-    bottom: 120px;
-    right: 5px;
+    /* 122px puts us right above the bars. */
+    bottom: 125px;
+    right: 10px;
     outline: none;
 }
 .view-sector #sqlstream {
@@ -157,13 +173,15 @@ polygon {
 .bars {
     position: fixed;
     bottom: 0px;
-    right: 0px;
+    right: -20px;
     height: 120px;
     width: 100%;
+    padding-right: 20px;
     border-width: 1px 0 0 0;
     z-index: 100;
     text-align: right;
-    background: black;
+    background: url(../media/bg-header.png);
+    box-shadow: ;
     white-space: nowrap;
 }
 .bars .col {
@@ -192,34 +210,29 @@ polygon {
     position: absolute;
     bottom: 0;
     width: 40px;
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
     height: 0;
-    background: rgba(227,159,28,.1);
-    border: 1px solid #FF7E0A;
-    -moz-box-shadow:
-        0 0 6px 2px rgba(227,159,28,.5),
-        0 0 4px 1px #000 inset,
-        0 0 2px 1px #FFC000 inset;
-    -webkit-box-shadow:
-        0 0 6px 2px rgba(227,159,28,.5),
-        0 0 4px 1px #000 inset,
-        0 0 2px 1px #FFC000 inset;
-    box-shadow:
-        0 0 6px 2px rgba(227,159,28,.5),
-        0 0 4px 1px #000 inset,
-        0 0 2px 1px #FFC000 inset;
+    background: #0d1944;
+    border: 1px solid #6eb6df;
+    -moz-box-shadow: 0 0 6px 2px #1c74be;
+    -webkit-box-shadow: 0 0 6px 2px #1c74be;
+    box-shadow: 0 0 6px 2px #1c74be;
 }
 .bars .col:hover .bar {
-    background-color: rgb(227,159,28);
+    background-color: #e39f1c;
+    border-color: #fee65c;
     -moz-box-shadow:
-        0 0 16px 2px rgba(227,159,28,.8),
+        0 0 16px 4px rgba(227,159,28,.8),
         0 0 4px 1px rgba(0,0,0,.1) inset,
         0 0 2px 1px #FFC000 inset;
     -webkit-box-shadow:
-        0 0 16px 2px rgba(227,159,28,.8),
+        0 0 16px 4px rgba(227,159,28,.8),
         0 0 4px 1px rgba(0,0,0,.1) inset,
         0 0 2px 1px #FFC000 inset;
     box-shadow:
-        0 0 16px 2px rgba(227,159,28,.8),
+        0 0 16px 4px rgba(227,159,28,.8),
         0 0 4px 1px rgba(0,0,0,.1) inset,
         0 0 2px 1px #FFC000 inset;
 }
@@ -237,7 +250,7 @@ polygon {
   top: -5px;
   left: -1%;
   border-width: 0 0 1px 0;
-  height: 96px;
+  height: 130px;
   width: 102%;
   position: relative;
   font-family: 'MetaBold', sans-serif;
@@ -245,80 +258,70 @@ polygon {
   line-height: 88px;
   color: white;
   z-index: 100;
+  background-image: url(../media/starburst.png), url(../media/bg-header.png);
+  background-repeat: no-repeat, repeat;
+  background-position: center -50px, top left;
+  
 }
 .rtl .masthead {
   left: 0;
   right: -1%;
 }
+.masthead h1 {
+    font-family: 'MetaBlack', "Trebuchet MS", Georgia;
+    font-size: 48px;
+    position: absolute;
+    top: 16px;
+    left: 40px;
+    width: 400px;
+    line-height: 46px;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+}
 #bigcounter {
   color: #fff;
-  font-family: 'MetaBold';
+  font-family: MetaBold, monospace;
   position: absolute;
   z-index: 9000;
   margin: 0;
-  top: 13px;
+  top: 20px;
   width: 512px;
   height: 64px;
   border-width: 1px;
-  font-size: 64px;
-  line-height: 55px;
+  font-size: 72px;
+  line-height: 54px;
 }
 .ltr #bigcounter {
-    left: 20px;
-    text-align: left;
+    right: 24px;
+    text-align: right;
 }
 .rtl #bigcounter {
-    text-align: right;
-    right: 20px;
+    text-align: left;
+    left: 24px;
 }
 #dlbutton {
     color: white;
-    text-shadow: -5px 0 14px rgba(240,240,255,.5),
-                 5px 0 14px rgba(240,240,255,.5);
-    font-family: MetaBold;
-    text-decoration: none;
-    font-size: 36px;
-    line-height: 36px;
-    background: -moz-linear-gradient(center top , #84C63C 0%, #489615 100%) repeat scroll 0 0 transparent;
-    background: -webkit-gradient(linear, left top, left bottom, from(#84C63C), to(#489615)) repeat scroll 0 0 transparent;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    border-radius: 6px;
-    height: 36px;
+    width: 222px;
+    height: 49px;
+    background: url(../media/dlbutton.png);
     position: relative;
     display: block;
 }
 .ltr #dlbutton {
     float: right;
-    padding: 7px 20px 12px 50px;
 }
 .rtl #dlbutton {
     float: left;
-    padding: 7px 50px 12px 20px;
-}
-#dlbutton:before {
-    content: "";
-    width: 73px;
-    height: 77px;
-    position: absolute;
-    display: block;
-    top: -7px;
-    left: -35px;
-    background: url(../media/logo-med.png);
-}
-.rtl #dlbutton:before {
-    left: auto;
-    right: -35px;
 }
 #cta {
     position: absolute;
-    top: 22px;
+    top: 106px;
 }
 .ltr #cta {
-    right: 40px;
+    right: 38px;
 }
 .rtl #cta {
-    left: 40px;
+    left: 38px;
 }
 noscript {
   color: #fff;

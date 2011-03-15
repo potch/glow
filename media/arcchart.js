@@ -192,7 +192,7 @@ $.fn.arcChart = function(opts) {
                 } else {
                     hue = o.hue;
                 }
-                ctx.fillStyle = "hsl(" + hue + ", " + (90 - depth*20) + "%, 50%)";
+                ctx.fillStyle = "hsl(" + hue + ", " + (100 - depth*20) + "%, 50%)";
                 ctx.beginPath();
                 ctx.arc(0,0,outerRad-1, 0, segmentArc - .005, false);
                 ctx.arc(0,0,innerRad, segmentArc - .005, 0, true);

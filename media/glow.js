@@ -111,7 +111,7 @@ $(window).resize(vast.debounce(sizePageElements, 500, this));
 
 function initSunburst() {
   var loader = loading();
-  $.getJSON(glow.data.sector.next, function(r) {
+  $.getJSON(ROOT + glow.data.sector.next, function(r) {
       dbg('sector data loaded');
       processGeo(r.data, function(decodedData) {
           dbg('processing done');
@@ -224,7 +224,7 @@ $("#chart").bind("update", function(e, list, current) {
 glow.init = function() {
     $.getJSON(ROOT + glow.time + "/count.json", function(r) {
         glow.data.count.next = r;
-        glow.data.sector.next = ROOT + glow.time + "/arc.json";
+        glow.data.sector.next = glow.time + "/arc.json";
         glow.count.playNext();
         glow.bar.playNext();
 

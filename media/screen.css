@@ -278,6 +278,9 @@ polygon {
     text-transform: uppercase;
     letter-spacing: -1px;
 }
+.rtl .masthead h1 {
+    right: 40px;
+}
 #bigcounter {
   color: #fff;
   font-family: MetaBold, monospace;

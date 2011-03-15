@@ -219,7 +219,6 @@ $.fn.arcChart = function(opts) {
         "display": "none",
         "width": "200px",
         "height": "20px",
-        "left": "0",
         "top": "0",
         "text-shadow": "0 0 2px #000",
         "pointer-events": "none"
@@ -230,6 +229,9 @@ $.fn.arcChart = function(opts) {
         "padding": "4px 8px 2px",
         "border-radius": "2px"
     });
+    if ($("html").hasClass("rtl")) {
+        $tip.css("text-align", "left");
+    }
 
     if (opts.draw) this.redraw();
     return this;

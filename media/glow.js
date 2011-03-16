@@ -131,6 +131,7 @@ function loading() {
         ctx.save();
         ctx.fillStyle = 'rgba(227, 159, 28, .1)';
         ctx.translate(c[0].width / 2, c[0].height / 2);
+        ctx.rotate(-Math.PI/16);
         ctx.clearRect(-70, -70, 140, 140);
         for (var i = 0; i < 8; i++) {
             ctx.rotate(Math.PI / 4);
@@ -182,18 +183,18 @@ function decodeGeo(data, depth, parent) {
         ret = [], o;
     for (i=0; i < data.length; i++) {
         row = data[i];
+        name = row[0] || "&lt;Unknown&gt;";
         switch (depth) {
             case 1:
-                name = gettext(_continents[row[0]]) || row[0];
+                name = gettext(_continents[row[0]]) || name;
                 break;
             case 2:
-                name = _countries[row[0]] || row[0];
+                name = _countries[row[0]] || name;
                 break;
             case 3:
-                name = _regions[parent][row[0]] || row[0];
-                break;
-            default:
-                name = row[0];
+                if (_regions[parent]) {
+                    name = _regions[parent][row[0]] || name
+                }
         }
         ret.push([name, row[1], decodeGeo(row[2], depth+1, row[0])]);
     }

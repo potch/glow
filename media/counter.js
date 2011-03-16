@@ -2,7 +2,7 @@ function initCounter() {
     "use strict";
     glow.count = {};
 
-    var el = document.getElementById('bigcounter');
+    var el = document.getElementById('bigcounter').firstChild;
 
     glow.count.playNext = function() {
         var response = glow.data.count.next,

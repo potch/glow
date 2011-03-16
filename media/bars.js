@@ -65,7 +65,7 @@ function initBars() {
         // Make room for a new bar.
         $bars.addClass('slide');
 
-        $bars.bind('transitionend webkitTransitionEnd', function(){
+        var addBar = function(){
             dbg('slide finished');
             $bars.unbind('transitionend webkitTransitionEnd');
             $bars.removeClass('slide');
@@ -80,6 +80,11 @@ function initBars() {
                 dbg('growing bar');
                 el.style.height = (el.getAttribute('data-val') / max * 100) + 'px';
             });
-        });
+        };
+        if (vast.cssTransitions) {
+            $bars.bind('transitionend webkitTransitionEnd', addBar());
+        } else {
+            addBar();
+        }
   };
 }

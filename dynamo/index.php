@@ -1,7 +1,7 @@
 <?php
 require 'locales.php';
 
-$locales = array('ar', 'ca', 'cs', 'de', 'el', 'en-us', 'es', 'eu', 'fr', 'fy', 'fy-nl', 'ga', 'ga-ie', 'he', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'nl', 'pl', 'pt', 'pt-br', 'rm', 'ru', 'sk', 'sl', 'sq', 'th', 'tr', 'zh-tw');
+$locales = array('ar', 'ca', 'cs', 'de', 'el', 'en-us', 'es', 'eu', 'fr', 'fy', 'fy-nl', 'ga', 'ga-ie', 'he', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'nl', 'pl', 'pt', 'pt-br', 'rm', 'ru', 'si', 'sk', 'sl', 'sq', 'sr', 'th', 'tr', 'vi', 'zh-tw');
 $rtl_locales = array('ar', 'fa', 'fa-ir', 'he');
 
 date_default_timezone_set('UTC');

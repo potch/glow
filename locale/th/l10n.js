@@ -1,4 +1,4 @@
-var catalog = {" \"PM":" \"PM"," \"AM":" \"AM"},
+var catalog = {},
     _timefmt = "H:mm",
     _group = ",",
     _numfmt = "#,##0.###";

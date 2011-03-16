@@ -1,6 +1,6 @@
-var catalog = {"Europe":"Europ\u00eb","zoom in":"zmadhoje","Sector Chart":"Grafik me Sektor\u00eb","Loading":"Po ngarkohet","City":"Qytet","Antarctica":"Antarktid\u00eb","Country":"Vend","Total Downloads":"Shkarkime Gjithsej","Africa":"Afrik\u00eb","About":"Rreth","Asia":"Azi","World Map":"Hart\u00eb e Bot\u00ebs","Firefox 4 Download Stats":"Statistika Shkarkimi p\u00ebr Firefox 4","zoom out":"zvog\u00ebloje","South America":"Amerik\u00eb e Jugut","Oceania":"Oqeani","Region":"Rajon","show my current location":"shfaq vendin tim t\u00eb tanish\u00ebm","Get Firefox":"Merreni Firefox-in","Continent":"Kontinent","North America":"Amerik\u00eb e Veriut"},
-    _timefmt = "h.mm.a",
-    _group = ".",
+var catalog = {"Europe":"Eur\u00f3pa","zoom in":"nagy\u00edt\u00e1s","Sector Chart":"Gy\u0171r\u0171diagramm","Loading":"Bet\u00f6lt\u00e9s","City":"V\u00e1ros","Antarctica":"Antarktisz","Country":"Orsz\u00e1g","Total Downloads":"\u00d6sszes let\u00f6lt\u00e9s","Africa":"Afrika","About":"N\u00e9vjegy","Asia":"\u00c1zsia","World Map":"Vil\u00e1gt\u00e9rk\u00e9p","Firefox 4 Download Stats":"Firefox 4 let\u00f6lt\u00e9si statisztika","zoom out":"kicsiny\u00edt\u00e9s","South America":"D\u00e9l-Amerika","Oceania":"\u00d3ce\u00e1nia","Region":"R\u00e9gi\u00f3","show my current location":"jelenlegi hely megjelen\u00edt\u00e9se","Get Firefox":"Firefox let\u00f6lt\u00e9se","Continent":"Kontinens","North America":"\u00c9szak-Amerika"},
+    _timefmt = "H:mm",
+    _group = " ",
     _numfmt = "#,##0.###";
 var gettext = function(s) {
   return s in catalog ? catalog[s] : s;

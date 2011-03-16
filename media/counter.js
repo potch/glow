@@ -9,7 +9,7 @@ function initCounter() {
             data = response.data,
             target = data[data.length - 1][1],
             current = data[data.length - 2][1],
-            delta = 60 * (target - current);
+            delta = target - current;
         dbg('counter');
         dbg(current, target, delta);
 

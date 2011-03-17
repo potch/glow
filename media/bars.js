@@ -82,7 +82,7 @@ function initBars() {
             });
         };
         if (vast.capabilities.cssTransitions) {
-            $bars.bind('transitionend webkitTransitionEnd', addBar());
+            $bars.bind('transitionend webkitTransitionEnd', addBar);
         } else {
             addBar();
         }

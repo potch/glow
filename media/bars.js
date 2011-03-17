@@ -81,7 +81,7 @@ function initBars() {
                 el.style.height = (el.getAttribute('data-val') / max * 100) + 'px';
             });
         };
-        if (vast.cssTransitions) {
+        if (vast.capabilities.cssTransitions) {
             $bars.bind('transitionend webkitTransitionEnd', addBar());
         } else {
             addBar();

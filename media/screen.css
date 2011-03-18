@@ -197,7 +197,10 @@ polygon {
     border-width: 1px 0 0 0;
     z-index: 100;
     text-align: right;
-    background: url(../media/bg-header.png);
+    background-color: #000;
+    background-image: url(../media/bg-header.png);
+    background-repeat: repeat-x;
+    background-position: left top;
     box-shadow: ;
     white-space: nowrap;
 }
@@ -299,10 +302,10 @@ polygon {
     font-family: 'MetaBlack', "Trebuchet MS", Georgia;
     font-size: 44px;
     position: absolute;
-    top: 16px;
-    left: 40px;
+    top: 13px;
+    left: 38px;
     width: 400px;
-    line-height: 44px;
+    line-height: 43px;
     text-transform: uppercase;
     letter-spacing: -1px;
 }
@@ -444,9 +447,9 @@ noscript {
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
-    box-shadow: 0 -2px rgba(0,0,0,.1) inset;
-    -moz-box-shadow: 0 -2px rgba(0,0,0,.1) inset;
-    -webkit-box-shadow: 0 -2px rgba(0,0,0,.1) inset;
+    box-shadow: 0 -2px rgba(0,0,0,.1) inset, 0 0 8px rgba(255,255,255,.3);
+    -moz-box-shadow: 0 -2px rgba(0,0,0,.1) inset, 0 0 8px rgba(255,255,255,.3);
+    -webkit-box-shadow: 0 -2px rgba(0,0,0,.1) inset, 0 0 8px rgba(255,255,255,.3);
 }
 #social a:hover {
     background: #fff;

@@ -156,6 +156,23 @@ polygon {
     background: url(../media/sector.png) center no-repeat #000;
     cursor: pointer;
 }
+.menu:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -40px;
+    left: 110px;
+    width: 61px;
+    height: 59px;
+    opacity: 0;
+    pointer-events: none;
+    background-image: url(../media/arrow.png);
+    -moz-transition: .2s opacity ease;
+    -webkit-transition: .2s opacity ease;
+}
+.menu:hover:after {
+    opacity: 1;
+}
 .view-sector .menu {
     background: url(../media/globe.png) center no-repeat #000;
 }

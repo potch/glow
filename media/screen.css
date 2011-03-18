@@ -312,6 +312,10 @@ polygon {
 .rtl .masthead h1 {
     right: 40px;
 }
+[lang=de] h1,
+[lang=es] h1 {
+    font-size: 35px;
+}
 h1, #bigcounter {
   text-shadow: -5px 0 14px rgba(240,240,255,.5),
                 5px 0 14px rgba(240,240,255,.5);

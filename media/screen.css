@@ -195,7 +195,7 @@ polygon {
     float: right;
     width: 40px;
     height: 130px;
-    margin: 0 10px;
+    margin: 0 10px 50px;
 }
 .bars.slide {
     -moz-transition-property: padding;
@@ -204,7 +204,7 @@ polygon {
     -webkit-transition-duration: 2s;
     transition-property: padding;
     transition-duration: 2s;
-    padding-right: 60px;
+    padding-right: 80px;
 }
 .bars .bar {
     position: absolute;
@@ -214,11 +214,24 @@ polygon {
     -webkit-border-radius: 6px 6px 0 0;
     border-radius: 6px 6px 0 0;
     height: 0;
-    background: #0d1944;
+    background: rgb(13, 25, 68);
     border: 1px solid #6eb6df;
-    -moz-box-shadow: 0 0 6px 2px #1c74be;
-    -webkit-box-shadow: 0 0 6px 2px #1c74be;
-    box-shadow: 0 0 6px 2px #1c74be;
+    -moz-box-shadow: 0 0 6px 2px #1c74be,
+                     0 0 4px 1px #1c74be inset,
+                     0 0 6px 1px rgba(0,0,0,.7) inset;
+    -webkit-box-shadow: 0 0 6px 2px #1c74be,
+                        0 0 2px #1c74be,
+                        0 0 4px 1px rgba(0,0,0,.2) inset;
+/*    box-shadow: 0 0 6px 2px #1c74be,
+                0 0 4px 1px rgba(0,0,0,.2) inset;
+*/}
+.bars .col .time {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    font-size: 1.1em;
+    color: rgba(255,255,255,.9);
+    text-align: center;
 }
 .bars .col:hover .bar {
     background-color: #e39f1c;
@@ -254,8 +267,6 @@ polygon {
   width: 102%;
   position: relative;
   font-family: 'MetaBold', sans-serif;
-  font-size: 80px;
-  line-height: 88px;
   color: white;
   z-index: 100;
   background-image: url(../media/starburst.png), url(../media/bg-header.png);
@@ -269,12 +280,12 @@ polygon {
 }
 .masthead h1 {
     font-family: 'MetaBlack', "Trebuchet MS", Georgia;
-    font-size: 48px;
+    font-size: 44px;
     position: absolute;
     top: 16px;
     left: 40px;
     width: 400px;
-    line-height: 46px;
+    line-height: 44px;
     text-transform: uppercase;
     letter-spacing: -1px;
 }
@@ -313,8 +324,6 @@ h1, #bigcounter {
     background: url(../media/dlbutton.png);
     position: relative;
     display: block;
-}
-.ltr #dlbutton {
     float: right;
 }
 .rtl #dlbutton {
@@ -323,8 +332,6 @@ h1, #bigcounter {
 #cta {
     position: absolute;
     top: 106px;
-}
-.ltr #cta {
     right: 38px;
 }
 .rtl #cta {
@@ -344,6 +351,7 @@ noscript {
     background-color: #181818;
     position: absolute;
     height: 100%;
+    padding-top: 18px;
     top: 0;
     overflow: auto;
 }

@@ -29,6 +29,7 @@ function initBars() {
                 var delta = data[i][1] - data[i - 1][1];
                 return (
                   "<div class='col'>" +
+                  (data[i][0][4] % 10 == 0 ? "<div class='time'>" + time + "</div>" : "") +
                   "<div class='bar' data-time='" + time +
                   "' data-val='" + delta +
                   "'></div></div>");

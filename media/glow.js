@@ -8,6 +8,8 @@ glow.data = {
 };
 
 var ROOT = "data/json/";
+var adjustOffset = 248;
+var targetHeight = 1650;
 
 // Load the next file of json data before timeout seconds have elapsed.
 glow.fetchCount = function(timeout) {
@@ -81,17 +83,17 @@ glow.toggleView = function() {
 
 function sizePageElements() {
     var $geo = $("#geo");
-    $("#sunburst, #geo").css("height", $("body").height() - 248);
+    $("#sunburst, #geo").css("height", $("body").height() - adjustOffset);
     $("#chart")[0].width = $("#sunburst").width() - 300;
     $("#chart")[0].height = $("#sunburst").height();
     if (glow.sector) glow.sector.redraw();
     if ($geo.width() / $geo.height() > 2) {
-        glow.map.scale = $geo.height() / 1650;
+        glow.map.scale = $geo.height() / targetHeight;
     } else {
         glow.map.scale = $geo.width() / 3600;
     }
     $("#mapdata, #pings").css({
-        "top": $geo.height() - 1650 * glow.map.scale,
+        "top": $geo.height() - targetHeight * glow.map.scale,
         "left": ($geo.width() - 3600 * glow.map.scale) / 2
     });
     $("#mapdata").css({
@@ -221,6 +223,19 @@ $("#chart").bind("update", function(e, list, current) {
     }
 
 });
+
+glow.toggleFullscreen = function() {
+    var $body = $("body");
+    $body.toggleClass("fullscreen");
+    if ($body.hasClass("fullscreen")) {
+        adjustOffset = 130;
+        targetHeight = 1800;
+    } else {
+        adjustOffset = 248;
+        targetHeight = 1650;
+    }
+    setTimeout(sizePageElements, 0);
+}
 
 glow.init = function() {
     $.getJSON(ROOT + glow.time + "/count.json", function(r) {

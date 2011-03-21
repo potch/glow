@@ -6,8 +6,10 @@ function initBars() {
 
     var started = false, $bars = $('.bars'), max = 0;
 
+    var tzOffset = (new Date()).getTimezoneOffset();
+
     var date = function(a, b, c, d, e) {
-        return new Date(a, b, c, d, e);
+        return new Date(a, b, c, d, e - tzOffset);
     };
 
     var $bar = $('#bar-tip'), $tip = $('#t');

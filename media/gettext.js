@@ -28,7 +28,7 @@ var timefmt = function(d) {
       if (fmt == "m") {
         num = minute;
       } else {
-        num = fmt == "h" ? hour % 12 : hour;
+        num = fmt == "h" ? hour % 12 || 12 : hour;
       }
       if (_timefmt[i + 1] == fmt) {
         i++;

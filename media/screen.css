@@ -323,8 +323,13 @@ polygon {
     font-size: 40px;
 }
 h1, #bigcounter {
-  text-shadow: -5px 0 14px rgba(240,240,255,.5),
-                5px 0 14px rgba(240,240,255,.5);
+    text-shadow: 0 0 24px #1C74BE,
+                 0 0 8px #1C74BE,
+                 0 0 8px #1C74BE,
+                 0 0 4px #1C74BE,
+                 0 0 4px #1C74BE,
+                 0 0 4px #1C74BE,
+                 0 0 4px #1C74BE;
 }
 #bigcounter {
   color: #fff;

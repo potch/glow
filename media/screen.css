@@ -319,6 +319,9 @@ polygon {
 [lang=es] h1 {
     font-size: 35px;
 }
+[lang=ar] h1 {
+    font-size: 40px;
+}
 h1, #bigcounter {
   text-shadow: -5px 0 14px rgba(240,240,255,.5),
                 5px 0 14px rgba(240,240,255,.5);

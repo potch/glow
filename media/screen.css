@@ -419,8 +419,6 @@ noscript {
     float: left;
     margin-right: 12px;
 }
-
-
 .fullscreen .bars,
 .fullscreen .menu {
     display: none;
@@ -484,4 +482,22 @@ noscript {
     left: 8px;
     width: 39px;
     height: 39px;
+}
+#bar-tip {
+    position: absolute;
+    bottom: 140px;
+    right: 50px;
+    text-shadow: 0 0 2px #000;
+    pointer-events: none;
+    z-index: 99999;
+    border-radius: 2px;
+    text-align: center;
+    opacity: .8;
+    display: none;
+}
+#bar-tip #t {
+    font-weight: normal;
+    background: rgba(0, 0, 0, .7);
+    padding: 5px 10px 2px;
+    border-radius: 6px;
 }

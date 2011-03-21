@@ -10,6 +10,14 @@ function initBars() {
         return new Date(a, b, c, d, e);
     };
 
+    var $bar = $('#bar-tip'), $tip = $('#t');
+    $bars.delegate('.col', 'hover', function(e) {
+        var $target = $(this.firstChild);
+        $bar.toggle();
+        $tip.html($target.attr('data-time') + '<br>' +
+                  '<span>' + $target.attr('data-val') + '</span>');
+    });
+
     glow.bar.playNext = function() {
         dbg('writing bars');
         var response = glow.data.count.next,
@@ -87,5 +95,5 @@ function initBars() {
         } else {
             addBar();
         }
-  };
+    };
 }

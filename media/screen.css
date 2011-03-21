@@ -312,6 +312,7 @@ polygon {
 .rtl .masthead h1 {
     right: 40px;
 }
+[lang=eu] h1,
 [lang=de] h1,
 [lang=it] h1,
 [lang=pl] h1,

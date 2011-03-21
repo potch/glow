@@ -186,7 +186,7 @@ function decodeGeo(data, depth, parent) {
         ret = [], o;
     for (i=0; i < data.length; i++) {
         row = data[i];
-        name = row[0] || "&lt;Unknown&gt;";
+        name = row[0] || "Other";
         switch (depth) {
             case 1:
                 name = gettext(_continents[row[0]]) || name;

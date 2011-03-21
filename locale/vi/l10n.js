@@ -1,4 +1,4 @@
-var catalog = {},
+var catalog = {"Europe":"Ch\u00e2u \u00c2u","zoom in":"ph\u00f3ng to","Sector Chart":"Bi\u1ec3u \u0111\u1ed3 Sector","Loading":"\u0110ang t\u1ea3i","City":"Th\u00e0nh ph\u1ed1","Antarctica":"Ch\u00e2u Nam C\u1ef1c","Country":"Qu\u1ed1c gia","Total Downloads":"T\u1ed5ng L\u01b0\u1ee3t T\u1ea3i","Africa":"Ch\u00e2u Phi","About":"Gi\u1edbi thi\u1ec7u","Asia":"Ch\u00e2u \u00c1","World Map":"B\u1ea3n \u0111\u1ed3 Th\u1ebf gi\u1edbi","Firefox 4 Download Stats":"Firefox 4 Th\u1ed1ng k\u00ea L\u01b0\u1ee3t t\u1ea3i","zoom out":"thu nh\u1ecf","South America":"Nam M\u1ef9","Oceania":"Ch\u00e2u \u0110\u1ea1i D\u01b0\u01a1ng","Region":"Khu v\u1ef1c","show my current location":"hi\u1ec3n th\u1ecb \u0111\u1ecba \u0111i\u1ec3m hi\u1ec7n t\u1ea1i c\u1ee7a t\u00f4i","Get Firefox":"T\u1ea3i Firefox","Continent":"L\u1ee5c \u0111\u1ecba","North America":"B\u1eafc M\u1ef9"},
     _timefmt = "HH:mm",
     _group = ".",
     _numfmt = "#,##0.###";

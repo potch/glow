@@ -99,6 +99,7 @@ function sizePageElements() {
     $("#mapdata").css({
         "-moz-transform": "scale(" + glow.map.scale + ")",
         "-webkit-transform": "scale(" + glow.map.scale + ")",
+        "-ms-transform": "scale(" + glow.map.scale + ")",
         "-o-transform": "scale(" + glow.map.scale + ")"
     });
     if ($("#geo").height)

@@ -439,6 +439,9 @@ noscript {
     font-style: italic;
     left: 38px;
 }
+.rtl #social {
+    right: 40px;
+}
 #social a {
     text-decoration: none;
     color: #444;
@@ -467,6 +470,9 @@ noscript {
     padding-left: 48px;
     margin-right: 14px;
 }
+.rtl #twitter {
+    margin-right: 0;
+}
 #twitter img {
     display: block;
     position: absolute;
@@ -474,6 +480,9 @@ noscript {
     left: 12px;
     width: 31px;
     height: 39px;
+}
+.rtl #facebook {
+    margin-right: 14px;
 }
 #facebook img {
     display: block;

@@ -14,7 +14,7 @@ function initBars() {
 
     var $bar = $('#bar-tip'), $tip = $('#t');
     $bars.delegate('.col', 'hover', function(e) {
-        var $target = $(this.firstChild);
+        var $target = $(this).find('.bar');
         $bar.toggle();
         $tip.html($target.attr('data-time') + '<br>' +
                   '<span>' + $target.attr('data-val') + '</span>');

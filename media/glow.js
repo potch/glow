@@ -198,6 +198,10 @@ function decodeGeo(data, depth, parent) {
                 if (_regions[parent]) {
                     name = _regions[parent][row[0]] || name
                 }
+                name = _countries[name] || name;
+                break;
+            case 4:
+                name = _countries[name] || name;
         }
         ret.push([name, row[1], decodeGeo(row[2], depth+1, row[0])]);
     }

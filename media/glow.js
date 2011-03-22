@@ -266,4 +266,27 @@ glow.init = function() {
     $("#logo").click(glow.toggleFullscreen);
 };
 
+var lastKey = null;
+$(window).bind('keydown', function(e) {
+    var num = null;
+    if (e.keyCode >= 48 && e.keyCode <= 57) {
+        num = e.keyCode - 48;
+    } else if (e.keyCode >= 96 && e.keyCode <= 105) {
+        num = e.keyCode - 96;
+    } else {
+        return;
+    }
+
+    if (lastKey === 0 && num === 0) {
+        window.location.reload();
+    } else if (lastKey == 1 && num == 1) {
+        glow.toggleFullscreen();
+    } else if (lastKey == 9 && num == 9) {
+        $("#logo")[0].src = "media/theeye.png";
+    }
+
+    console.log(num, lastKey);
+    lastKey = num;
+});
+
 })();

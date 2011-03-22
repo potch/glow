@@ -70,10 +70,12 @@ var getData = function(url, timeout, success) {
 
 glow.toggleView = function() {
     if (glow.view == "map") {
+        window.location.hash = "arc";
         glow.view = "chart";
         $("#sunburst").show();
         if (!glow.sector) initSunburst();
     } else {
+        history.replaceState(null, null, "/");
         glow.view = "map";
         $("#sunburst").hide();
     }
@@ -243,9 +245,9 @@ glow.toggleFullscreen = function() {
 }
 
 glow.init = function() {
+    glow.data.sector.next = glow.time + "/arc.json";
     $.getJSON(ROOT + glow.time + "/count.json", function(r) {
         glow.data.count.next = r;
-        glow.data.sector.next = glow.time + "/arc.json";
         glow.count.playNext();
         glow.bar.playNext();
 
@@ -264,6 +266,10 @@ glow.init = function() {
 
     $(".menu").click(glow.toggleView);
     $("#logo").click(glow.toggleFullscreen);
+
+    if (location.hash.slice(1, 4) == "arc") {
+        glow.toggleView();
+    }
 };
 
 var lastKey = null;

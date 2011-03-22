@@ -269,6 +269,8 @@ glow.init = function() {
 
     if (location.hash.slice(1, 4) == "arc") {
         glow.toggleView();
+    } else if (location.hash.slice(1, 5) == "full") {
+        glow.toggleFullscreen();
     }
 };
 

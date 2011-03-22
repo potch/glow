@@ -75,7 +75,7 @@ glow.toggleView = function() {
         $("#sunburst").show();
         if (!glow.sector) initSunburst();
     } else {
-        history.replaceState(null, null, "/");
+        window.location.hash = "";
         glow.view = "map";
         $("#sunburst").hide();
     }

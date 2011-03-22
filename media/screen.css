@@ -124,6 +124,7 @@ body, html {
     left: 50%;
     margin-left: -73px;
     z-index: 9000;
+    cursor: pointer;
 }
 polygon {
     fill: #031841;

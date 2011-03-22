@@ -608,3 +608,8 @@ noscript {
 .rtl .show-about:hover {
     background-position: -144px center;
 }
+[lang="en-US"] .show-about {
+    position: absolute;
+    top: -78px;
+    left: 337px;
+}

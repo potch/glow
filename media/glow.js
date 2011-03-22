@@ -306,10 +306,12 @@ $(window).bind('keydown', function(e) {
 $(".show-about").click(function(e) {
     e.preventDefault();
     $("body").addClass("about");
+    setTimeout(function() {
+        $("body").one('click', function() {
+            $("body").removeClass("about");
+        });
+    },100);
 });
 
-$("#about").click(function() {
-    $("body").removeClass("about");
-});
 
 })();

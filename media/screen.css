@@ -450,9 +450,10 @@ noscript {
     left: 38px;
 }
 .rtl #social {
+    left: auto;
     right: 40px;
 }
-#social a {
+#social .button {
     text-decoration: none;
     color: #444;
     border-color: #c9d9e2;
@@ -472,7 +473,7 @@ noscript {
     -moz-box-shadow: 0 -2px rgba(0,0,0,.1) inset, 0 0 8px rgba(255,255,255,.3);
     -webkit-box-shadow: 0 -2px rgba(0,0,0,.1) inset, 0 0 8px rgba(255,255,255,.3);
 }
-#social a:hover {
+#social .button:hover {
     background: #fff;
 }
 
@@ -522,7 +523,7 @@ noscript {
     left: 50%;
     margin-left: -12px;
     bottom: -24px;
-    border-top-color: rgba(0, 0, 0, .7);
+    border-top-color: rgba(0, 0, 0, .9);
 }
 #bar-tip #t {
     line-height: 15px;
@@ -530,6 +531,8 @@ noscript {
     text-shadow: 0 0 2px #000;
     font-weight: normal;
     background: rgba(0, 0, 0, .7);
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
     border-radius: 2px;
     padding: 6px 10px 6px 28px;
     border-radius: 6px;
@@ -553,5 +556,55 @@ noscript {
     right: 10px;
 }
 #about {
-    display: none;
+    pointer-events: none;
+    opacity: 0;
+    height: 350px;
+    font-family: sans-serif;
+    line-height: 1.4em;
+    font-size: .9em;
+    direction: ltr;
+    left: 50%;
+    background: rgba(0, 0, 0, .9);
+    -moz-border-radius: 4px;
+    box-shadow: 0 0 20px rgba(255,255,255,.5);
+    -moz-box-shadow: 0 0 20px rgba(255,255,255,.5);
+    -webkit-box-shadow: 0 0 20px rgba(255,255,255,.5);
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    margin-left: -200px;
+    margin-top: -200px;
+    position: absolute;
+    top: 50%;
+    width: 400px;
+    z-index: 9000;
+    -moz-transition: .5s opacity;
+    -webkit-transition: .5s opacity;
+}
+#about p {
+    margin: 2em;
+}
+.about #about {
+    opacity: 1;
+    pointer-events: auto;
+}
+.show-about {
+    display: inline-block;
+    width: 48px;
+    height: 32px;
+    cursor: pointer;
+    background: url("../media/about.png") no-repeat 0 center;
+    line-height: 20px;
+    width: 48px;
+    vertical-align: middle;
+    margin: 0 10px;
+}
+.show-about:hover {
+    background-position: -48px center;
+}
+.rtl .show-about {
+    float: left;
+    background-position: -96px center;
+}
+.rtl .show-about:hover {
+    background-position: -144px center;
 }

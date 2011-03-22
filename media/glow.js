@@ -275,6 +275,7 @@ glow.init = function() {
 };
 
 var lastKey = null;
+var toggled = false;
 $(window).bind('keydown', function(e) {
     var num = null;
     if (e.keyCode >= 48 && e.keyCode <= 57) {
@@ -290,11 +291,25 @@ $(window).bind('keydown', function(e) {
     } else if (lastKey == 1 && num == 1) {
         glow.toggleFullscreen();
     } else if (lastKey == 9 && num == 9) {
-        $("#logo")[0].src = "media/theeye.png";
+        if (toggled) {
+            $("#logo")[0].src = "media/logo-large.png";
+        } else {
+            $("#logo")[0].src = "media/theeye.png";
+        }
+        toggled = !toggled;
     }
 
     console.log(num, lastKey);
     lastKey = num;
+});
+
+$(".show-about").click(function(e) {
+    e.preventDefault();
+    $("body").addClass("about");
+});
+
+$("#about").click(function() {
+    $("body").removeClass("about");
 });
 
 })();

@@ -233,7 +233,7 @@ glow.toggleFullscreen = function() {
     var $body = $("body");
     $body.toggleClass("fullscreen");
     if ($body.hasClass("fullscreen")) {
-        adjustOffset = 130;
+        adjustOffset = 0;
         targetHeight = 1800;
     } else {
         adjustOffset = 248;
@@ -263,6 +263,7 @@ glow.init = function() {
     sizePageElements();
 
     $(".menu").click(glow.toggleView);
+    $("#logo").click(glow.toggleFullscreen);
 };
 
 })();

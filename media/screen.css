@@ -427,6 +427,9 @@ noscript {
     float: left;
     margin-right: 12px;
 }
+.fullscreen #sqlstream,
+.fullscreen #cta,
+.fullscreen #social,
 .fullscreen .bars,
 .fullscreen .menu {
     display: none;
@@ -439,8 +442,6 @@ noscript {
     top: 0;
     left: 0;
 }
-
-
 #social {
     position: absolute;
     top: 114px;

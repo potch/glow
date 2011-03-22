@@ -552,3 +552,6 @@ noscript {
     left: auto;
     right: 10px;
 }
+#about {
+    display: none;
+}

@@ -8,8 +8,13 @@ function initCounter() {
         var response = glow.data.count.next,
             data = response.data,
             target = data[data.length - 1][1],
-            current = data[data.length - 2][1],
-            delta = target - current;
+            current = 0, delta;
+
+        if (data.length > 1) {
+            current = data[data.length - 2][1];
+        }
+
+        delta = target - current;
         dbg('counter');
         dbg(current, target, delta);
 

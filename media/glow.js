@@ -205,7 +205,7 @@ function decodeGeo(data, depth, parent) {
             case 4:
                 name = _countries[name] || name;
         }
-        ret.push([name, row[1], decodeGeo(row[2], depth+1, row[0])]);
+        ret.push([name, row[1], decodeGeo(row[2], depth+1, row[0]), row[0]]);
     }
     return ret;
 }

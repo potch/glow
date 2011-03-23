@@ -114,6 +114,23 @@ $.fn.arcChart = function(opts) {
         });
     })();
 
+    this.zoomTo = function(path) {
+        currentContext = false;
+        contextStack = [];
+        $canvas.redraw();
+        var i = 0;
+        function advance() {
+            for (var j=0; j < clickMap.length; j++) {
+                if (clickMap[j][2][3] == path[i]) {
+                    i++;
+                    $canvas.zoomIn(j, {animate: false, cb: advance});
+                    return;
+                }
+            }
+        }
+        advance();
+    };
+
     this.zoomOut = function() {
         if (contextStack.length < 1) return;
         span = (currentContext[1]-currentContext[0]);
@@ -136,28 +153,36 @@ $.fn.arcChart = function(opts) {
         );
     };
 
-    this.zoomIn = function(which) {
+    this.zoomIn = function(which, opts) {
         var tgt = clickMap[which];
         if (!tgt || !tgt[2][2]) return;
         contextStack.push(currentContext);
         currentContext = tgt;
         span = (tgt[1]-tgt[0]);
-        animation = vast.animate.over(
-            500,
-            function(i) {
-                var j = vast.ease.easeout(i);
-                $canvas.redraw({
-                    sa: tgt[0] * (1-j),
-                    sz: (2 * Math.PI - span) * j + span,
-                    innerRad: 80 - 30 * j
-                });
-            },
-            this,
-            {after: function() {
-                animation = false;
-                $canvas.redraw();
-            }}
-        );
+
+        function doneZoom() {
+            animation = false;
+            $canvas.redraw();
+            if (opts && typeof opts.cb == "function") opts.cb.apply(null, currentContext);
+        }
+
+        if (opts && !opts.anim) {
+            doneZoom();
+        } else {
+            animation = vast.animate.over(
+                500,
+                function(i) {
+                    var j = vast.ease.easeout(i);
+                    $canvas.redraw({
+                        sa: tgt[0] * (1-j),
+                        sz: (2 * Math.PI - span) * j + span,
+                        innerRad: 80 - 30 * j
+                    });
+                },
+                this,
+                {after: doneZoom}
+            );
+        }
     };
 
     function drawChildren(pts, depth, arcSize, o) {

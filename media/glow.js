@@ -70,7 +70,9 @@ var getData = function(url, timeout, success) {
 
 glow.toggleView = function() {
     if (glow.view == "map") {
-        window.location.hash = "arc";
+        if (window.location.hash.slice(1,4) != "arc") {
+            window.location.hash = "arc";
+        }
         glow.view = "chart";
         $("#sunburst").show();
         if (!glow.sector) initSunburst();
@@ -123,6 +125,9 @@ function initSunburst() {
           clearInterval(loader);
           glow.sector = $("#chart").arcChart({data: decodedData});
           $("#crumb").click(glow.sector.zoomOut);
+          if (window.location.hash.slice(1, 4) == "arc") {
+              glow.sector.zoomTo(window.location.hash.split("/").slice(1));
+          }
       });
   });
 }
@@ -299,7 +304,6 @@ $(window).bind('keydown', function(e) {
         toggled = !toggled;
     }
 
-    console.log(num, lastKey);
     lastKey = num;
 });
 

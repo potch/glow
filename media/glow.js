@@ -125,8 +125,11 @@ function initSunburst() {
           clearInterval(loader);
           glow.sector = $("#chart").arcChart({data: decodedData});
           $("#crumb").click(glow.sector.zoomOut);
-          if (window.location.hash.slice(1, 4) == "arc") {
-              glow.sector.zoomTo(window.location.hash.split("/").slice(1));
+          if (location.hash.slice(1, 4) == "arc") {
+              if (vast.capabilities.history) {
+                  history.replaceState(location.hash, null, location.hash);
+              }
+              glow.sector.zoomTo(location.hash.split("/").slice(1));
           }
       });
   });
@@ -203,7 +206,8 @@ function decodeGeo(data, depth, parent) {
                 break;
             case 3:
                 if (_regions[parent]) {
-                    name = _regions[parent][row[0]] || name
+                    name = _regions[parent][row[0]] || name;
+                    row[0] = name;
                 }
                 name = _countries[name] || name;
                 break;

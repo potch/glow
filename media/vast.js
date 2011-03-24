@@ -28,6 +28,7 @@ function Vast() {
                        document.body.style.MozTransition !== undefined;
             return test;
         })(),
+        history: !!(window.history && history.pushState),
         requestAnimationFrame: false //("mozRequestAnimationFrame" in window) ? "moz" : ("webkitRequestAnimationFrame" in window ? "webkit" : false)
     };
 

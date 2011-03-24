@@ -4,6 +4,17 @@ var PI = Math.PI;
 var PI_2 = PI/2;
 var RAD = PI / 180;
 var GAP = 2 * RAD;
+
+
+function pushState(loc) {
+    dbg("pushState", loc);
+    if (vast.capabilities.history) {
+        history.pushState(loc, null, loc);
+    } else {
+        location.hash = loc;
+    }
+};
+
 $.fn.arcChart = function(opts) {
     opts = $.extend({
         data: [],
@@ -19,6 +30,16 @@ $.fn.arcChart = function(opts) {
         clickMap = [],
         cx, cy,
         animation = false;
+
+    $(window).bind("popstate", function(e) {
+        var state = e.originalEvent.state;
+        dbg("popstate", state);
+        if (state === null) {
+            $canvas.zoomOut({pushState: false});
+        } else {
+            $canvas.zoomTo(state.split("/").slice(1));
+        }
+    });
 
     this.redraw = function(o) {
         o = $.extend({
@@ -115,15 +136,18 @@ $.fn.arcChart = function(opts) {
     })();
 
     this.zoomTo = function(path) {
+        dbg("zoomTo", path);
         currentContext = false;
         contextStack = [];
         $canvas.redraw();
         var i = 0;
         function advance() {
-            for (var j=0; j < clickMap.length; j++) {
-                if (clickMap[j][2][3] == path[i]) {
+            var target = path[i];
+            for (var j = 0, jj = clickMap.length; j < jj; j++) {
+                if (clickMap[j][2][3] == target) {
                     i++;
-                    $canvas.zoomIn(j, {animate: false, cb: advance});
+                    dbg("advance", i, j);
+                    $canvas.zoomIn(j, {cb: advance, pushState: false});
                     return;
                 }
             }
@@ -131,8 +155,12 @@ $.fn.arcChart = function(opts) {
         advance();
     };
 
-    this.zoomOut = function() {
+    this.zoomOut = function(opts) {
         if (contextStack.length < 1) return;
+        if (!(opts && opts.pushState === false)) {
+            var slash = location.hash.lastIndexOf("/");
+            pushState(location.hash.slice(0, slash));
+        }
         span = (currentContext[1]-currentContext[0]);
         animation = vast.animate.over(
             500,
@@ -166,6 +194,9 @@ $.fn.arcChart = function(opts) {
             if (opts && typeof opts.cb == "function") opts.cb.apply(null, currentContext);
         }
 
+        if (!(opts && opts.pushState === false)) {
+            pushState(location.hash + "/" + tgt[2][3]);
+        }
         if (opts && !opts.anim) {
             doneZoom();
         } else {

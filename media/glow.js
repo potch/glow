@@ -254,8 +254,8 @@ glow.toggleFullscreen = function() {
 }
 
 glow.init = function() {
-    if (location.hash.slice(1, 10) == "timeshift") {
-        $(document.body).addClass("timeshift");
+    if (location.hash.slice(1, 9) == "timewarp") {
+        $(document.body).addClass("timewarp");
         initTimeshift();
         initCounter();
         initBars();
@@ -297,7 +297,7 @@ glow.init = function() {
 var lastKey = null;
 var toggled = false;
 $(window).bind('keydown', function(e) {
-    if (location.hash.slice(1, 10) == "timeshift") {
+    if (location.hash.slice(1, 9) == "timewarp") {
         return;
     }
     var num = null;
@@ -355,13 +355,13 @@ var initTimeshift = function() {
         var date = new Date(location.hash.split("/")[1]),
             d = $.map([date.getMonth() + 1, date.getDate(), date.getFullYear(),
                        date.getHours(), date.getMinutes()], pad);
-        $("#timeshift input").val(d[0] + "-" + d[1] + "-" + d[2]
-                                  + " " + d[3] + ":" + d[4]);
+        $("#timewarp input").val(d[0] + "-" + d[1] + "-" + d[2]
+                                 + " " + d[3] + ":" + d[4]);
         travel(date);
     }
 
     function travel(date) {
-        history.pushState({date: date}, null, "#timeshift/" + date);
+        history.pushState({date: date}, null, "#timewarp/" + date);
         $.getJSON(path(date) + "/count.json", function(r) {
             var num = numberfmt(r.data[r.data.length - 1][1])
             $('#bigcounter')[0].firstChild.textContent = num;
@@ -372,10 +372,10 @@ var initTimeshift = function() {
     }
 
 
-    $("#timeshift form").submit(function(e) {
+    $("#timewarp form").submit(function(e) {
         e.preventDefault();
         var val = /(\d\d)-(\d\d)-(\d{4}) (\d\d?):(\d\d)/.exec(
-                        $("#timeshift input").val()),
+                        $("#timewarp input").val()),
             date = new Date(val[3], val[1] - 1, val[2], val[4], val[5]);
         travel(date);
     });

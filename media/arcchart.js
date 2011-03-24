@@ -31,14 +31,8 @@ $.fn.arcChart = function(opts) {
         cx, cy,
         animation = false;
 
-    $(window).bind("popstate", function(e) {
-        var state = e.originalEvent.state;
-        dbg("popstate", state);
-        if (state === null) {
-            $canvas.zoomOut({pushState: false});
-        } else {
-            $canvas.zoomTo(state.split("/").slice(1));
-        }
+    $(window).bind("popstate hashchange", function() {
+        $canvas.zoomTo(location.hash.split("/").slice(1));
     });
 
     this.redraw = function(o) {

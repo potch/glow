@@ -32,15 +32,15 @@ function initMap() {
                 longitude = ~~((-parseFloat(ping[1]) + 90) * 10),
                 count = ping[2];
                 if (count > maxCount) {
-                    maxLat = latitude;
-                    maxLon = longitude;
+                    maxLat = ping[0];
+                    maxLon = ping[1];
                     maxCount = count;
                 }
             for (var k = 0; k < count; k++) {
                 rv.push([0, latitude, longitude]);
             }
         }
-        glow.map.max = (maxLon/10) + "," + (maxLat/10) + " " + maxCount;
+        glow.map.max = maxLon + "," + maxLat + " " + maxCount;
 
         return rv;
     };

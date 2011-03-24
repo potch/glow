@@ -220,7 +220,7 @@ function decodeGeo(data, depth, parent) {
 }
 
 
-$("#chart").bind("update", function(e, list, current) {
+$("#chart").bind("update", function(e, list, current, path) {
     var $ul = $("#rankedlist").empty(),
         $crumb = $("#crumb").empty(),
         i;

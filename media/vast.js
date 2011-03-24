@@ -29,7 +29,7 @@ function Vast() {
             return test;
         })(),
         history: !!(window.history && history.pushState),
-        requestAnimationFrame: ("mozRequestAnimationFrame" in window) ? "moz" : ("webkitRequestAnimationFrame" in window ? "webkit" : false)
+        requestAnimationFrame: false //("mozRequestAnimationFrame" in window) ? "moz" : ("webkitRequestAnimationFrame" in window ? "webkit" : false)
     };
 
     // Array Remove - By John Resig (MIT Licensed)

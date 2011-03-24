@@ -25,15 +25,23 @@ function initMap() {
         var rv = [];
         /* Add `count` [lat, long] pairs to newData, then shuffle the whole
          * thing. */
+        var maxLat = 0, maxLon = 0, maxCount = 0;
         for (var j = 0, jj = pings.length; j < jj; j++) {
             var ping = pings[j],
                 latitude = ~~((parseFloat(ping[0]) + 180) * 10),
                 longitude = ~~((-parseFloat(ping[1]) + 90) * 10),
                 count = ping[2];
+                if (count > maxCount) {
+                    maxLat = latitude;
+                    maxLon = longitude;
+                    maxCount = count;
+                }
             for (var k = 0; k < count; k++) {
                 rv.push([0, latitude, longitude]);
             }
         }
+        glow.map.max = maxLon/10 + "," + maxLat/10 + " " + maxCount;
+
         return rv;
     };
 

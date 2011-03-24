@@ -24,3 +24,21 @@ Firefox, with a few seconds of latency as we process everything on the backend.
 The counter at the top shows the total downloads of Firefox since March 22,
 2011, when Firefox 4 was released. The arc chart shows those downloads broken
 down all the way to the city level.
+
+
+How It Works
+============
+
+glow.mozilla.org is a website for tracking downloads of Firefox 4. We take
+every hit from our logs and drop the download location on the map.
+
+# Getting the data
+# Writing the files
+# REST, caching
+# Displaying the map
+# Running the counter/bars, latency
+# Daisy
+# Perf
+## Avoiding GC
+## .firstChild.textConten
+## Chrome vs. Firefox

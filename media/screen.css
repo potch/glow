@@ -614,3 +614,19 @@ noscript {
     top: -78px;
     left: 337px;
 }
+.timeshift #sqlstream,
+.timeshift #cta,
+.timeshift #social,
+.timeshift .menu {
+    display: none;
+}
+#timeshift {
+    display: none;
+    position: absolute;
+    top: 100px;
+    right: 38px;
+    z-index: 100;
+}
+.timeshift #timeshift {
+    display: inherit;
+}

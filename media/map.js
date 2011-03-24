@@ -21,15 +21,8 @@ function initMap() {
         }
     };
 
-    /* Each ping looks like [latitude, longitude, count]. It represents the
-     * numbers of downloads in the timeframe from this location. */
-    glow.map.playNext = function() {
-        var response = glow.data.map.next,
-            /* [date, total, [pings]] */
-            data = response.data,
-            pings = data[2],
-            newData = [];
-
+    glow.map.preparePings = function(pings) {
+        var rv = [];
         /* Add `count` [lat, long] pairs to newData, then shuffle the whole
          * thing. */
         for (var j = 0, jj = pings.length; j < jj; j++) {
@@ -38,9 +31,20 @@ function initMap() {
                 longitude = ~~((-parseFloat(ping[1]) + 90) * 10),
                 count = ping[2];
             for (var k = 0; k < count; k++) {
-                newData.push([0, latitude, longitude]);
+                rv.push([0, latitude, longitude]);
             }
         }
+        return rv;
+    };
+
+    /* Each ping looks like [latitude, longitude, count]. It represents the
+     * numbers of downloads in the timeframe from this location. */
+    glow.map.playNext = function() {
+        var response = glow.data.map.next,
+            /* [date, total, [pings]] */
+            data = response.data,
+            newData = glow.map.preparePings(data[2]);
+
         shuffle(newData);
 
         /* Ping animations last 1 second so some are going to roll over. This
@@ -115,4 +119,19 @@ function initMap() {
             }
         }
     }
+
+    glow.map.showAll = function(data) {
+        var ping;
+        ctx.clearRect(0, 0, 3600, 1800);
+        ctx.fillStyle = "rgba(255, 255, 255, .3)";
+        dbg(data.length);
+        for (var i = 0, ii = data.length; i < ii; i++) {
+            ping = data[i];
+            ctx.beginPath();
+            // Firefox 3.6 requires the anticlockwise argument.
+            ctx.arc(ping[1] * glow.map.scale, ping[2] * glow.map.scale,
+                    1, 0, Math.PI * 2, false);
+            ctx.fill();
+        }
+    };
 }

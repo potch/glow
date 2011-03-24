@@ -250,6 +250,17 @@ glow.toggleFullscreen = function() {
 }
 
 glow.init = function() {
+    if (location.hash.slice(1, 10) == "timeshift") {
+        $(document.body).addClass("timeshift");
+        initTimeshift();
+        initCounter();
+        initBars();
+        initMap();
+        sizePageElements();
+        loadMap(function(){});
+        return;
+    }
+
     glow.data.sector.next = glow.time + "/arc.json";
     $.getJSON(ROOT + glow.time + "/count.json", function(r) {
         glow.data.count.next = r;
@@ -282,6 +293,9 @@ glow.init = function() {
 var lastKey = null;
 var toggled = false;
 $(window).bind('keydown', function(e) {
+    if (location.hash.slice(1, 10) == "timeshift") {
+        return;
+    }
     var num = null;
     if (e.keyCode >= 48 && e.keyCode <= 57) {
         num = e.keyCode - 48;
@@ -316,6 +330,52 @@ $(".show-about").click(function(e) {
         });
     },100);
 });
+
+var pad = function(x){
+    return ("" + x).length == 1 ? "0" + x : x;
+};
+
+var path = function(date) {
+    var d = [date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate(),
+             date.getUTCHours(), date.getUTCMinutes()];
+    return ROOT + $.map(d, pad).join("/");
+};
+
+var initTimeshift = function() {
+    $(window).bind("popstate", function(e) {
+        dbg('popstate');
+        dbg(e.originalEvent.state);
+    });
+
+    if (location.hash.split("/").length == 2) {
+        var date = new Date(location.hash.split("/")[1]),
+            d = $.map([date.getMonth() + 1, date.getDate(), date.getFullYear(),
+                       date.getHours(), date.getMinutes()], pad);
+        $("#timeshift input").val(d[0] + "-" + d[1] + "-" + d[2]
+                                  + " " + d[3] + ":" + d[4]);
+        travel(date);
+    }
+
+    function travel(date) {
+        history.pushState({date: date}, null, "#timeshift/" + date);
+        $.getJSON(path(date) + "/count.json", function(r) {
+            var num = numberfmt(r.data[r.data.length - 1][1])
+            $('#bigcounter')[0].firstChild.textContent = num;
+        });
+        $.getJSON(path(date) + "/map.json", function(r) {
+            glow.map.showAll(glow.map.preparePings(r.data[2]));
+        });
+    }
+
+
+    $("#timeshift form").submit(function(e) {
+        e.preventDefault();
+        var val = /(\d\d)-(\d\d)-(\d{4}) (\d\d?):(\d\d)/.exec(
+                        $("#timeshift input").val()),
+            date = new Date(val[3], val[1] - 1, val[2], val[4], val[5]);
+        travel(date);
+    });
+};
 
 
 })();

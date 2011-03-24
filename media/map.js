@@ -40,7 +40,7 @@ function initMap() {
                 rv.push([0, latitude, longitude]);
             }
         }
-        glow.map.max = maxLon/10 + "," + maxLat/10 + " " + maxCount;
+        glow.map.max = (maxLon/10) + "," + (maxLat/10) + " " + maxCount;
 
         return rv;
     };

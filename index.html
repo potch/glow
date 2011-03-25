@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="media/screen.css">
-    <title>Firefox 4 Download Stats</title>
+    <title data-gettext>Firefox 4 Download Stats</title>
     <link rel="shortcut icon" type="image/x-icon" href="media/favicon.ico">
     <style>
       #map polygon {
@@ -25,13 +25,13 @@
         <div class="menu glow"></div>
         <div class="bars glow"></div>
         <div class="masthead glow">
-          <h1 gettext="Firefox 4 Download Stats"></h1>
+          <h1 data-gettext>Firefox 4 Download Stats</h1>
           <div id="cta">
             <a id="dlbutton" href="http://www.mozilla.com/firefox/?from=glow"></a>
           </div>
           <div id="social">
-            <a href="http://twitterparty.mozilla.org/" class="button" id="twitter"><img src="media/twitter-badge.png">Twitter</a>
-            <a href="http://www.facebook.com/Firefox?v=app_122300121174636" class="button" id="facebook"><img src="media/fb-badge.png">Facebook</a>
+            <a href="http://twitterparty.mozilla.org/" class="button" id="twitter"><img src="media/twitter-badge.png"><span data-gettext>Twitter</span></a>
+            <a href="http://www.facebook.com/Firefox?v=app_122300121174636" class="button" id="facebook"><img src="media/fb-badge.png"><span data-gettext>Facebook</span></a>
             <a href="#" class="show-about"></a>
           </div>
         </div>
@@ -67,13 +67,13 @@
     </div>
     <canvas id="c"></canvas>
     <div id="about">
-      <p>
+      <p data-gettext>
       glow.mozilla.org tracks downloads for Firefox 4. When someone clicks
       the download button on mozilla.com or asks for an upgrade from inside
       Firefox, we approximate their location based on IP address and store
       anonymous aggregate location information in our database.
       </p>
-      <p>
+      <p data-gettext>
       Each dot that shows up on the map represents someone who just
       downloaded Firefox (with a few seconds of latency as we process
       everything on the backend).  The counter at the top shows the total
@@ -104,10 +104,9 @@
       $('html').addClass(glow.dir)
         .attr({lang: glow.locale.replace('_', '-'), dir: glow.dir});
       $.getScript("locale/" + glow.locale + "/l10n.js", function() {
-        document.title = gettext("Firefox 4 Download Stats");
         glow.init();
-        $("[gettext]").each(function(){
-          $(this).text(gettext($(this).attr("gettext")));
+        $("[data-gettext]").each(function(){
+          $(this).text(gettext($.trim($(this).text().replace(/[\n\s]+/g, ' '))));
         });
       });
 

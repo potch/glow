@@ -259,7 +259,7 @@ $.fn.arcChart = function(opts) {
         ctx.restore();
     }
 
-    var $tip = $("<div id='arcchart-tip'><span></span></div>");
+    var $tip = $("<div id='arcchart-tip'><div></div></div>");
     $("body").append($tip);
     $tip.css({
         "position": "absolute",
@@ -270,11 +270,12 @@ $.fn.arcChart = function(opts) {
         "text-shadow": "0 0 2px #000",
         "pointer-events": "none"
     });
-    $tiptext = $tip.find("span");
+    $tiptext = $tip.find("div");
     $tiptext.css({
         "background": "rgba(0,0,0,.7)",
-        "padding": "4px 8px 2px",
-        "border-radius": "2px"
+        "padding": "2px 0",
+        "border-radius": "2px",
+        "text-align": "center",
     });
     if ($("html").hasClass("rtl")) {
         $tip.css("text-align", "left");

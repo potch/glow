@@ -275,7 +275,7 @@ $.fn.arcChart = function(opts) {
         "background": "rgba(0,0,0,.7)",
         "padding": "2px 0",
         "border-radius": "2px",
-        "text-align": "center",
+        "text-align": "center"
     });
     if ($("html").hasClass("rtl")) {
         $tip.css("text-align", "left");

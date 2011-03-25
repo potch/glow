@@ -6,15 +6,6 @@ var RAD = PI / 180;
 var GAP = 2 * RAD;
 
 
-function pushState(loc) {
-    dbg("pushState", loc);
-    if (vast.capabilities.history) {
-        history.pushState(loc, null, loc);
-    } else {
-        location.hash = loc;
-    }
-};
-
 $.fn.arcChart = function(opts) {
     opts = $.extend({
         data: [],
@@ -30,10 +21,6 @@ $.fn.arcChart = function(opts) {
         clickMap = [],
         cx, cy,
         animation = false;
-
-    $(window).bind("popstate hashchange", function() {
-        $canvas.zoomTo(location.hash.split("/").slice(1));
-    });
 
     function getPath() {
         var path = [];
@@ -154,7 +141,7 @@ $.fn.arcChart = function(opts) {
                 if (clickMap[j][2][3] == target) {
                     i++;
                     dbg("advance", i, j);
-                    $canvas.zoomIn(j, {cb: advance, pushState: false});
+                    $canvas.zoomIn(j, {cb: advance, anim:false, trigger:false});
                     return;
                 }
             }
@@ -164,10 +151,6 @@ $.fn.arcChart = function(opts) {
 
     this.zoomOut = function(opts) {
         if (contextStack.length < 1) return;
-        if (!(opts && opts.pushState === false)) {
-            var slash = location.hash.lastIndexOf("/");
-            pushState(location.hash.slice(0, slash));
-        }
         span = (currentContext[1]-currentContext[0]);
         animation = vast.animate.over(
             500,
@@ -183,6 +166,7 @@ $.fn.arcChart = function(opts) {
             {after: function() {
                 animation = false;
                 currentContext = contextStack.pop() || false;
+                $canvas.trigger("zoomout", [clickMap, currentContext, getPath()]);
                 $canvas.redraw();
             }}
         );
@@ -198,12 +182,12 @@ $.fn.arcChart = function(opts) {
         function doneZoom() {
             animation = false;
             $canvas.redraw();
+            if (!(opts && opts.trigger === false)) {
+                $canvas.trigger("zoomin", [clickMap, currentContext, getPath()]);
+            }
             if (opts && typeof opts.cb == "function") opts.cb.apply(null, currentContext);
         }
 
-        if (!(opts && opts.pushState === false)) {
-            pushState(location.hash + "/" + tgt[2][3]);
-        }
         if (opts && !opts.anim) {
             doneZoom();
         } else {

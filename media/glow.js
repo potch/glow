@@ -130,9 +130,16 @@ function initSunburst() {
                   history.replaceState(location.hash, null, location.hash);
               }
               glow.sector.zoomTo(location.hash.split("/").slice(1));
+              bindHistory();
           }
       });
   });
+}
+
+function bindHistory() {
+    $(window).bind("hashchange popstate", function() {
+        glow.sector.zoomTo(location.hash.split("/").slice(1));
+    });
 }
 
 function loading() {
@@ -219,6 +226,23 @@ function decodeGeo(data, depth, parent) {
     return ret;
 }
 
+function pushState(loc, name) {
+    dbg("pushState", loc);
+    if (vast.capabilities.history) {
+        history.pushState(loc, name, loc);
+    } else {
+        location.hash = loc;
+    }
+};
+
+var currentPath = false;
+$("#chart").bind("zoomin zoomout", function(e, list, current, path) {
+    var newPath = path.join("/");
+    if (currentPath != newPath) {
+        currentPath = newPath;
+        pushState("#arc/" + newPath, current ? current[2][0] : undefined);
+    }
+});
 
 $("#chart").bind("update", function(e, list, current, path) {
     var $ul = $("#rankedlist").empty(),
@@ -237,7 +261,6 @@ $("#chart").bind("update", function(e, list, current, path) {
     for (i=0; i<list.length; i++) {
         $ul.append("<li><a href='#'>" + list[i][2][0] + " <span>" + numberfmt(list[i][2][1]) + "</span></a></li>");
     }
-
 });
 
 glow.toggleFullscreen = function() {

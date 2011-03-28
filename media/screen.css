@@ -493,7 +493,8 @@ noscript {
     width: 31px;
     height: 39px;
 }
-.rtl #facebook {
+.rtl #facebook,
+.rtl #mobile {
     margin-right: 14px;
 }
 #facebook img {
@@ -503,6 +504,14 @@ noscript {
     left: 8px;
     width: 39px;
     height: 39px;
+}
+#mobile img {
+    display: block;
+    position: absolute;
+    top: -18px;
+    left: 9px;
+    width: 37px;
+    height: 72px;
 }
 #bar-tip {
     font-family: Verdana, sans-serif;

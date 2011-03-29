@@ -6,8 +6,7 @@ $rtl_locales = array('ar', 'fa', 'fa-ir', 'he');
 
 date_default_timezone_set('UTC');
 $time = strftime('%Y/%m/%d/%H/%M', strtotime('-2 minutes'));
-$chooser = new ChooseLocale($locales);
-$locale = $chooser->getCompatibleLocale();
+$locale = chooseLocale($locales);
 $rtl = in_array($locale, $rtl_locales) ? 'rtl' : 'ltr';
 if (strpos($locale, '-')) {
     $x = explode('-', $locale);

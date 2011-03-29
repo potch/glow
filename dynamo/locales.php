@@ -1,117 +1,74 @@
 <?php
 
-/* ChooseLocale
- *
- * Licence: MPL 2/GPL 2.0/LGPL 2.1
- * Author: Pascal Chevrel, Mozilla
- * Date : 2010-07-17
- *
- * Description:
- * Class to choose the locale which locale we will show to the visitor
- * based on http acceptlang headers and our list of supported locales.
- *
- *
-*/
-
-
-
-
-class ChooseLocale
-{
-    public    $HTTPAcceptLang;
-    public    $supportedLocales;
-    protected $detectedLocale;
-    protected $defaultLocale;
-    public    $mapLonglocales;
-
-
-    public function __construct($list=array('en-US'))
-    {
-        $lang = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : 'en-us';
-        $this -> HTTPAcceptLang   = strtolower($lang);
-        $this -> supportedLocales = array_unique($list);
-        $this -> setDefaultLocale('en-US');
-        $this -> setCompatibleLocale();
-        $this -> mapLonglocales = true;
-
-    }
-
-    public function getAcceptLangArray()
-    {
-        if (empty($this->HTTPAcceptLang)) return null;
-
-        return explode(',', $this->HTTPAcceptLang);
-    }
-
-    public function getCompatibleLocale()
-    {
-        $l       = $this -> defaultLocale;
-        $acclang = $this -> getAcceptLangArray();
-
-        if(!is_array($acclang)) {
-            return $this -> defaultLocale;
-        }
-
-        foreach ($acclang as $var) {
-            $locale      = $this -> _cleanHTTPlocaleCode($var);
-            $shortLocale = array_shift((explode('-', $locale)));
-
-            if (in_array($locale, $this -> supportedLocales)) {
-                $l = $locale;
-                break;
-            }
-
-            if (in_array($shortLocale, $this -> supportedLocales)) {
-                $l = $shortLocale;
-                break;
-            }
-
-            // check if we map visitors short locales to site long locales
-            // like en -> en-GB
-            if ($this -> mapLonglocales == true) {
-                foreach ($this -> supportedLocales as $var) {
-                    $shortSupportedLocale = array_shift((explode('-', $var)));
-                    if ($shortLocale == $shortSupportedLocale) {
-                        $l = $var;
-                        break;
-                    }
-                }
-            }
-
-            }
-
-        return $l;
-    }
-
-    public function getDefaultLocale() {
-        return $this -> defaultLocale;
-    }
-
-    public function setCompatibleLocale() {
-        $this -> detectedLocale  = $this -> getCompatibleLocale();
-    }
-
-    public function setDefaultLocale($locale) {
-
-        // the default locale should always be among the site locales
-        // if not, the first locale in the supportedLocales array is default
-        if (!in_array($locale, $this -> supportedLocales)) {
-            $this -> defaultLocale = $this -> supportedLocales[0];
-
-        } else {
-            $this -> defaultLocale = $locale;
-        }
-        return;
-    }
-
-    private function _cleanHTTPlocaleCode($str)
-    {
-        $locale = explode(';', $str);
-        $locale = trim($locale[0]);
-
-        return $locale;
-    }
-
+function chooseLocale($locales, $default='en-us') {
+    $accept = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : $default;
+    return _chooseLocale($locales, $accept, $default);
 }
 
-?>
+// From https://github.com/auraphp/aura.web/blob/master/src/Context.php
+function parseAccept($accept) {
+    $accept = explode(',', $accept);
+    $sorted = array();
+
+    foreach ($accept as $key => $value) {
+        $value = trim($value);
+
+        if (false === strpos($value, ';q=')) {
+            $sorted[$value] = 1.0;
+        } else {
+            list($value, $q) = explode(';q=', $value);
+            $sorted[$value] = $q;
+        }
+    }
+
+    // sort by quality factor, highest first.
+    asort($sorted);
+    return array_reverse($sorted);
+}
+
+
+function _lowerLocales($locales) {
+    $rv = array();
+    foreach ($locales as $lang) {
+        $rv[strtolower($lang)] = $lang;
+        $short = array_shift(explode('-', $lang));
+        if (!in_array($short, $locales)) {
+            $rv[$short] = $lang;
+        }
+    }
+    return $rv;
+}
+
+function _chooseLocale($locales, $accept, $default) {
+    $locales = _lowerLocales($locales);
+    $accept = parseAccept(strtolower($accept));
+
+    foreach ($accept as $lang => $rank) {
+        $short = array_shift(explode('-', $lang));
+        if (array_key_exists($lang, $locales)) {
+            return $locales[$lang];
+        } else if (array_key_exists($short, $locales)) {
+            return $locales[$short];
+        }
+    }
+    return $default;
+}
+
+/*
+// These are my "tests".
+$loc = array('ar', 'en-US', 'fr', 'ga', 'ga-IE', 'pt-BR', 'zh-TW', 'zh-CN');
+echo "\nga-IE == " . _chooseLocale($loc, 'ga-ie', 'def');
+echo "\nga-IE == " . _chooseLocale($loc, 'ga-IE', 'def');
+echo "\nga-IE == " . _chooseLocale($loc, 'GA-ie', 'def');
+echo "\nga == " . _chooseLocale($loc, 'ga-XX', 'def');
+echo "\nga == " . _chooseLocale($loc, 'ga', 'def');
+echo "\nfr == " . _chooseLocale($loc, 'fr-FR', 'def');
+echo "\npt-BR == " . _chooseLocale($loc, 'pt', 'def');
+echo "\nzh-CN == " . _chooseLocale($loc, 'zh', 'def');
+echo "\ndef == " . _chooseLocale($loc, 'xx', 'def');
+echo "\nfr == " . _chooseLocale($loc, 'fr,en;q=0.8', 'def');
+echo "\nfr == " . _chooseLocale($loc, 'en;q=0.8,fr,ga-IE;q=0.9', 'def');
+echo "\nzh-CN == " . _chooseLocale($loc, 'zh, fr;q=0.8', 'def');
+echo "\nga-IE == " . _chooseLocale($loc, 'ga-IE,en;q=0.8,fr;q=0.6', 'def');
+echo "\nfr == " . _chooseLocale($loc, 'fr-fr, en;q=0.8, es;q=0.2', 'def');
+ */
